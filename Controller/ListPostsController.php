@@ -8,7 +8,6 @@ use Twig_Environment;
 use Twig_Loader_Filesystem;
 
 require 'Model/PostManager.php';
-require 'vendor/twig/twig/lib/Twig/Loader/Filesystem.php';
 
 /**
  * @author Amélie-Dzovinar Haladjian
@@ -21,7 +20,7 @@ class ListPostsController
     {
         $posts = $this->getPosts();
 
-        $this->renderTemplate('index.php', [$posts]);
+        $this->renderTemplate('index.html', [$posts]);
     }
 
     public function __construct()
