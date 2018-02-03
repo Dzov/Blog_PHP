@@ -1,2 +1,4 @@
+.DS_Store
 Model/db_config.php
 .idea
+composer.phar
