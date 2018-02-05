@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
-
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 
     <link href="Views/css/common-css/bootstrap.css" rel="stylesheet">
@@ -15,17 +14,15 @@
     <link href="Views/css/layout-1/css/styles.css" rel="stylesheet">
 
     <link href="Views/css/layout-1/css/responsive.css" rel="stylesheet">
-
+    {% block links %}{% endblock %}
 </head>
 <body>
 
-{% include('header.html.twig') %}
+{% include('header.twig') %}
 
-<main>
-    {% block main %}{% endblock %}
-</main>
+{% block main %}{% endblock %}
 
-{% include('footer.html.twig') %}
+{% include('footer.twig') %}
 
 <script src="Views/js/common-js/jquery-3.1.1.min.js"></script>
 

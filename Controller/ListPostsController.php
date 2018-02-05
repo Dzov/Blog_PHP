@@ -14,31 +14,24 @@ require 'Model/PostManager.php';
  */
 class ListPostsController
 {
-    private $em;
-
     public function listPostsAction()
     {
         $posts = $this->getPosts();
 
-        $this->renderTemplate('home.html.twig', ['posts' => $posts]);
-    }
-
-    public function __construct()
-    {
-        $this->em = new PostManager();
+        $this->renderTemplate('home.twig', ['posts' => $posts]);
     }
 
     private function getPosts()
     {
-        return $this->em->findAllPosts();
+        $em = new PostManager();
+
+        return $em->findAllPosts();
     }
 
     private function renderTemplate(string $path, array $parameters)
     {
         $loader = new Twig_Loader_Filesystem('Views/templates');
-        $twig = new Twig_Environment(
-            $loader
-        );
+        $twig = new Twig_Environment($loader);
 
         try {
             $twig->load($path);
