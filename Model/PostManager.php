@@ -13,7 +13,7 @@ class PostManager extends DatabaseConnection
     {
         $query = 'SELECT * FROM post';
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($query)->fetchAll();
     }
 
     public function findPost($id)

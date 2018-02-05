@@ -20,7 +20,7 @@ class ListPostsController
     {
         $posts = $this->getPosts();
 
-        $this->renderTemplate('index.html', [$posts]);
+        $this->renderTemplate('home.html.twig', ['posts' => $posts]);
     }
 
     public function __construct()
@@ -37,19 +37,15 @@ class ListPostsController
     {
         $loader = new Twig_Loader_Filesystem('Views/templates');
         $twig = new Twig_Environment(
-            $loader, array(
-                'cache' => 'Blog/vendor/twig/twig/src/Util',
-            )
+            $loader
         );
 
         try {
             $twig->load($path);
 
             echo $twig->render($path, $parameters);
-
         } catch (Exception $e) {
             var_dump($e->getMessage());
         }
-
     }
 }

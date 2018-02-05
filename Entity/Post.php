@@ -23,6 +23,11 @@ class Post
     /**
      * @var string
      */
+    private $image_url;
+
+    /**
+     * @var string
+     */
     private $subtitle;
 
     /**
@@ -63,6 +68,16 @@ class Post
     public function setId(int $id)
     {
         $this->id = $id;
+    }
+
+    public function getImageUrl(): string
+    {
+        return $this->image_url;
+    }
+
+    public function setImageUrl(string $image_url)
+    {
+        $this->image_url = $image_url;
     }
 
     public function getSubtitle(): string

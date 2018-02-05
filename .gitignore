@@ -2,3 +2,4 @@
 Model/db_config.php
 .idea
 composer.phar
+vendor/*
