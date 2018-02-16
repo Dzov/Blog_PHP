@@ -36,7 +36,7 @@ class ComposerStaticInitb8f6045488838dba18d68395646eac60
         ),
         'Blog\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/vendor',
+            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
