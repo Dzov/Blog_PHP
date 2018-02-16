@@ -40,3 +40,4 @@ abstract class DatabaseConnection
         return $results;
     }
 }
+

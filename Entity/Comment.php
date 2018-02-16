@@ -95,3 +95,4 @@ class Comment
         $this->status = $status;
     }
 }
+

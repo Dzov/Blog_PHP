@@ -36,3 +36,4 @@ class PostManager extends DatabaseConnection
         //TODO
     }
 }
+
