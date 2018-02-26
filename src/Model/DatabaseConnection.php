@@ -2,6 +2,7 @@
 
 namespace Blog\Model;
 
+use Blog\Config\Parameters;
 use http\Exception;
 use PDO;
 
@@ -12,28 +13,29 @@ abstract class DatabaseConnection
 {
     private static $db;
 
-    private function getDb()
+    private static function getDb()
     {
-        try
-        {
-            require 'db_config.php';
+        try {
+            if (null === self::$db) {
+                self::$db = new PDO(
+                    'mysql:host=' . Parameters::$host . ';dbname=' . Parameters::$dbName . ';charset=utf8',
+                    Parameters::$user,
+                    Parameters::$password
+                );
+            }
 
-            self::$db = new PDO("mysql:host=$host;dbname=$dbName;charset=utf8", $user, $password);
             return self::$db;
-        }
-        catch(Exception $e)
-        {
-            die('Erreur : '.$e->getMessage());
+        } catch (Exception $e) {
+            die('Erreur : ' . $e->getMessage());
         }
     }
 
-    protected function executeQuery($query, $parameters = null)
+    public static function executeQuery($query, $parameters = null)
     {
-        if(null === $parameters)
-        {
-            $results = $this->getDb()->query($query);
+        if (null === $parameters) {
+            $results = self::getDb()->query($query);
         } else {
-            $results = $this->getDb()->prepare($query);
+            $results = self::getDb()->prepare($query);
             $results->execute($parameters);
         }
 

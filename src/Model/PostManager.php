@@ -5,31 +5,31 @@ namespace Blog\Model;
 /**
  * @author Amélie-Dzovinar Haladjian
  */
-class PostManager extends DatabaseConnection
+abstract class PostManager extends DatabaseConnection
 {
-    public function findAllPosts()
+    public static function findAllPosts()
     {
         $query = 'SELECT * FROM post';
 
-        return $this->executeQuery($query)->fetchAll();
+        return parent::executeQuery($query)->fetchAll();
     }
 
-    public function findPost($id)
+    public static function findPost($id)
     {
         //TODO
     }
 
-    public function deletePost($id)
+    public static function deletePost($id)
     {
         //TODO
     }
 
-    public function updatePost($id)
+    public static function updatePost($id)
     {
         //TODO
     }
 
-    public function addPost()
+    public static function addPost()
     {
         //TODO
     }

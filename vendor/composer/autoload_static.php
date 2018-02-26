@@ -21,6 +21,7 @@ class ComposerStaticInitb8f6045488838dba18d68395646eac60
         ),
         'B' => 
         array (
+            'Blog\\Config\\' => 12,
             'Blog\\' => 5,
         ),
     );
@@ -33,6 +34,10 @@ class ComposerStaticInitb8f6045488838dba18d68395646eac60
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Blog\\Config\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/config',
         ),
         'Blog\\' => 
         array (
