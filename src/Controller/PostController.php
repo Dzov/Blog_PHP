@@ -9,7 +9,7 @@ use Blog\Model\PostManager;
  */
 class PostController extends Controller
 {
-    public function listAction()
+    public function listPostsAction()
     {
         $posts = PostManager::findAllPosts();
 

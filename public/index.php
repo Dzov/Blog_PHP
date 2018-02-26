@@ -8,6 +8,6 @@ require_once '../vendor/autoload.php';
 
 $controller = new PostController();
 
-$controller->listAction();
+$controller->listPostsAction();
 
 
