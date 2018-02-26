@@ -30,9 +30,9 @@ abstract class DatabaseConnection
         }
     }
 
-    public static function executeQuery($query, $parameters = null)
+    public static function executeQuery(string $query, array $parameters = [])
     {
-        if (null === $parameters) {
+        if (empty($parameters)) {
             $results = self::getDb()->query($query);
         } else {
             $results = self::getDb()->prepare($query);
