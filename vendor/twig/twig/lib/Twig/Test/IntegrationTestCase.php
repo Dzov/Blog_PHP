@@ -177,7 +177,7 @@ abstract class Twig_Test_IntegrationTestCase extends TestCase
             $p->setValue($twig, '__TwigTemplate_'.hash('sha256', uniqid(mt_rand(), true), false).'_');
 
             try {
-                $template = $twig->loadTemplate('index.twig');
+                $template = $twig->loadTemplate('base.twig');
             } catch (Exception $e) {
                 if (false !== $exception) {
                     $message = $e->getMessage();
@@ -230,7 +230,7 @@ abstract class Twig_Test_IntegrationTestCase extends TestCase
         $templates = array();
         preg_match_all('/--TEMPLATE(?:\((.*?)\))?--(.*?)(?=\-\-TEMPLATE|$)/s', $test, $matches, PREG_SET_ORDER);
         foreach ($matches as $match) {
-            $templates[($match[1] ? $match[1] : 'index.twig')] = $match[2];
+            $templates[($match[1] ? $match[1] : 'base.twig')] = $match[2];
         }
 
         return $templates;

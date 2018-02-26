@@ -9,7 +9,7 @@ abstract class PostManager extends DatabaseConnection
 {
     public static function findAllPosts()
     {
-        $query = 'SELECT * FROM post';
+        $query = 'SELECT * FROM post INNER JOIN user ON post.admin_user_id = user.user_id';
 
         return parent::executeQuery($query)->fetchAll();
     }

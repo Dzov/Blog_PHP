@@ -109,12 +109,12 @@ class Twig_Tests_TemplateTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @expectedException Twig_Error_Runtime
-     * @expectedExceptionMessage Block "unknown" on template "index.twig" does not exist in "index.twig".
+     * @expectedExceptionMessage Block "unknown" on template "base.twig" does not exist in "base.twig".
      */
     public function testRenderBlockWithUndefinedBlock()
     {
         $twig = new Twig_Environment($this->getMockBuilder('Twig_LoaderInterface')->getMock());
-        $template = new Twig_TemplateTest($twig, 'index.twig');
+        $template = new Twig_TemplateTest($twig, 'base.twig');
         try {
             $template->renderBlock('unknown', array());
         } catch (\Exception $e) {
@@ -126,24 +126,24 @@ class Twig_Tests_TemplateTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @expectedException Twig_Error_Runtime
-     * @expectedExceptionMessage Block "unknown" on template "index.twig" does not exist in "index.twig".
+     * @expectedExceptionMessage Block "unknown" on template "base.twig" does not exist in "base.twig".
      */
     public function testDisplayBlockWithUndefinedBlock()
     {
         $twig = new Twig_Environment($this->getMockBuilder('Twig_LoaderInterface')->getMock());
-        $template = new Twig_TemplateTest($twig, 'index.twig');
+        $template = new Twig_TemplateTest($twig, 'base.twig');
         $template->displayBlock('unknown', array());
     }
 
     /**
      * @expectedException Twig_Error_Runtime
-     * @expectedExceptionMessage Block "foo" should not call parent() in "index.twig" as the block does not exist in the parent template "parent.twig"
+     * @expectedExceptionMessage Block "foo" should not call parent() in "base.twig" as the block does not exist in the parent template "parent.twig"
      */
     public function testDisplayBlockWithUndefinedParentBlock()
     {
         $twig = new Twig_Environment($this->getMockBuilder('Twig_LoaderInterface')->getMock());
         $template = new Twig_TemplateTest($twig, 'parent.twig');
-        $template->displayBlock('foo', array(), array('foo' => array(new Twig_TemplateTest($twig, 'index.twig'), 'block_foo')), false);
+        $template->displayBlock('foo', array(), array('foo' => array(new Twig_TemplateTest($twig, 'base.twig'), 'block_foo')), false);
     }
 
     public function testGetAttributeOnArrayWithConfusableKey()
@@ -359,9 +359,9 @@ class Twig_Tests_TemplateTest extends \PHPUnit\Framework\TestCase
 
         // tests when input is not an array or object
         $tests = array_merge($tests, array(
-            array(false, null, 42, 'a', array(), $anyType, 'Impossible to access an attribute ("a") on a integer variable ("42") in "index.twig".'),
-            array(false, null, 'string', 'a', array(), $anyType, 'Impossible to access an attribute ("a") on a string variable ("string") in "index.twig".'),
-            array(false, null, array(), 'a', array(), $anyType, 'Key "a" does not exist as the array is empty in "index.twig".'),
+            array(false, null, 42, 'a', array(), $anyType, 'Impossible to access an attribute ("a") on a integer variable ("42") in "base.twig".'),
+            array(false, null, 'string', 'a', array(), $anyType, 'Impossible to access an attribute ("a") on a string variable ("string") in "base.twig".'),
+            array(false, null, array(), 'a', array(), $anyType, 'Key "a" does not exist as the array is empty in "base.twig".'),
         ));
 
         return $tests;
@@ -386,7 +386,7 @@ class Twig_TemplateTest extends Twig_Template
 {
     private $name;
 
-    public function __construct(Twig_Environment $env, $name = 'index.twig')
+    public function __construct(Twig_Environment $env, $name = 'base.twig')
     {
         parent::__construct($env);
         self::$cache = array();

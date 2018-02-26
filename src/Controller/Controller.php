@@ -23,5 +23,7 @@ abstract class Controller
         } catch (Exception $e) {
             var_dump($e->getMessage());
         }
+
+        $twig->getExtension('Twig_Extension_Core')->setTimezone('Europe/Paris');
     }
 }

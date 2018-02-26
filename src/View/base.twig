@@ -1,37 +1,43 @@
-<!DOCTYPE HTML>
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <title>{% block title %}{% endblock %}</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 
-    <link href="css/common-css/bootstrap.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <link href="css/common-css/ionicons.css" rel="stylesheet">
+    <title>{% block title %}Clean Blog - Start Bootstrap Theme{% endblock %}</title>
 
-    <link href="css/layout-1/css/styles.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="css/layout-1/css/responsive.css" rel="stylesheet">
-    {% block links %}{% endblock %}
+    <!-- Custom fonts for this template -->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
 </head>
+
 <body>
 
-{% include('header.twig') %}
+{% block header %} {% include('header.twig') %} {% endblock %}
 
-{% block main %}{% endblock %}
+{% block body %} {% endblock %}
 
-{% include('footer.twig') %}
+{% block footer %} {% include('footer.twig') %} {% endblock %}
 
-<script src="js/common-js/jquery-3.1.1.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="../vendor/jquery/jquery.min.js"></script>
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<script src="js/common-js/tether.min.js"></script>
-
-<script src="js/common-js/bootstrap.js"></script>
-
-<script src="js/common-js/scripts.js"></script>
+<!-- Custom scripts for this template -->
+<script src="../js/clean-blog.min.js"></script>
 
 </body>
-</html>
 
+</html>
