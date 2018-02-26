@@ -1,5 +1,5 @@
 .DS_Store
-Model/db_config.php
+config/
 .idea
 composer.phar
 vendor/*
