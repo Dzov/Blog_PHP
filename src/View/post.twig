@@ -1,21 +1,29 @@
-<article>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
+{% extends('base.twig') %}
 
-                <h2 class="section-heading">{{ post.title }}</h2>
+{% block header %} {% endblock %}
 
-                <p>{{ post.content }}</p>
+{% block body %}
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
 
-                <a href="#">
-                    <img class="img-fluid" src="img/post-sample-image.jpg" alt="">
-                </a>
-                <p>Placeholder text by
-                    <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by
-                    <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p>
+                    <h2 class="section-heading">{{ post.title }}</h2>
+
+                    <p>{{ post.content }}</p>
+
+                    <a href="#">
+                        <img class="img-fluid" src="img/post-sample-image.jpg" alt="">
+                    </a>
+                    <p>Placeholder text by
+                        <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by
+                        <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p>
+                </div>
             </div>
         </div>
-    </div>
-</article>
+    </article>
 
-<hr>
+    <hr>
+
+{% endblock body %}
