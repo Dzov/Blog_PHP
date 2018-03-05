@@ -3,7 +3,6 @@
 {% block header %} {% endblock %}
 
 {% block body %}
-    <!-- Post Content -->
     <article>
         <div class="container">
             <div class="row">
@@ -11,7 +10,7 @@
 
                     <h2 class="section-heading">{{ post.title }}</h2>
 
-                    <p>{{ post.content }}</p>
+                    <p>{{ post.content | nl2br }}</p>
 
                     <a href="#">
                         <img class="img-fluid" src="img/post-sample-image.jpg" alt="">
@@ -25,5 +24,13 @@
     </article>
 
     <hr>
+
+    {% block comment %}
+        {% include('comment-form.twig') %}
+
+        {% for comment in comments %}
+            {% include('comment.twig') %}
+        {% endfor %}
+    {% endblock %}
 
 {% endblock body %}

@@ -2,6 +2,7 @@
 
 namespace Blog;
 
+use Blog\Controller\CommentController;
 use Blog\Controller\HomeController;
 use Blog\Controller\PostController;
 
@@ -17,7 +18,8 @@ if (isset($_GET['action'])) {
                 PostController::showPostAction((int) $_GET['p']);
             }
             break;
-        case 'about':
+        case 'comment':
+            CommentController::addCommentAction($_GET['p'], 1, htmlspecialchars($_POST['content']));
             break;
         case 'contact':
             break;

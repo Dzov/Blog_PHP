@@ -20,7 +20,9 @@ class PostController extends Controller
     {
         $post = PostManager::findPost($id);
 
-        self::renderTemplate('post.twig', ['post' => $post]);
+        $comments = PostManager::findCommentsByPost($id);
+
+        self::renderTemplate('post.twig', ['post' => $post, 'comments' => $comments]);
     }
 }
 
