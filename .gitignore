@@ -1,5 +1,9 @@
 .DS_Store
-Model/db_config.php
+config/
 .idea
 composer.phar
-vendor/*
+vendor
+public/css/clean-blog.css.map
+public/css/clean-blog.min.css.map
+public/.sass-cache/
+public/clean-blog.css/

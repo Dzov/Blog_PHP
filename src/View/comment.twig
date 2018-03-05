@@ -1,0 +1,16 @@
+{% block comment %}
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="media mb-4">
+                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                    <div class="media-body">
+                        <h5 class="mt-0">{{ comment.username | capitalize }}</h5>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+{% endblock %}
+
