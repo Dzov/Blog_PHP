@@ -13,7 +13,7 @@ abstract class DatabaseConnection
 {
     private static $db;
 
-    private static function getDb()
+    private static function getDb(): PDO
     {
         try {
             if (null === self::$db) {
@@ -30,14 +30,10 @@ abstract class DatabaseConnection
         }
     }
 
-    public static function executeQuery(string $query, array $parameters = [])
+    public static function executeQuery(string $query, array $parameters = []): \PDOStatement
     {
-        if (empty($parameters)) {
-            $results = self::getDb()->query($query);
-        } else {
-            $results = self::getDb()->prepare($query);
-            $results->execute($parameters);
-        }
+        $results = self::getDb()->prepare($query);
+        $results->execute($parameters);
 
         return $results;
     }

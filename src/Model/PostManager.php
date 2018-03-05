@@ -11,7 +11,7 @@ abstract class PostManager extends DatabaseConnection
     {
         $query = 'SELECT p.post_id, p.title, p.subtitle, p.updated_at, u.username 
                     FROM post p
-                    JOIN user u ON p.admin_user_id = u.user_id';
+                    JOIN user u ON p.author = u.user_id';
 
         return parent::executeQuery($query)->fetchAll();
     }
@@ -20,7 +20,7 @@ abstract class PostManager extends DatabaseConnection
     {
         $query = 'SELECT p.post_id, p.title, p.subtitle, p.updated_at, u.username 
                     FROM post p
-                    JOIN user u ON p.admin_user_id = u.user_id 
+                    JOIN user u ON p.author = u.user_id 
                     ORDER BY updated_at desc 
                     LIMIT 3';
 
