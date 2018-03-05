@@ -2,7 +2,7 @@
 config/
 .idea
 composer.phar
-vendor/*
+vendor
 public/css/clean-blog.css.map
 public/css/clean-blog.min.css.map
 public/.sass-cache/
