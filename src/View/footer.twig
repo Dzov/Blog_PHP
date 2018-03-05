@@ -1,55 +1,39 @@
-<footer>
+{% block footer %}
 
-    <div class="container">
-        <div class="row">
-
-            <div class="col-lg-4 col-md-6">
-                <div class="footer-section">
-
-                    <p class="copyright">Developped by Amélie-Dzovinar Haladjian</p>
-                    <p class="copyright">Theme: Bona @ 2017. All rights reserved. <br> Designed by
-                        <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
-                    <ul class="icons">
-                        <li><a href="#"><i class="ion-social-facebook-outline"></i></a></li>
-                        <li><a href="#"><i class="ion-social-twitter-outline"></i></a></li>
-                        <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
-                        <li><a href="#"><i class="ion-social-vimeo-outline"></i></a></li>
-                        <li><a href="#"><i class="ion-social-pinterest-outline"></i></a></li>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                            </a>
+                        </li>
                     </ul>
+                    <p class="copyright text-muted">Copyright &copy; Amélie-Dzovinar Haladjian 2018</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-                </div><!-- footer-section -->
-            </div><!-- col-lg-4 col-md-6 -->
-
-            <div class="col-lg-4 col-md-6">
-                <div class="footer-section">
-                    <h4 class="title"><b>CATEGORIES</b></h4>
-                    <ul>
-                        <li><a href="#">BEAUTY</a></li>
-                        <li><a href="#">HEALTH</a></li>
-                        <li><a href="#">MUSIC</a></li>
-                    </ul>
-                    <ul>
-                        <li><a href="#">SPORT</a></li>
-                        <li><a href="#">DESIGN</a></li>
-                        <li><a href="#">TRAVEL</a></li>
-                    </ul>
-                </div><!-- footer-section -->
-            </div><!-- col-lg-4 col-md-6 -->
-
-            <div class="col-lg-4 col-md-6">
-                <div class="footer-section">
-
-                    <h4 class="title"><b>CONTACT</b></h4>
-                    <div class="input-area">
-                        <form class="flex">
-                            <input class="email-input" type="text" placeholder="Votre email">
-                            <button class="submit-btn" type="submit"><i class="icon ion-ios-email-outline"></i></button>
-                        </form>
-                    </div>
-
-                </div><!-- footer-section -->
-            </div><!-- col-lg-4 col-md-6 -->
-
-        </div><!-- row -->
-    </div><!-- container -->
-</footer>
+{% endblock %}

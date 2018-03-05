@@ -9,11 +9,20 @@ use Blog\Model\PostManager;
  */
 class PostController extends Controller
 {
-    public function listAction()
+    public static function listPostsAction()
     {
         $posts = PostManager::findAllPosts();
 
-        $this->renderTemplate('home.twig', ['posts' => $posts]);
+        self::renderTemplate('posts.twig', ['posts' => $posts]);
+    }
+
+    public static function showPostAction($id)
+    {
+        $post = PostManager::findPost($id);
+
+        $comments = PostManager::findCommentsByPost($id);
+
+        self::renderTemplate('post.twig', ['post' => $post, 'comments' => $comments]);
     }
 }
 
