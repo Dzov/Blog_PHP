@@ -3,7 +3,6 @@
 {% block header %} {% endblock %}
 
 {% block body %}
-    <!-- Post Content -->
     <article>
         <div class="container">
             <div class="row">
@@ -28,6 +27,10 @@
 
     {% block comment %}
         {% include('comment-form.twig') %}
+
+        {% for comment in comments %}
+            {% include('comment.twig') %}
+        {% endfor %}
     {% endblock %}
 
 {% endblock body %}

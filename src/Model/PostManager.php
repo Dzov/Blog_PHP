@@ -27,7 +27,7 @@ abstract class PostManager extends DatabaseConnection
         return parent::executeQuery($query)->fetchAll();
     }
 
-    public static function findPost($id)
+    public static function findPost(int $id)
     {
         $query = 'SELECT * FROM post 
                     WHERE post_id = :id';
@@ -35,12 +35,22 @@ abstract class PostManager extends DatabaseConnection
         return parent::executeQuery($query, [':id' => $id])->fetch();
     }
 
-    public static function deletePost($id)
+    public static function findCommentsByPost(int $id)
+    {
+        $query = 'SELECT c.content, c.posted_at, c.status, u.username 
+                    FROM comment c
+                    JOIN user u ON c.author = u.user_id
+                    WHERE c.post_id = :id';
+
+        return parent::executeQuery($query, [':id' => $id])->fetchAll();
+    }
+
+    public static function deletePost(int $id)
     {
         //TODO
     }
 
-    public static function updatePost($id)
+    public static function updatePost(int $id)
     {
         //TODO
     }
