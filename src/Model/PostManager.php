@@ -40,7 +40,7 @@ abstract class PostManager extends DatabaseConnection
         $query = 'SELECT c.content, c.posted_at, c.status, u.username 
                     FROM comment c
                     JOIN user u ON c.author = u.user_id
-                    WHERE c.post_id = :id';
+                    WHERE c.post_id = :id AND c.status = "PUBLISHED"';
 
         return parent::executeQuery($query, [':id' => $id])->fetchAll();
     }
