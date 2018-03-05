@@ -15,7 +15,7 @@ class CommentController extends Controller
 
         if($commentAdded)
         {
-            var_dump('Comment was successfully added and is now pending approval');
+            header("Location: index.php?action=post&p=$post_id");
         }
     }
 }
