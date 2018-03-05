@@ -11,7 +11,7 @@ use Twig_Loader_Filesystem;
  */
 abstract class Controller
 {
-    protected function renderTemplate(string $path, array $parameters)
+    protected static function renderTemplate(string $path, array $parameters)
     {
         $loader = new Twig_Loader_Filesystem('../src/View');
         $twig = new Twig_Environment($loader);
@@ -23,7 +23,5 @@ abstract class Controller
         } catch (Exception $e) {
             var_dump($e->getMessage());
         }
-
-        $twig->getExtension('Twig_Extension_Core')->setTimezone('Europe/Paris');
     }
 }
