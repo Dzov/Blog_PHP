@@ -1,5 +1,7 @@
 <?php
 
+namespace Blog\Entity;
+
 /**
  * @author Amélie-Dzovinar Haladjian
  */
@@ -110,3 +112,4 @@ class User
         $this->username = $username;
     }
 }
+

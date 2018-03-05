@@ -1,0 +1,13 @@
+<div class="post-preview">
+    <a href="index.php?action=post&p={{ post.post_id }}">
+        <h2 class="post-title">
+            {{ post.title }}
+        </h2>
+        <h3 class="post-subtitle">
+            {{ post.subtitle }}
+        </h3>
+    </a>
+    <p class="post-meta">Modifié le
+        {{ post.updated_at | date("d, M Y", "Europe/Paris") }} par {{ post.username | capitalize }}</p>
+</div>
+<hr>

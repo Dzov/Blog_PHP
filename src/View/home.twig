@@ -1,0 +1,20 @@
+{% extends('base.twig') %}
+
+{% block title %} Blog - Home {% endblock title %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+
+                {% for post in posts %}
+                    {% include('card-post.twig') %}
+                {% endfor %}
+                
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

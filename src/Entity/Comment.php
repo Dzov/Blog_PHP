@@ -1,5 +1,7 @@
 <?php
 
+namespace Blog\Entity;
+
 /**
  * @author Amélie-Dzovinar Haladjian
  */
@@ -95,3 +97,4 @@ class Comment
         $this->status = $status;
     }
 }
+

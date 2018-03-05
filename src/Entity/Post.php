@@ -1,5 +1,7 @@
 <?php
 
+namespace Blog\Entity;
+
 /**
  * @author Amélie-Dzovinar Haladjian
  */
@@ -19,6 +21,11 @@ class Post
      * @var int
      */
     private $id;
+
+    /**
+     * @var string
+     */
+    private $image_url;
 
     /**
      * @var string
@@ -65,6 +72,16 @@ class Post
         $this->id = $id;
     }
 
+    public function getImageUrl(): string
+    {
+        return $this->image_url;
+    }
+
+    public function setImageUrl(string $image_url)
+    {
+        $this->image_url = $image_url;
+    }
+
     public function getSubtitle(): string
     {
         return $this->subtitle;
@@ -85,7 +102,7 @@ class Post
         $this->title = $title;
     }
 
-    public function getUpdatedAt(): DateTime
+    public function getUpdatedAt(): \DateTime
     {
         return $this->updated_at;
     }
@@ -95,3 +112,4 @@ class Post
         $this->updated_at = $updated_at;
     }
 }
+
