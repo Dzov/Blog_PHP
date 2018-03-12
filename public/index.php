@@ -5,11 +5,17 @@ namespace Blog;
 use Blog\Controller\CommentController;
 use Blog\Controller\HomeController;
 use Blog\Controller\PostController;
+use Blog\Router\Router;
 
 require_once '../vendor/autoload.php';
 
-if (isset($_GET['action'])) {
-    switch ($_GET['action']) {
+$router = new Router();
+
+$router->load($_GET['url']);
+
+
+/*
+    switch ($_GET['url']) {
         case 'listPosts':
             PostController::listPostsAction();
             break;
@@ -23,9 +29,8 @@ if (isset($_GET['action'])) {
             break;
         case 'contact':
             break;
-    }
-} else {
-    HomeController::listRecentPostsAction();
-}
+        default :
+            HomeController::listRecentPostsAction();
+}*/
 
 
