@@ -47,7 +47,9 @@ abstract class PostManager extends DatabaseConnection
 
     public static function deletePost(int $id)
     {
-        //TODO
+        $query = 'DELETE * FROM post p WHERE p.post_id = :id';
+
+        return parent::executeQuery($query, [':id' => $id]);
     }
 
     public static function updatePost(int $id)

@@ -2,9 +2,10 @@
 
 namespace Blog\Router;
 
-use Blog\Controller\Controller;
+use Blog\Controller\ErrorController;
 use Blog\Controller\HomeController;
-use Blog\Controller\PostController;
+use Controller\Exceptions\ActionNotFoundException;
+use Controller\Exceptions\ControllerNotFoundException;
 
 /**
  * @author Amélie-Dzovinar Haladjian
@@ -13,53 +14,108 @@ class Router
 {
     private $routes =
         [
-            '/' => ['controller' => 'HomeController', 'action' => 'listRecentPostsAction'],
-            'listPosts' => ['controller' => 'PostController', 'action' => 'listPostsAction'],
-            'post/{id}' => ['controller' => 'PostController', 'action' => 'showPostAction', 'parameters' => ['id' => '\d']],
+            ''          => ['controller' => 'Home', 'action' => 'listRecentPosts'],
+            'listPosts' => ['controller' => 'Post', 'action' => 'listPosts'],
+            'post/{id}' => [
+                'controller' => 'Post',
+                'action'     => 'showPost',
+                'parameters' => ['id' => '[0-9]+']
+            ],
+            'about'     => ['controller' => 'About', 'action' => 'show'],
+            'contact'   => ['controller' => 'Contact', 'action' => 'show'],
+            'admin'     => ['controller' => 'Admin', 'action' => 'show'],
         ];
 
-    public function load(string $url = '')
+    /**
+     * @throws \Exception
+     */
+    public function get(string $requestUrl = '')
     {
-        $parameters = $this->parseUrl($url);
+        // ^$
+        // ^listPosts$
+        // ^post\/([0-9]+)$
+        // ^admin\/post\/([0-9]+)$
 
-        foreach ($this->routes as $name => $route) {
-            if ($url === $name) {
-                PostController::listPostsAction();
-                $route['controller'] . 'Controller::' . $route['action'] . 'Action()';
+        foreach ($this->routes as $uriPattern => $route) {
+
+            $parameters = $route['parameters'] ?? [];
+
+            if ($this->routeMatch($requestUrl, $uriPattern, $parameters)) {
+
+                $controllerClassName = $this->getControllerClassName($route);
+
+                $actionName = $this->getActionName($route);
+
+                $this->executeAction($controllerClassName, $actionName, $parameters);
             }
         }
 
-        if ($url === '' || $url === 'index.php') {
+        if ($requestUrl === '' || $requestUrl === 'index.php') {
             HomeController::listRecentPostsAction();
-        }
-
-        //var_dump(preg_match('/^\/post\/([a-zA-Z0-9]+)$/', $url, $parameters));
-        //var_dump($parameters);
-    }
-
-    public function parseUrl($url)
-    {
-        if (preg_match('/^[a-zA-Z]+\/([a-zA-Z0-9]+)$/', $url, $parameters)) {
-            return $parameters;
+        } else {
+            ErrorController::show();
         }
     }
 
-    /*
+    /**
+     * @throws ControllerNotFoundException
+     * @throws ActionNotFoundException
+     */
+    public function executeAction($controller, $action, $parameters = [])
+    {
+        if (!class_exists($controller)) {
+            throw new ControllerNotFoundException();
+        }
 
-    foreach ($routeur as $uriRouteur => $cmdsRouteur)
-    {
-    if (routeVerify($uriRequest, $uriRouteur))
-    {
-    echo 'Appelle du controller ' . $cmdsRouteur['controller'] . ' et de l\'action ' . $cmdsRouteur['action'];
+        if (!method_exists($controller, $action)) {
+            throw new ActionNotFoundException();
+        }
+
+        $controller::$action($parameters);
     }
+
+    private function getControllerClassName($route): string
+    {
+        $controller = $route['controller'];
+        $controller = 'Blog\\Controller\\' . $controller . 'Controller';
+
+        return $controller;
     }
 
-    function routeVerify($uriRequest, $uriRouter)
+    private function getActionName($route): string
     {
-        $parameters = [];
+        $action = $route['action'] . 'Action';
 
-        var_dump($parameters);
+        return $action;
+    }
 
-        return $uriRequest === $uriRouter;
-    }*/
+    private function routeMatch(string $requestUrl, string $uriPattern, array &$parameters = []): bool
+    {
+        $regex = $this->generateRegex($uriPattern, $parameters);
+
+        $matches = [];
+
+        $match = preg_match($regex, $requestUrl, $matches);
+
+        return $match;
+    }
+
+    private function generateRegex(string $uriPattern, array $parameters = []): string
+    {
+        $uriParts = explode('/', $uriPattern);
+
+        for ($i = 0; $i < count($uriParts); $i++) {
+            if (strlen($uriParts[$i]) === 0) {
+                continue;
+            }
+
+            if ($uriParts[$i][0] === '{' && $uriParts[$i][strlen($uriParts[$i]) - 1] === '}') {
+                $parameterName = substr($uriParts[$i], 1, -1);
+
+                $uriParts[$i] = '(' . $parameters[$parameterName] . ')';
+            }
+        }
+
+        return '/^' . implode('\/', $uriParts) . '$/';
+    }
 }
