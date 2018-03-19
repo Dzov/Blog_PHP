@@ -15,13 +15,14 @@ abstract class Controller
     {
         $loader = new Twig_Loader_Filesystem('../src/View');
         $twig = new Twig_Environment($loader);
+        $twig->addGlobal('session', $_SESSION);
 
         try {
             $twig->load($path);
 
             echo $twig->render($path, $parameters);
         } catch (Exception $e) {
-            var_dump($e->getMessage());
+            echo $e->getMessage();
         }
     }
 }

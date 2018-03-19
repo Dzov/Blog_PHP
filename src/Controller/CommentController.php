@@ -9,12 +9,14 @@ use Blog\Model\CommentManager;
  */
 class CommentController extends Controller
 {
-    public static function addCommentAction($post_id, $author, $content)
+    public static function addCommentAction(int $post_id, string $author, string $content)
     {
         $commentAdded = CommentManager::addComment($post_id, $author, $content);
 
-        if ($commentAdded) {
+        if ($commentAdded->rowCount() > 0) {
             header("Location: index.php?action=post&p=$post_id");
+        } else {
+            echo 'Oops, something went wrong';
         }
     }
 }

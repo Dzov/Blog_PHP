@@ -2,9 +2,12 @@
 
 namespace Blog;
 
+use Blog\Controller\AuthController;
 use Blog\Controller\CommentController;
 use Blog\Controller\HomeController;
 use Blog\Controller\PostController;
+
+session_start();
 
 require_once '../vendor/autoload.php';
 
@@ -22,6 +25,15 @@ if (isset($_GET['action'])) {
             CommentController::addCommentAction($_GET['p'], htmlspecialchars($_POST['author']), htmlspecialchars($_POST['content']));
             break;
         case 'contact':
+            break;
+        case 'loginPage':
+            AuthController::showLoginAction();
+            break;
+        case 'login':
+            AuthController::loginAction(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));
+            break;
+        case 'logout':
+            AuthController::logoutAction();
             break;
     }
 } else {

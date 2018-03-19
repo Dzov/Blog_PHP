@@ -24,6 +24,17 @@
         text-transform: uppercase;
       }
     }
+    > li.auth-info {
+      margin-left: 25px;
+      > .nav-username {
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 10px 20px;
+        color: $white;
+      }
+    }
   }
   @media only screen and (min-width: 992px) {
     border-bottom: 1px solid transparent;
