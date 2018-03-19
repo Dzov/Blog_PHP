@@ -47,17 +47,52 @@ abstract class PostManager extends DatabaseConnection
 
     public static function deletePost(int $id)
     {
-        //TODO
+        $query = 'DELETE FROM post p WHERE p.post_id = :id';
+
+        return parent::executeQuery($query, [':id' => $id]);
     }
 
-    public static function updatePost(int $id)
+    public static function updatePost(int $id, $author, $title, $subtitle, $content, $url)
     {
-        //TODO
+        $query = 'UPDATE post p 
+                  SET p.author = :author, 
+                    p.title = :title, 
+                    p.subtitle = :subtitle, 
+                    p.content = :content, 
+                    p.updated_at = :updatedAt, 
+                    p.image_url = :url 
+                  WHERE p.post_id = :id';
+
+        return parent::executeQuery(
+            $query,
+            [
+                ':author'    => $author,
+                ':title'     => $title,
+                ':subtitle'  => $subtitle,
+                ':content'   => $content,
+                ':updatedAt' => date("Y-m-d H:i:s"),
+                ':url'       => $url,
+                ':id'        => $id
+            ]
+        );
     }
 
-    public static function addPost()
+    public static function addPost($author, $title, $subtitle, $content, $url)
     {
-        //TODO
+        $query = 'INSERT INTO post p (p.author, p.title, p.subtitle, p.content, p.updated_at, p.image_url) 
+                  VALUES (:author, :title, :subtitle, :content, :updatedAt, :url)';
+
+        return parent::executeQuery(
+            $query,
+            [
+                ':author'    => $author,
+                ':title'     => $title,
+                ':subtitle'  => $subtitle,
+                ':content'   => $content,
+                ':updatedAt' => date("Y-m-d H:i:s"),
+                ':url'       => $url
+            ]
+        );
     }
 }
 
