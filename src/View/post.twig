@@ -28,9 +28,22 @@
     {% block comment %}
         {% include('comment-form.twig') %}
 
-        {% for comment in comments %}
-            {% include('comment.twig') %}
-        {% endfor %}
+        {% if comments %}
+            {% for comment in comments %}
+                {% include('comment.twig') %}
+            {% endfor %}
+        {% else %}
+            <article>
+                <div class="container">
+                    <div class="row">
+                        <div class="media mb-4">
+                            <p>There are no comments yet, add yours</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        {% endif %}
     {% endblock %}
 
 {% endblock body %}

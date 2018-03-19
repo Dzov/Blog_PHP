@@ -13,8 +13,7 @@ class CommentController extends Controller
     {
         $commentAdded = CommentManager::addComment($post_id, $author, $content);
 
-        if($commentAdded)
-        {
+        if ($commentAdded) {
             header("Location: index.php?action=post&p=$post_id");
         }
     }

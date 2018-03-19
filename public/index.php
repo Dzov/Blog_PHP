@@ -19,7 +19,7 @@ if (isset($_GET['action'])) {
             }
             break;
         case 'comment':
-            CommentController::addCommentAction($_GET['p'], 1, htmlspecialchars($_POST['content']));
+            CommentController::addCommentAction($_GET['p'], htmlspecialchars($_POST['author']), htmlspecialchars($_POST['content']));
             break;
         case 'contact':
             break;
