@@ -18,8 +18,7 @@ class AuthController extends Controller
     {
         $user = AuthManager::getUserInformation($username, $password);
 
-        if ($user && sha1($password) === $user['password'])
-        {
+        if ($user && sha1($password) === $user['password']) {
             $_SESSION['user'] = $user;
 
             header("Location: index.php");

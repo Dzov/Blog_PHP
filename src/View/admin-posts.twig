@@ -1,0 +1,11 @@
+{% extends('admin-layout.twig') %}
+
+{% block body %}
+
+    {% for post in posts %}
+        <ul>
+            <li>{{ post.title }}</li>
+        </ul>
+    {% endfor %}
+
+{% endblock %}

@@ -7,6 +7,13 @@ namespace Blog\Model;
  */
 abstract class CommentManager extends DatabaseConnection
 {
+    public static function findAllComments()
+    {
+        $query = 'SELECT * FROM comment';
+
+        return parent::executeQuery($query, [])->fetchAll();
+    }
+
     public static function addComment(int $post_id, string $author, string $content)
     {
         $query = 'INSERT INTO comment(post_id, author, content, posted_at, status) 

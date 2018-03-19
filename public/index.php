@@ -2,6 +2,7 @@
 
 namespace Blog;
 
+use Blog\Controller\AdminController;
 use Blog\Controller\AuthController;
 use Blog\Controller\CommentController;
 use Blog\Controller\HomeController;
@@ -34,6 +35,18 @@ if (isset($_GET['action'])) {
             break;
         case 'logout':
             AuthController::logoutAction();
+            break;
+        case 'admin':
+            AdminController::showAdminDashboardAction();
+            break;
+        case 'adminPosts':
+            AdminController::listAdminPostsActions();
+            break;
+        case 'adminComments':
+            AdminController::listAdminCommentsActions();
+            break;
+        case 'adminUsers':
+            AdminController::listAdminUsersActions();
             break;
     }
 } else {

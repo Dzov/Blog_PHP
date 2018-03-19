@@ -1,0 +1,11 @@
+{% extends('admin-layout.twig') %}
+
+{% block body %}
+
+    {% for comment in comments %}
+        <ul>
+            <li>{{ comment.content }}</li>
+        </ul>
+    {% endfor %}
+
+{% endblock %}
