@@ -5,7 +5,7 @@ namespace Blog\Entity;
 /**
  * @author Amélie-Dzovinar Haladjian
  */
-class User
+class User extends Entity
 {
     /**
      * @var string
@@ -41,6 +41,10 @@ class User
      * @var string
      */
     private $username;
+
+    public function __construct(array $data){
+        $this->hydrate($data);
+    }
 
     public function getEmail(): string
     {

@@ -5,7 +5,7 @@ namespace Blog\Entity;
 /**
  * @author Amélie-Dzovinar Haladjian
  */
-class Post
+class Post extends Entity
 {
     /**
      * @var User
@@ -42,12 +42,17 @@ class Post
      */
     private $updated_at;
 
+    public function __construct(array $data)
+    {
+        $this->hydrate($data);
+    }
+
     public function getAuthor(): User
     {
         return $this->author;
     }
 
-    public function setAuthor(User $author)
+    public function setAuthor($author)
     {
         $this->author = $author;
     }

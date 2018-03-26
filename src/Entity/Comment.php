@@ -5,7 +5,7 @@ namespace Blog\Entity;
 /**
  * @author Amélie-Dzovinar Haladjian
  */
-class Comment
+class Comment extends Entity
 {
     /**
      * @var User
@@ -37,12 +37,17 @@ class Comment
      */
     private $status;
 
+    public function __construct($data)
+    {
+        $this->hydrate($data);
+    }
+
     public function getAuthor(): User
     {
         return $this->author;
     }
 
-    public function setAuthor(User $author)
+    public function setAuthor($author)
     {
         $this->author = $author;
     }
@@ -77,7 +82,7 @@ class Comment
         $this->post = $post;
     }
 
-    public function getPostedAt(): DateTime
+    public function getPostedAt(): \DateTime
     {
         return $this->postedAt;
     }

@@ -2,6 +2,8 @@
 
 namespace Blog\Model;
 
+use Blog\Entity\Post;
+
 /**
  * @author Amélie-Dzovinar Haladjian
  */
@@ -13,7 +15,12 @@ abstract class PostManager extends DatabaseConnection
                     FROM post p
                     INNER JOIN user u ON p.author = u.user_id';
 
-        return parent::executeQuery($query)->fetchAll();
+        return array_map(
+            function ($item) {
+                return new Post($item);
+            },
+            parent::executeQuery($query)->fetchAll()
+        );
     }
 
     public static function findRecentPosts()
@@ -24,7 +31,12 @@ abstract class PostManager extends DatabaseConnection
                     ORDER BY updated_at desc 
                     LIMIT 3';
 
-        return parent::executeQuery($query)->fetchAll();
+        return array_map(
+            function ($item) {
+                return new Post($item);
+            },
+            parent::executeQuery($query)->fetchAll()
+        );
     }
 
     public static function findPost(int $id)
@@ -32,7 +44,7 @@ abstract class PostManager extends DatabaseConnection
         $query = 'SELECT * FROM post 
                     WHERE post_id = :id';
 
-        return parent::executeQuery($query, [':id' => $id])->fetch();
+        return new Post(parent::executeQuery($query, [':id' => $id])->fetch());
     }
 
     public static function findCommentsByPost(int $id)
@@ -41,23 +53,6 @@ abstract class PostManager extends DatabaseConnection
                     FROM comment c
                     INNER JOIN user u ON c.author = u.user_id
                     WHERE c.post_id = :id AND c.status = "PUBLISHED"';
-
-        return parent::executeQuery($query, [':id' => $id])->fetchAll();
-/*
-        $query = 'SELECT p.author, 
-                    p.title, 
-                    p.subtitle, 
-                    p.content, 
-                    p.updated_at, 
-                    p.image_url, 
-                    c.content, 
-                    c.posted_at, 
-                    c.status, 
-                    u.username
-                    FROM post p
-                    LEFT JOIN comment AS c ON c.post_id = :id
-                    INNER JOIN user AS u ON u.user_id = p.author
-                    WHERE p.post_id = :id AND c.status = "PUBLISHED"';*/
 
         return parent::executeQuery($query, [':id' => $id])->fetchAll();
     }
