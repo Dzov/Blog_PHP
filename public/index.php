@@ -7,9 +7,9 @@ use Blog\Controller\CommentController;
 use Blog\Controller\HomeController;
 use Blog\Controller\PostController;
 
-session_start();
-
 require_once '../vendor/autoload.php';
+
+session_start();
 
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {

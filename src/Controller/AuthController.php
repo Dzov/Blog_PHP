@@ -20,13 +20,13 @@ class AuthController extends Controller
 
         $user = AuthManager::getUserInformation($username, $encryptedPassword);
 
-        if (!$user)
+        if ($user)
         {
-            echo 'Wrong information';
-        } else {
             $_SESSION['user'] = $user;
 
             header("Location: index.php");
+        } else {
+            echo 'Wrong information';
         }
     }
 

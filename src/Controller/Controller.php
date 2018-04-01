@@ -18,7 +18,6 @@ abstract class Controller
 
         if (isset($_SESSION['user'])) {
             $twig->addGlobal('user', $_SESSION['user']);
-            $twig->addGlobal('user.username', $_SESSION['user']);
         }
 
         try {
