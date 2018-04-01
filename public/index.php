@@ -22,7 +22,7 @@ if (isset($_GET['action'])) {
             }
             break;
         case 'comment':
-            CommentController::addCommentAction($_GET['p'], htmlspecialchars($_POST['author']), htmlspecialchars($_POST['content']));
+            CommentController::addCommentAction($_GET['p'], $_POST['author'], $_POST['content']);
             break;
         case 'contact':
             break;
@@ -30,7 +30,7 @@ if (isset($_GET['action'])) {
             AuthController::showLoginAction();
             break;
         case 'login':
-            AuthController::loginAction(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));
+            AuthController::loginAction($_POST['username'], $_POST['password']);
             break;
         case 'logout':
             AuthController::logoutAction();

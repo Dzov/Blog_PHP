@@ -21,7 +21,6 @@ abstract class CommentManager extends DatabaseConnection
              ':status'    => 'PENDING'
             ]
         );
-
     }
 
     private static function getAuthor(string $author)

@@ -23,15 +23,15 @@
                         <a class="nav-link" href="index.php?action=contact">Contact</a>
                     </li>
 
-                    {% if session.user.role == 'ADMIN' %}
+                    {% if user.role == 'ADMIN' %}
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?action=admin">Admin</a>
                         </li>
                     {% endif %}
 
-                    {% if session.user %}
+                    {% if user is defined %}
                         <li class="nav-item auth-info flexColumn">
-                            <span class="nav-username">Welcome {{ session.user.username }} !</span>
+                            <span class="nav-username">Welcome {{ user.username }} !</span>
                         </li>
                         <li class="nav-item flexColumn">
                             <a class="nav-link" href="index.php?action=logout">Log out</a>

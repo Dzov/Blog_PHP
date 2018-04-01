@@ -37,6 +37,11 @@ class Comment extends Entity
      */
     private $status;
 
+    /**
+     * @var string
+     */
+    private $username;
+
     public function __construct($data)
     {
         $this->hydrate($data);
@@ -82,12 +87,12 @@ class Comment extends Entity
         $this->post = $post;
     }
 
-    public function getPostedAt(): \DateTime
+    public function getPosted_at()
     {
         return $this->postedAt;
     }
 
-    public function setPostedAt(\DateTime $postedAt)
+    public function setPosted_at($postedAt)
     {
         $this->postedAt = $postedAt;
     }
@@ -100,6 +105,16 @@ class Comment extends Entity
     public function setStatus(string $status)
     {
         $this->status = $status;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username)
+    {
+        $this->username = $username;
     }
 }
 

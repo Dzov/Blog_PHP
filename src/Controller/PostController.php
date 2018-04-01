@@ -16,7 +16,7 @@ class PostController extends Controller
         self::renderTemplate('posts.twig', ['posts' => $posts]);
     }
 
-    public static function showPostAction($id)
+    public static function showPostAction(int $id)
     {
         $post = PostManager::findPost($id);
 

@@ -2,6 +2,7 @@
 
 namespace Blog\Model;
 
+use Blog\Entity\Comment;
 use Blog\Entity\Post;
 
 /**
@@ -54,7 +55,12 @@ abstract class PostManager extends DatabaseConnection
                     INNER JOIN user u ON c.author = u.user_id
                     WHERE c.post_id = :id AND c.status = "PUBLISHED"';
 
-        return parent::executeQuery($query, [':id' => $id])->fetchAll();
+        return array_map(
+            function ($item) {
+                return new Comment($item);
+            },
+            parent::executeQuery($query, [':id' => $id])->fetchAll()
+        );
     }
 
     public static function deletePost(int $id)

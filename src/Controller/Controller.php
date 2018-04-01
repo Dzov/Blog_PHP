@@ -15,7 +15,11 @@ abstract class Controller
     {
         $loader = new Twig_Loader_Filesystem('../src/View');
         $twig = new Twig_Environment($loader);
-        $twig->addGlobal('user', $_SESSION['user']);
+
+        if (isset($_SESSION['user'])) {
+            $twig->addGlobal('user', $_SESSION['user']);
+            $twig->addGlobal('user.username', $_SESSION['user']);
+        }
 
         try {
             $twig->load($path);

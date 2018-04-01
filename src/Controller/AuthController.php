@@ -16,24 +16,23 @@ class AuthController extends Controller
 
     public static function loginAction($username, $password)
     {
-        $user = AuthManager::getUserInformation($username, $password);
+        $encryptedPassword = sha1($password);
 
-        if ($user && sha1($password) === $user['password'])
+        $user = AuthManager::getUserInformation($username, $encryptedPassword);
+
+        if (!$user)
         {
+            echo 'Wrong information';
+        } else {
             $_SESSION['user'] = $user;
 
             header("Location: index.php");
-
-        } else {
-            echo 'Wrong information';
         }
     }
 
     public static function logoutAction()
     {
-        session_unset();
-
-        session_destroy();
+        unset($_SESSION['user']);
 
         header('Location: index.php');
     }
