@@ -12,22 +12,27 @@ class Router
 {
     private $routes =
         [
-            ''              => ['controller' => 'Home', 'action' => 'listRecentPosts'],
-            'listPosts'     => ['controller' => 'Post', 'action' => 'listPosts'],
-            'post/{id}'     => [
+            ''                      => ['controller' => 'Home', 'action' => 'listRecentPosts'],
+            'listPosts'             => ['controller' => 'Post', 'action' => 'listPosts'],
+            'post/{id}'             => [
                 'controller' => 'Post',
                 'action'     => 'showPost',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            'about'         => ['controller' => 'About', 'action' => 'show'],
-            'contact'       => ['controller' => 'Contact', 'action' => 'show'],
-            'loginPage'     => ['controller' => 'Auth', 'action' => 'showLogin'],
-            'login'         => ['controller' => 'Auth', 'action' => 'login'],
-            'logout'        => ['controller' => 'Auth', 'action' => 'logout'],
-            'admin'         => ['controller' => 'Admin', 'action' => 'showAdminDashboard'],
-            'adminPosts'    => ['controller' => 'Admin', 'action' => 'listAdminPosts'],
-            'adminComments' => ['controller' => 'Admin', 'action' => 'listAdminComments'],
-            'adminUsers'    => ['controller' => 'Admin', 'action' => 'listAdminUsers'],
+            'about'                 => ['controller' => 'About', 'action' => 'show'],
+            'contact'               => ['controller' => 'Contact', 'action' => 'show'],
+            'loginPage'             => ['controller' => 'Auth', 'action' => 'showLogin'],
+            'login'                 => ['controller' => 'Auth', 'action' => 'login'],
+            'logout'                => ['controller' => 'Auth', 'action' => 'logout'],
+            'admin'                 => ['controller' => 'Admin', 'action' => 'showDashboard'],
+            'adminPosts'            => ['controller' => 'Admin', 'action' => 'listPosts'],
+            'adminComments'         => ['controller' => 'Admin', 'action' => 'listComments'],
+            'publishPendingComment/{id}' => [
+                'controller' => 'Admin',
+                'action'     => 'publishPendingComment',
+                'parameters' => ['id' => '[0-9]+']
+            ],
+            'adminUsers'            => ['controller' => 'Admin', 'action' => 'listUsers'],
         ];
 
     /**
@@ -104,7 +109,9 @@ class Router
     private function getParameters($parameterKeys, $parameters, $matches)
     {
         foreach ($parameterKeys as $key => $parameterKey) {
-            $parameters[$parameterKey] = $matches[$key + 1];
+            if ($matches) {
+                $parameters[$parameterKey] = $matches[$key + 1];
+            }
         }
 
         return $parameters;

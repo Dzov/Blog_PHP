@@ -14,7 +14,7 @@ class CommentController extends Controller
         $commentAdded = CommentManager::addComment($post_id, $author, $content);
 
         if ($commentAdded->rowCount() > 0) {
-            header("Location: index.php?action=post&p=$post_id");
+            header("Location: index.php/post/$post_id");
         } else {
             echo 'Oops, something went wrong';
         }
