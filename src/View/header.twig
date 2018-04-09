@@ -25,7 +25,7 @@
 
                     {% if session.user.role == 'ADMIN' %}
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?action=admin">Admin</a>
+                            <a class="nav-link" href="admin">Admin</a>
                         </li>
                     {% endif %}
 
@@ -34,11 +34,11 @@
                             <span class="nav-username">Welcome {{ session.user.username }} !</span>
                         </li>
                         <li class="nav-item flexColumn">
-                            <a class="nav-link" href="index.php?action=logout">Log out</a>
+                            <a class="nav-link" href="logout">Log out</a>
                         </li>
                     {% else %}
                         <li class="nav-item auth-info">
-                            <a class="nav-link" href="index.php?action=loginPage">Log in</a>
+                            <a class="nav-link" href="loginPage">Log in</a>
                         </li>
                     {% endif %}
 
