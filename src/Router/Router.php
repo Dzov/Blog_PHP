@@ -12,19 +12,22 @@ class Router
 {
     private $routes =
         [
-            ''          => ['controller' => 'Home', 'action' => 'listRecentPosts'],
-            'listPosts' => ['controller' => 'Post', 'action' => 'listPosts'],
-            'post/{id}' => [
+            ''              => ['controller' => 'Home', 'action' => 'listRecentPosts'],
+            'listPosts'     => ['controller' => 'Post', 'action' => 'listPosts'],
+            'post/{id}'     => [
                 'controller' => 'Post',
                 'action'     => 'showPost',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            'about'     => ['controller' => 'About', 'action' => 'show'],
-            'contact'   => ['controller' => 'Contact', 'action' => 'show'],
-            'admin'     => ['controller' => 'Admin', 'action' => 'show'],
-            'logout'    => ['controller' => 'Auth', 'action' => 'logout'],
-            'loginPage' => ['controller' => 'Auth', 'action' => 'showLogin'],
-            'login'     => ['controller' => 'Auth', 'action' => 'login'],
+            'about'         => ['controller' => 'About', 'action' => 'show'],
+            'contact'       => ['controller' => 'Contact', 'action' => 'show'],
+            'loginPage'     => ['controller' => 'Auth', 'action' => 'showLogin'],
+            'login'         => ['controller' => 'Auth', 'action' => 'login'],
+            'logout'        => ['controller' => 'Auth', 'action' => 'logout'],
+            'admin'         => ['controller' => 'Admin', 'action' => 'showAdminDashboard'],
+            'adminPosts'    => ['controller' => 'Admin', 'action' => 'listAdminPosts'],
+            'adminComments' => ['controller' => 'Admin', 'action' => 'listAdminComments'],
+            'adminUsers'    => ['controller' => 'Admin', 'action' => 'listAdminUsers'],
         ];
 
     /**

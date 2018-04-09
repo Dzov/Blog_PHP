@@ -13,14 +13,14 @@ class AdminController extends Controller
 {
     public static function showAdminDashboardAction()
     {
-        if ($_SESSION['user']['role'] !== 'ADMIN') {
+        /*if ($_SESSION['user']['role'] !== 'ADMIN') {
             header('Location: index.php');
-        } else {
+        } else {*/
             self::renderTemplate('admin-dashboard.twig', []);
-        }
+        //}
     }
 
-    public static function listAdminPostsActions()
+    public static function listAdminPostsAction()
     {
         $posts = PostManager::findAllPosts();
 
@@ -30,7 +30,7 @@ class AdminController extends Controller
         );
     }
 
-    public static function listAdminCommentsActions()
+    public static function listAdminCommentsAction()
     {
         $comments = CommentManager::findAllComments();
 
@@ -40,7 +40,7 @@ class AdminController extends Controller
         );
     }
 
-    public static function listAdminUsersActions()
+    public static function listAdminUsersAction()
     {
         $users = UserManager::findAllUsers();
 

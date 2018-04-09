@@ -1,11 +1,12 @@
-{% extends('admin-layout.twig') %}
+{% extends('base.twig') %}
 
 {% block body %}
 
-    {% for comment in comments %}
-        <ul>
-            <li>{{ comment.content }}</li>
-        </ul>
-    {% endfor %}
-
+    <section class="admin__section--comments">
+        {% for comment in comments %}
+            <ul>
+                <li>{{ comment.content }}</li>
+            </ul>
+        {% endfor %}
+    </section>
 {% endblock %}

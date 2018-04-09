@@ -1,12 +1,14 @@
-{% extends('admin-layout.twig') %}
+{% extends('base.twig') %}
+
+{% block title %}Admin{% endblock %}
 
 {% block body %}
     <section class="flexColumn">
         <div>
             <ul>
-                <li><a href="index.php?action=adminPosts">Posts</a></li>
-                <li><a href="index.php?action=adminComments">Comments</a></li>
-                <li><a href="index.php?action=adminUsers">Users</a></li>
+                <li><a href="adminPosts">Posts</a></li>
+                <li><a href="adminComments">Comments</a></li>
+                <li><a href="adminUsers">Users</a></li>
             </ul>
         </div>
     </section>

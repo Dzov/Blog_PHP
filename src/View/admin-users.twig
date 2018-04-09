@@ -1,11 +1,11 @@
-{% extends('admin-layout.twig') %}
+{% extends('base.twig') %}
 
 {% block body %}
-
-    {% for user in users %}
-        <ul>
-            <li>{{ user.username }}</li>
-        </ul>
-    {% endfor %}
-
+    <section class="admin__section--users">
+        {% for user in users %}
+            <ul>
+                <li>{{ user.username }}</li>
+            </ul>
+        {% endfor %}
+    </section>
 {% endblock %}
