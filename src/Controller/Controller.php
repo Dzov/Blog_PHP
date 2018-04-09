@@ -16,7 +16,10 @@ abstract class Controller
     {
         $loader = new Twig_Loader_Filesystem('../src/View');
         $twig = new Twig_Environment($loader);
-        $twig->addGlobal('session', $_SESSION);
+
+        if (isset($_SESSION['user'])) {
+            $twig->addGlobal('user', $_SESSION['user']);
+        }
 
         $asset = new Twig_Function(
             'asset',

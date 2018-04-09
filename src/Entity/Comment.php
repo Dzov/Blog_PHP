@@ -5,7 +5,7 @@ namespace Blog\Entity;
 /**
  * @author Amélie-Dzovinar Haladjian
  */
-class Comment
+class Comment extends Entity
 {
     /**
      * @var User
@@ -37,12 +37,22 @@ class Comment
      */
     private $status;
 
+    /**
+     * @var string
+     */
+    private $username;
+
+    public function __construct($data)
+    {
+        $this->hydrate($data);
+    }
+
     public function getAuthor(): User
     {
         return $this->author;
     }
 
-    public function setAuthor(User $author)
+    public function setAuthor($author)
     {
         $this->author = $author;
     }
@@ -77,12 +87,12 @@ class Comment
         $this->post = $post;
     }
 
-    public function getPostedAt(): DateTime
+    public function getPosted_at()
     {
         return $this->postedAt;
     }
 
-    public function setPostedAt(\DateTime $postedAt)
+    public function setPosted_at($postedAt)
     {
         $this->postedAt = $postedAt;
     }
@@ -95,6 +105,16 @@ class Comment
     public function setStatus(string $status)
     {
         $this->status = $status;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username)
+    {
+        $this->username = $username;
     }
 }
 

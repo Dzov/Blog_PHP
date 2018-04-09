@@ -5,7 +5,7 @@ namespace Blog\Entity;
 /**
  * @author Amélie-Dzovinar Haladjian
  */
-class User
+class User extends Entity
 {
     /**
      * @var string
@@ -42,6 +42,11 @@ class User
      */
     private $username;
 
+    public function __construct(array $data)
+    {
+        $this->hydrate($data);
+    }
+
     public function getEmail(): string
     {
         return $this->email;
@@ -52,32 +57,32 @@ class User
         $this->email = $email;
     }
 
-    public function getFirstName(): string
+    public function getFirst_name(): string
     {
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName)
+    public function setFirst_name(string $firstName)
     {
         $this->firstName = $firstName;
     }
 
-    public function getId(): int
+    public function getUser_id(): int
     {
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setUser_id(int $id)
     {
         $this->id = $id;
     }
 
-    public function getLastName(): string
+    public function getLast_name(): string
     {
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName)
+    public function setLast_name(string $lastName)
     {
         $this->lastName = $lastName;
     }

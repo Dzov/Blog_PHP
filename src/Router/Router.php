@@ -22,6 +22,9 @@ class Router
             'about'     => ['controller' => 'About', 'action' => 'show'],
             'contact'   => ['controller' => 'Contact', 'action' => 'show'],
             'admin'     => ['controller' => 'Admin', 'action' => 'show'],
+            'logout'    => ['controller' => 'Auth', 'action' => 'logout'],
+            'loginPage' => ['controller' => 'Auth', 'action' => 'showLogin'],
+            'login'     => ['controller' => 'Auth', 'action' => 'login'],
         ];
 
     /**
@@ -76,7 +79,11 @@ class Router
         return $action;
     }
 
-    private function routeMatch(string $requestUrl, string $uriPattern, array &$parameters = []): bool
+    private function routeMatch(
+        string $requestUrl,
+        string $uriPattern,
+        array &$parameters = []
+    ): bool
     {
         $parameterKeys = [];
 
@@ -100,7 +107,11 @@ class Router
         return $parameters;
     }
 
-    private function generateRegex(string $uriPattern, array $parameters = [], array &$parameterKeys = []): string
+    private function generateRegex(
+        string $uriPattern,
+        array $parameters = [],
+        array &$parameterKeys = []
+    ): string
     {
         $parameterKeys = [];
 

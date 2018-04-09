@@ -22,13 +22,12 @@ abstract class CommentManager extends DatabaseConnection
         return parent::executeQuery(
             $query,
             [':post_id'   => $post_id,
-             ':author'    => intval(self::getAuthor(str_replace(' ','',$author))),
+             ':author'    => intval(self::getAuthor($author)),
              ':content'   => $content,
              ':posted_at' => date('Y-m-d H:i:s'),
              ':status'    => 'PENDING'
             ]
         );
-
     }
 
     private static function getAuthor(string $author)

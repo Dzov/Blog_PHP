@@ -5,7 +5,7 @@ namespace Blog\Entity;
 /**
  * @author Amélie-Dzovinar Haladjian
  */
-class Post
+class Post extends Entity
 {
     /**
      * @var User
@@ -42,12 +42,22 @@ class Post
      */
     private $updated_at;
 
+    /**
+     * @var string
+     */
+    private $username;
+
+    public function __construct(array $data)
+    {
+        $this->hydrate($data);
+    }
+
     public function getAuthor(): User
     {
         return $this->author;
     }
 
-    public function setAuthor(User $author)
+    public function setAuthor($author)
     {
         $this->author = $author;
     }
@@ -62,12 +72,12 @@ class Post
         $this->content = $content;
     }
 
-    public function getId(): int
+    public function getPost_id(): int
     {
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setPost_id(int $id)
     {
         $this->id = $id;
     }
@@ -110,6 +120,16 @@ class Post
     public function setUpdatedAt(\DateTime $updated_at)
     {
         $this->updated_at = $updated_at;
+    }
+
+    public function getUsername()
+    {
+        return $this->username;
+    }
+    
+    public function setUsername(string $username)
+    {
+        $this->username = $username;
     }
 }
 
