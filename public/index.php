@@ -9,11 +9,11 @@ use Blog\Router\Router;
 
 require_once '../vendor/autoload.php';
 
-var_dump($_GET['id']);
-
 $router = new Router();
 
-$router->get($_GET['url']);
+$url = str_replace($_SERVER['BASE'] . '/', '', $_SERVER['REQUEST_URI']);
+
+$router->get($url);
 
 
 /*

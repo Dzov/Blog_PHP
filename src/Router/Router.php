@@ -2,10 +2,8 @@
 
 namespace Blog\Router;
 
-use Blog\Controller\ErrorController;
-use Blog\Controller\HomeController;
+use Blog\Controller\Exceptions\ControllerNotFoundException;
 use Controller\Exceptions\ActionNotFoundException;
-use Controller\Exceptions\ControllerNotFoundException;
 
 /**
  * @author Amélie-Dzovinar Haladjian
@@ -31,11 +29,6 @@ class Router
      */
     public function get(string $requestUrl = '')
     {
-        // ^$
-        // ^listPosts$
-        // ^post\/([0-9]+)$
-        // ^admin\/post\/([0-9]+)$
-
         foreach ($this->routes as $uriPattern => $route) {
 
             $parameters = $route['parameters'] ?? [];
@@ -48,12 +41,6 @@ class Router
 
                 $this->executeAction($controllerClassName, $actionName, $parameters);
             }
-        }
-
-        if ($requestUrl === '' || $requestUrl === 'index.php') {
-            HomeController::listRecentPostsAction();
-        } else {
-            ErrorController::show();
         }
     }
 
@@ -91,17 +78,32 @@ class Router
 
     private function routeMatch(string $requestUrl, string $uriPattern, array &$parameters = []): bool
     {
-        $regex = $this->generateRegex($uriPattern, $parameters);
+        $parameterKeys = [];
+
+        $regex = $this->generateRegex($uriPattern, $parameters, $parameterKeys);
 
         $matches = [];
 
         $match = preg_match($regex, $requestUrl, $matches);
 
+        $parameters = $this->getParameters($parameterKeys, $parameters, $matches);
+
         return $match;
     }
 
-    private function generateRegex(string $uriPattern, array $parameters = []): string
+    private function getParameters($parameterKeys, $parameters, $matches)
     {
+        foreach ($parameterKeys as $key => $parameterKey) {
+            $parameters[$parameterKey] = $matches[$key + 1];
+        }
+
+        return $parameters;
+    }
+
+    private function generateRegex(string $uriPattern, array $parameters = [], array &$parameterKeys = []): string
+    {
+        $parameterKeys = [];
+
         $uriParts = explode('/', $uriPattern);
 
         for ($i = 0; $i < count($uriParts); $i++) {
@@ -113,6 +115,8 @@ class Router
                 $parameterName = substr($uriParts[$i], 1, -1);
 
                 $uriParts[$i] = '(' . $parameters[$parameterName] . ')';
+
+                $parameterKeys[] = $parameterName;
             }
         }
 
