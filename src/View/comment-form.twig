@@ -3,6 +3,7 @@
     <div class="card-body">
         <form action="index.php?action=comment&p={{ post.post_id }}" method="post">
             <div class="form-group">
+                <input class="form-control" name="author">
                 <textarea class="form-control" rows="3" name="content"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
