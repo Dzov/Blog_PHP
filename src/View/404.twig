@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{% block title %}Clean Blog - Start Bootstrap Theme{% endblock %}</title>
+    <title>Clean Blog - Start Bootstrap Theme</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -20,17 +20,19 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/clean-blog.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/flex.css') }}" rel="stylesheet">
 
 </head>
 
 <body>
 
-{% block header %} {% include('header.twig') %} {% endblock %}
-
-{% block body %} {% endblock %}
-
-{% block footer %} {% include('footer.twig') %} {% endblock %}
+<div class="row">
+    <div class="col-lg-5 col-md-10 mx-auto">
+        <div class="site-heading">
+            <h1>ERREUR 404</h1>
+            <span class="subheading">I'm sorry, the page you are looking for doesn't exist</span>
+        </div>
+    </div>
+</div>
 
 <!-- Bootstrap core JavaScript -->
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
