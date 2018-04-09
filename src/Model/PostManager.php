@@ -43,23 +43,6 @@ abstract class PostManager extends DatabaseConnection
                     WHERE c.post_id = :id AND c.status = "PUBLISHED"';
 
         return parent::executeQuery($query, [':id' => $id])->fetchAll();
-/*
-        $query = 'SELECT p.author, 
-                    p.title, 
-                    p.subtitle, 
-                    p.content, 
-                    p.updated_at, 
-                    p.image_url, 
-                    c.content, 
-                    c.posted_at, 
-                    c.status, 
-                    u.username
-                    FROM post p
-                    LEFT JOIN comment AS c ON c.post_id = :id
-                    INNER JOIN user AS u ON u.user_id = p.author
-                    WHERE p.post_id = :id AND c.status = "PUBLISHED"';*/
-
-        return parent::executeQuery($query, [':id' => $id])->fetchAll();
     }
 
     public static function deletePost(int $id)
