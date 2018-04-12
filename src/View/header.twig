@@ -23,13 +23,13 @@
                         <a class="nav-link" href="contact">Contact</a>
                     </li>
 
-                    {% if user.role == 'ADMIN' %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin">Admin</a>
-                        </li>
-                    {% endif %}
-
                     {% if user is defined %}
+                        {% if user.role == 'ADMIN' %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="admin">Admin</a>
+                            </li>
+                        {% endif %}
+
                         <li class="nav-item auth-info flexColumn">
                             <span class="nav-username">Welcome {{ user.username }} !</span>
                         </li>

@@ -7,6 +7,11 @@ namespace Blog\Entity;
  */
 abstract class Entity
 {
+    public function __construct($data)
+    {
+        $this->hydrate($data);
+    }
+
     protected function hydrate(array $data)
     {
         foreach ($data as $key => $value) {
