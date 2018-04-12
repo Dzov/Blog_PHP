@@ -13,11 +13,11 @@ class AdminController extends Controller
 {
     public static function showAdminDashboardAction()
     {
-        /*if ($_SESSION['user']['role'] !== 'ADMIN') {
+        if ($_SESSION['user']['role'] !== 'ADMIN') {
             header('Location: index.php');
-        } else {*/
+        } else {
             self::renderTemplate('admin-dashboard.twig', []);
-        //}
+        }
     }
 
     public static function listAdminPostsAction()
