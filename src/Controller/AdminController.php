@@ -16,7 +16,7 @@ class AdminController extends Controller
         if ($_SESSION['user']['role'] !== 'ADMIN') {
             header('Location: index.php');
         } else {
-        self::renderTemplate('admin-dashboard.twig', []);
+            self::renderTemplate('admin-dashboard.twig', []);
         }
     }
 
@@ -50,19 +50,25 @@ class AdminController extends Controller
         );
     }
 
-    public static function publishPendingCommentAction(array $parameters)
+    public static function publishAction(array $parameters)
     {
         $id = $parameters['id'];
 
-        $publishedComment = CommentManager::publishComment($id);
+        CommentManager::publishComment($id);
 
         $redirectUrl = $_SERVER['BASE'] . '/adminComments';
 
-        if ($publishedComment->rowCount() > 0) {
-            header("Location: $redirectUrl");
-            echo "Le commentaire a bien été publié";
-        } else {
-            echo 'Oops, something went wrong';
-        }
+        header("Location: $redirectUrl");
+    }
+
+    public static function deleteAction(array $parameters)
+    {
+        $id = $parameters['id'];
+
+        CommentManager::delete($id);
+
+        $redirectUrl = $_SERVER['BASE'] . '/adminComments';
+
+        header("Location: $redirectUrl");
     }
 }
