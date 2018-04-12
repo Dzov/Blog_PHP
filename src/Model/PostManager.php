@@ -2,6 +2,9 @@
 
 namespace Blog\Model;
 
+use Blog\Entity\Comment;
+use Blog\Entity\Post;
+
 /**
  * @author Amélie-Dzovinar Haladjian
  */
@@ -13,7 +16,12 @@ abstract class PostManager extends DatabaseConnection
                     FROM post p
                     INNER JOIN user u ON p.author = u.user_id';
 
-        return parent::executeQuery($query)->fetchAll();
+        return array_map(
+            function ($item) {
+                return new Post($item);
+            },
+            parent::executeQuery($query)->fetchAll()
+        );
     }
 
     public static function findRecentPosts()
@@ -24,7 +32,12 @@ abstract class PostManager extends DatabaseConnection
                     ORDER BY updated_at desc 
                     LIMIT 3';
 
-        return parent::executeQuery($query)->fetchAll();
+        return array_map(
+            function ($item) {
+                return new Post($item);
+            },
+            parent::executeQuery($query)->fetchAll()
+        );
     }
 
     public static function findPost(int $id)
@@ -32,7 +45,7 @@ abstract class PostManager extends DatabaseConnection
         $query = 'SELECT * FROM post 
                     WHERE post_id = :id';
 
-        return parent::executeQuery($query, [':id' => $id])->fetch();
+        return new Post(parent::executeQuery($query, [':id' => $id])->fetch());
     }
 
     public static function findCommentsByPost(int $id)
@@ -42,7 +55,12 @@ abstract class PostManager extends DatabaseConnection
                     INNER JOIN user u ON c.author = u.user_id
                     WHERE c.post_id = :id AND c.status = "PUBLISHED"';
 
-        return parent::executeQuery($query, [':id' => $id])->fetchAll();
+        return array_map(
+            function ($item) {
+                return new Comment($item);
+            },
+            parent::executeQuery($query, [':id' => $id])->fetchAll()
+        );
     }
 
     public static function deletePost(int $id)

@@ -17,6 +17,10 @@ abstract class Controller
         $loader = new Twig_Loader_Filesystem('../src/View');
         $twig = new Twig_Environment($loader);
 
+        if (isset($_SESSION['user'])) {
+            $twig->addGlobal('user', $_SESSION['user']);
+        }
+
         $asset = new Twig_Function(
             'asset',
             function ($url) {
@@ -31,7 +35,7 @@ abstract class Controller
 
             echo $twig->render($path, $parameters);
         } catch (Exception $e) {
-            var_dump($e->getMessage());
+            echo $e->getMessage();
         }
     }
 }

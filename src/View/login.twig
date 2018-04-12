@@ -1,0 +1,25 @@
+{% extends('base.twig') %}
+
+{% block header %} {% endblock %}
+
+{% block body %}
+
+    <div class="card my-4 commentForm loginForm">
+        <h5 class="card-header">Login</h5>
+        <div class="card-body">
+            <form action="login" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input class="form-control" name="username">
+                    <label for="password">Password</label>
+                    <input class="form-control" type="password" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block footer %} {% endblock %}

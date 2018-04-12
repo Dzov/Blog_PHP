@@ -2,12 +2,11 @@
 
 namespace Blog;
 
-use Blog\Controller\CommentController;
-use Blog\Controller\HomeController;
-use Blog\Controller\PostController;
 use Blog\Router\Router;
 
 require_once '../vendor/autoload.php';
+
+session_start();
 
 $router = new Router();
 
