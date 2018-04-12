@@ -28,7 +28,7 @@ abstract class DatabaseConnection
             }
 
             return self::$db;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             die('Erreur : ' . $e->getMessage());
         }
     }
