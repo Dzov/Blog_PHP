@@ -42,11 +42,6 @@ class Comment extends Entity
      */
     private $username;
 
-    public function __construct($data)
-    {
-        $this->hydrate($data);
-    }
-
     public function getAuthor(): User
     {
         return $this->author;
