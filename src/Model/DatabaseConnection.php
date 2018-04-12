@@ -5,6 +5,7 @@ namespace Blog\Model;
 use Blog\Config\Parameters;
 use http\Exception;
 use PDO;
+use PDOException;
 
 /**
  * @author Amélie-Dzovinar Haladjian
@@ -22,10 +23,12 @@ abstract class DatabaseConnection
                     Parameters::$user,
                     Parameters::$password
                 );
+
+                self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }
 
             return self::$db;
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
             die('Erreur : ' . $e->getMessage());
         }
     }
