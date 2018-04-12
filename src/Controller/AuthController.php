@@ -20,14 +20,9 @@ class AuthController extends Controller
 
         $user = AuthManager::getUserInformation($username, $encryptedPassword);
 
-        if ($user)
-        {
-            $_SESSION['user'] = $user;
+        $_SESSION['user'] = $user;
 
-            header("Location: index.php");
-        } else {
-            echo 'Wrong information';
-        }
+        header("Location: index.php");
     }
 
     public static function logoutAction()
