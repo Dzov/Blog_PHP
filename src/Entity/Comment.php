@@ -82,12 +82,12 @@ class Comment extends Entity
         $this->post = $post;
     }
 
-    public function getPosted_at(): \DateTime
+    public function getPosted_at()
     {
         return $this->postedAt;
     }
 
-    public function setPosted_at(\DateTime $postedAt): void
+    public function setPosted_at($postedAt): void
     {
         $this->postedAt = $postedAt;
     }
