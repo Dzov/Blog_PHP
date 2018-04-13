@@ -52,7 +52,7 @@ class Post extends Entity
         return $this->author;
     }
 
-    public function setAuthor($author)
+    public function setAuthor($author): void
     {
         $this->author = $author;
     }
@@ -62,7 +62,7 @@ class Post extends Entity
         return $this->content;
     }
 
-    public function setContent(string $content)
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }
@@ -72,7 +72,7 @@ class Post extends Entity
         return $this->id;
     }
 
-    public function setPost_id(int $id)
+    public function setPost_id(int $id): void
     {
         $this->id = $id;
     }
@@ -82,7 +82,7 @@ class Post extends Entity
         return $this->image_url;
     }
 
-    public function setImageUrl(string $image_url)
+    public function setImageUrl(string $image_url): void
     {
         $this->image_url = $image_url;
     }
@@ -92,7 +92,7 @@ class Post extends Entity
         return $this->subtitle;
     }
 
-    public function setSubtitle(string $subtitle)
+    public function setSubtitle(string $subtitle): void
     {
         $this->subtitle = $subtitle;
     }
@@ -102,7 +102,7 @@ class Post extends Entity
         return $this->title;
     }
 
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
@@ -112,17 +112,17 @@ class Post extends Entity
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTime $updated_at)
+    public function setUpdatedAt(\DateTime $updated_at): void
     {
         $this->updated_at = $updated_at;
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
     
-    public function setUsername(string $username)
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }

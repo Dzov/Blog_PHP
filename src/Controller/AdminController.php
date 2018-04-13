@@ -11,16 +11,12 @@ use Blog\Model\UserManager;
  */
 class AdminController extends Controller
 {
-    public static function showDashboardAction()
+    public static function showDashboardAction(): void
     {
-        if ($_SESSION['user']['role'] !== 'ADMIN') {
-            header('Location: index.php');
-        } else {
-            self::renderTemplate('admin-dashboard.twig', []);
-        }
+        self::renderTemplate('admin-dashboard.twig', []);
     }
 
-    public static function listPostsAction()
+    public static function listPostsAction(): void
     {
         $posts = PostManager::findAllPosts();
 
@@ -30,7 +26,7 @@ class AdminController extends Controller
         );
     }
 
-    public static function listCommentsAction()
+    public static function listCommentsAction(): void
     {
         $comments = CommentManager::findAllComments();
 
@@ -40,7 +36,7 @@ class AdminController extends Controller
         );
     }
 
-    public static function listUsersAction()
+    public static function listUsersAction(): void
     {
         $users = UserManager::findAllUsers();
 
@@ -50,7 +46,7 @@ class AdminController extends Controller
         );
     }
 
-    public static function publishAction(array $parameters)
+    public static function publishAction(array $parameters): void
     {
         $id = $parameters['id'];
 
@@ -61,7 +57,7 @@ class AdminController extends Controller
         header("Location: $redirectUrl");
     }
 
-    public static function deleteAction(array $parameters)
+    public static function deleteAction(array $parameters): void
     {
         $id = $parameters['id'];
 

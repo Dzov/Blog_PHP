@@ -9,7 +9,7 @@ use Blog\Model\CommentManager;
  */
 class CommentController extends Controller
 {
-    public static function addCommentAction(int $post_id, string $author, string $content)
+    public static function addCommentAction(int $post_id, string $author, string $content): void
     {
         CommentManager::addComment($post_id, $author, $content);
 

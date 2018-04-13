@@ -47,7 +47,7 @@ class Comment extends Entity
         return $this->author;
     }
 
-    public function setAuthor($author)
+    public function setAuthor(User $author): void
     {
         $this->author = $author;
     }
@@ -57,7 +57,7 @@ class Comment extends Entity
         return $this->content;
     }
 
-    public function setContent(string $content)
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }
@@ -67,7 +67,7 @@ class Comment extends Entity
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -77,17 +77,17 @@ class Comment extends Entity
         return $this->post;
     }
 
-    public function setPost(Post $post)
+    public function setPost(Post $post): void
     {
         $this->post = $post;
     }
 
-    public function getPosted_at()
+    public function getPosted_at(): \DateTime
     {
         return $this->postedAt;
     }
 
-    public function setPosted_at($postedAt)
+    public function setPosted_at(\DateTime $postedAt): void
     {
         $this->postedAt = $postedAt;
     }
@@ -97,7 +97,7 @@ class Comment extends Entity
         return $this->status;
     }
 
-    public function setStatus(string $status)
+    public function setStatus(string $status): void
     {
         $this->status = $status;
     }
@@ -107,7 +107,7 @@ class Comment extends Entity
         return $this->username;
     }
 
-    public function setUsername(string $username)
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }

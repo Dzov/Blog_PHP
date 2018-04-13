@@ -7,7 +7,7 @@ namespace Blog\Controller;
  */
 class ErrorController extends Controller
 {
-    public static function show()
+    public static function show(): void
     {
         self::renderTemplate('404.twig');
     }

@@ -9,12 +9,12 @@ use Blog\Model\AuthManager;
  */
 class AuthController extends Controller
 {
-    public static function showLoginAction()
+    public static function showLoginAction(): void
     {
         self::renderTemplate('login.twig', []);
     }
 
-    public static function loginAction($username, $password)
+    public static function loginAction(string $username, string $password): void
     {
         $encryptedPassword = sha1($password);
 
@@ -25,7 +25,7 @@ class AuthController extends Controller
         header("Location: index.php");
     }
 
-    public static function logoutAction()
+    public static function logoutAction(): void
     {
         unset($_SESSION['user']);
 

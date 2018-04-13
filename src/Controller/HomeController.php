@@ -9,7 +9,7 @@ use Blog\Model\PostManager;
  */
 class HomeController extends Controller
 {
-    public static function listRecentPostsAction()
+    public static function listRecentPostsAction(): void
     {
         $posts = PostManager::findRecentPosts();
 

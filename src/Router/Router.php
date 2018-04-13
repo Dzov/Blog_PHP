@@ -40,10 +40,7 @@ class Router
             'adminUsers'    => ['controller' => 'Admin', 'action' => 'listUsers'],
         ];
 
-    /**
-     * @throws \Exception
-     */
-    public function get(string $requestUrl = '')
+    public function getMatchingRoute(string $requestUrl = '')
     {
         foreach ($this->routes as $uriPattern => $route) {
 
@@ -55,26 +52,9 @@ class Router
 
                 $actionName = $this->getActionName($route);
 
-                $this->executeAction($controllerClassName, $actionName, $parameters);
+                return ['controller' => $controllerClassName, 'action' => $actionName, 'parameters' => $parameters];
             }
         }
-    }
-
-    /**
-     * @throws ControllerNotFoundException
-     * @throws ActionNotFoundException
-     */
-    public function executeAction(string $controller, $action, $parameters = [])
-    {
-        if (!class_exists($controller)) {
-            throw new ControllerNotFoundException();
-        }
-
-        if (!method_exists($controller, $action)) {
-            throw new ActionNotFoundException();
-        }
-
-        $controller::$action($parameters);
     }
 
     private function getControllerClassName($route): string
