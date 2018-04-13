@@ -17,7 +17,7 @@ class Kernel
     private $router;
 
     /**
-     * @var array
+     * @var array|null
      */
     private $route;
 
@@ -32,20 +32,18 @@ class Kernel
     private $action;
 
     /**
-     * @var array
+     * @var array|null
      */
     private $parameters;
 
     public function __construct()
     {
         $this->router = new Router();
-        $url = str_replace($_SERVER['BASE'] . '/', '', $_SERVER['REQUEST_URI']);
-        $this->setMatchingRoute($this->getMatchingRoute($url));
-        $this->setRoutingElements($this->getRoute());
+        $this->prepare();
         $this->execute($this->getController(), $this->getAction(), $this->getParameters());
     }
 
-    public function setMatchingRoute(array $route): void
+    public function setRoute(array $route = []): void
     {
         $this->route = $route;
     }
@@ -60,7 +58,7 @@ class Kernel
         $this->action = $action;
     }
 
-    public function setParameters(array $parameters): void
+    public function setParameters(array $parameters = []): void
     {
         $this->parameters = $parameters;
     }
@@ -70,7 +68,7 @@ class Kernel
         return $this->router;
     }
 
-    public function getRoute(): array
+    public function getRoute(): ?array
     {
         return $this->route;
     }
@@ -85,17 +83,17 @@ class Kernel
         return $this->action;
     }
 
-    public function getParameters(): array
+    public function getParameters(): ?array
     {
         return $this->parameters;
     }
 
-    public function getMatchingRoute(string $url): array
+    public function getMatchingRoute(string $url): ?array
     {
         return $this->getRouter()->getMatchingRoute($url);
     }
 
-    public function setRoutingElements(array $matchingRoute): void
+    public function setRoutingElements(array $matchingRoute = []): void
     {
         $this->setController($matchingRoute['controller']);
         $this->setAction($matchingRoute['action']);
@@ -107,10 +105,9 @@ class Kernel
      * @throws ActionNotFoundException
      * @throws ControllerNotFoundException
      */
-    public function execute(string $controller, string $action, array $parameters): void
+    public function execute(string $controller, string $action, array $parameters = []): void
     {
-        if (!class_exists($controller))
-        {
+        if (!class_exists($controller)) {
             throw new ControllerNotFoundException();
         }
 
@@ -123,5 +120,12 @@ class Kernel
         }
 
         $controller::$action($parameters);
+    }
+
+    private function prepare(): void
+    {
+        $url = str_replace($_SERVER['BASE'] . '/', '', $_SERVER['REQUEST_URI']);
+        $this->setRoute($this->getMatchingRoute($url));
+        $this->setRoutingElements($this->getRoute());
     }
 }

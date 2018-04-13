@@ -4,6 +4,7 @@ namespace Blog;
 
 use Blog\Controller\Exceptions\ControllerNotFoundException;
 use Blog\Controller\Exceptions\ActionNotFoundException;
+use Blog\Controller\Exceptions\RouteNotFoundException;
 use Blog\Router\Kernel;
 use Blog\Controller\Exceptions\AccessDeniedException;
 
@@ -19,6 +20,8 @@ try {
     echo $anfe->getMessage();
 } catch (AccessDeniedException $ade) {
     echo $ade->getMessage();
+} catch (RouteNotFoundException $rnfe) {
+    echo $rnfe->getMessage();
 }
 
 
