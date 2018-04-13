@@ -5,6 +5,7 @@ namespace Blog\Router;
 use Blog\Controller\Exceptions\AccessDeniedException;
 use Blog\Controller\Exceptions\ActionNotFoundException;
 use Blog\Controller\Exceptions\ControllerNotFoundException;
+use Blog\Entity\User;
 
 /**
  * @author Amélie-Dzovinar Haladjian
@@ -35,6 +36,11 @@ class Kernel
      * @var array|null
      */
     private $parameters;
+
+    /**
+     * @var User|null
+     */
+    private $currentUser;
 
     public function __construct()
     {
@@ -88,6 +94,9 @@ class Kernel
         return $this->parameters;
     }
 
+    /**
+     * @throws \Blog\Controller\Exceptions\RouteNotFoundException
+     */
     public function getMatchingRoute(string $url): ?array
     {
         return $this->getRouter()->getMatchingRoute($url);
@@ -115,17 +124,39 @@ class Kernel
             throw new ActionNotFoundException();
         }
 
-        if (strpos($controller, 'Admin') && $_SESSION['user']['role'] !== 'ADMIN') {
+        if (strpos($controller, 'Admin') && $this->getUserRole() !== 'ADMIN') {
             throw new AccessDeniedException('Vous n\'avez pas les droits');
         }
 
         $controller::$action($parameters);
     }
 
+    /**
+     * @throws \Blog\Controller\Exceptions\RouteNotFoundException
+     */
     private function prepare(): void
     {
         $url = str_replace($_SERVER['BASE'] . '/', '', $_SERVER['REQUEST_URI']);
         $this->setRoute($this->getMatchingRoute($url));
         $this->setRoutingElements($this->getRoute());
+        $this->setCurrentUser();
+    }
+
+    public function getCurrentUser(): ?User
+    {
+        return $this->currentUser;
+    }
+
+    public function getUserRole(): ?string
+    {
+        return $this->currentUser->getRole();
+    }
+
+    public function setCurrentUser(): void
+    {
+        if (isset($_SESSION['user']))
+        {
+            $this->currentUser = $_SESSION['user'];
+        }
     }
 }

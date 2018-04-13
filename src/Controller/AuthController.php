@@ -14,8 +14,11 @@ class AuthController extends Controller
         self::renderTemplate('login.twig', []);
     }
 
-    public static function loginAction(string $username, string $password): void
+    public static function loginAction(): void
     {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
         $encryptedPassword = sha1($password);
 
         $user = AuthManager::getUserInformation($username, $encryptedPassword);
