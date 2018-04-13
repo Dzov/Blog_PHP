@@ -26,7 +26,7 @@ abstract class CommentManager extends DatabaseConnection
                 ':post_id'   => $post_id,
                 ':author'    => intval(self::getAuthor($author)),
                 ':content'   => $content,
-                ':posted_at' => new \DateTime(date('Y-m-d H:i:s')),
+                ':posted_at' => date('Y-m-d H:i:s'),
                 ':status'    => 'PENDING'
             ]
         );
