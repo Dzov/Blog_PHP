@@ -15,9 +15,6 @@ class AuthController extends Controller
         self::renderTemplate('login.twig', []);
     }
 
-    /**
-     * @throws UserNotFoundException
-     */
     public static function loginAction(): void
     {
         $username = $_POST['username'];
@@ -30,9 +27,8 @@ class AuthController extends Controller
 
             $_SESSION['userId'] = $user->getUser_id();
 
-            header("Location: index.php");
-        } catch (UserNotFoundException $unfe)
-        {
+            self::redirect('index.php');
+        } catch (UserNotFoundException $unfe) {
             self::renderTemplate('login.twig', ['error' => 'Ces identifiants sont erronés']);
         }
     }
@@ -41,6 +37,6 @@ class AuthController extends Controller
     {
         unset($_SESSION['userId']);
 
-        header('Location: index.php');
+        self::redirect('index.php');
     }
 }

@@ -17,9 +17,7 @@ class CommentController extends Controller
 
         CommentManager::addComment($postId, $author, $content);
 
-        $redirectUrl = $_SERVER['BASE'] . '/post/' . $postId;
-
-        header("Location: $redirectUrl");
+        self::redirect('/post/' . $postId);
     }
 }
 

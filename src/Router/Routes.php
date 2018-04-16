@@ -16,7 +16,7 @@ class Routes
                 'action'     => 'showPost',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            'addComment/{postId}' => [
+            'post/addComment/{postId}' => [
                 'controller' => 'Comment',
                 'action'     => 'addComment',
                 'parameters' => ['postId' => '[0-9]+']
@@ -31,15 +31,16 @@ class Routes
             'adminComments'       => ['controller' => 'Admin', 'action' => 'listComments'],
             'publish/{id}'        => [
                 'controller' => 'Admin',
-                'action'     => 'publish',
+                'action'     => 'publishComment',
                 'parameters' => ['id' => '[0-9]+']
             ],
             'delete/{id}'         => [
                 'controller' => 'Admin',
-                'action'     => 'delete',
+                'action'     => 'deleteComment',
                 'parameters' => ['id' => '[0-9]+']
             ],
             'adminUsers'          => ['controller' => 'Admin', 'action' => 'listUsers'],
+            '404'                 => ['controller' => 'Error', 'action' => 'show']
         ];
 
     public function getRoutes(): array

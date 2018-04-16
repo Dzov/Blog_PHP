@@ -46,25 +46,21 @@ class AdminController extends Controller
         );
     }
 
-    public static function publishAction(array $parameters): void
+    public static function publishCommentAction(array $parameters): void
     {
         $id = $parameters['id'];
 
         CommentManager::publishComment($id);
 
-        $redirectUrl = $_SERVER['BASE'] . '/adminComments';
-
-        header("Location: $redirectUrl");
+        self::redirect('adminComments');
     }
 
-    public static function deleteAction(array $parameters): void
+    public static function deleteCommentAction(array $parameters): void
     {
         $id = $parameters['id'];
 
         CommentManager::delete($id);
 
-        $redirectUrl = $_SERVER['BASE'] . '/adminComments';
-
-        header("Location: $redirectUrl");
+        self::redirect('adminComments');
     }
 }

@@ -20,7 +20,7 @@ try {
 } catch (AccessDeniedException $ade) {
     echo $ade->getMessage();
 } catch (RouteNotFoundException $rnfe) {
-    echo $rnfe->getMessage();
+    header('Location: 404');
 }
 
 
