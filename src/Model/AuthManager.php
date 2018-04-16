@@ -2,6 +2,7 @@
 
 namespace Blog\Model;
 
+use Blog\Controller\Exceptions\UserNotFoundException;
 use Blog\Entity\User;
 
 /**
@@ -9,13 +10,20 @@ use Blog\Entity\User;
  */
 class AuthManager extends DatabaseConnection
 {
-    public static function getUserInformation($username, $password)
+    /**
+     * @throws UserNotFoundException
+     */
+    public static function getUserIdentification(string $username, string $password): ?User
     {
-        $query = 'SELECT u.first_name, u.last_name, u.username, u.email, u.user_id, u.role 
+        $query = 'SELECT u.user_id
                   FROM user u WHERE u.username = :username AND u.password = :password';
 
-        return new User(
-            self::executeQuery($query, ['username' => $username, 'password' => $password])->fetch()
-        );
+        $user = self::executeQuery($query, ['username' => $username, 'password' => $password])->fetch();
+
+        if (false === $user) {
+            throw new UserNotFoundException();
+        }
+
+        return new User($user);
     }
 }

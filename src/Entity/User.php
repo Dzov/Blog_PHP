@@ -47,7 +47,7 @@ class User extends Entity
         return $this->email;
     }
 
-    public function setEmail(string $email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -57,7 +57,7 @@ class User extends Entity
         return $this->firstName;
     }
 
-    public function setFirst_name(string $firstName)
+    public function setFirst_name(string $firstName): void
     {
         $this->firstName = $firstName;
     }
@@ -67,7 +67,7 @@ class User extends Entity
         return $this->id;
     }
 
-    public function setUser_id(int $id)
+    public function setUser_id(int $id): void
     {
         $this->id = $id;
     }
@@ -77,7 +77,7 @@ class User extends Entity
         return $this->lastName;
     }
 
-    public function setLast_name(string $lastName)
+    public function setLast_name(string $lastName): void
     {
         $this->lastName = $lastName;
     }
@@ -87,7 +87,7 @@ class User extends Entity
         return sha1($this->password);
     }
 
-    public function setPassword(string $password)
+    public function setPassword(string $password): void
     {
         $this->password = sha1($password);
     }
@@ -97,7 +97,7 @@ class User extends Entity
         return $this->role;
     }
 
-    public function setRole(string $role)
+    public function setRole(string $role): void
     {
         $this->role = $role;
     }
@@ -107,7 +107,7 @@ class User extends Entity
         return $this->username;
     }
 
-    public function setUsername(string $username)
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }

@@ -2,6 +2,7 @@
 
 namespace Blog\Controller;
 
+use Blog\Controller\Exceptions\UserNotFoundException;
 use Blog\Model\AuthManager;
 
 /**
@@ -9,25 +10,36 @@ use Blog\Model\AuthManager;
  */
 class AuthController extends Controller
 {
-    public static function showLoginAction()
+    public static function showLoginAction(): void
     {
         self::renderTemplate('login.twig', []);
     }
 
-    public static function loginAction($username, $password)
+    /**
+     * @throws UserNotFoundException
+     */
+    public static function loginAction(): void
     {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
         $encryptedPassword = sha1($password);
 
-        $user = AuthManager::getUserInformation($username, $encryptedPassword);
+        try {
+            $user = AuthManager::getUserIdentification($username, $encryptedPassword);
 
-        $_SESSION['user'] = $user;
+            $_SESSION['userId'] = $user->getUser_id();
 
-        header("Location: index.php");
+            header("Location: index.php");
+        } catch (UserNotFoundException $unfe)
+        {
+            self::renderTemplate('login.twig', ['error' => 'Ces identifiants sont erronés']);
+        }
     }
 
-    public static function logoutAction()
+    public static function logoutAction(): void
     {
-        unset($_SESSION['user']);
+        unset($_SESSION['userId']);
 
         header('Location: index.php');
     }

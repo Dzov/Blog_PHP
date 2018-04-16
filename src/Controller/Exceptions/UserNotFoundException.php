@@ -5,7 +5,7 @@ namespace Blog\Controller\Exceptions;
 /**
  * @author Amélie-Dzovinar Haladjian
  */
-class ActionNotFoundException extends \Exception
+class UserNotFoundException extends \Exception
 {
 
 }

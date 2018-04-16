@@ -1,12 +1,42 @@
 {% extends('base.twig') %}
 
 {% block body %}
+    <main class="flex justifyBetween">
+        <section class="admin__section--comments">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 m-auto">
+                        {% for comment in comments %}
+                            <section class="flex justifyBetween">
+                                <div class="admin__comment-list">
+                                    <a href="post/{{ comment.post_id }}">
+                                        <h5 class="comment-title">
+                                            {{ comment.content }}
+                                        </h5>
+                                        <h6 class="comment-subtitle">
+                                            {{ comment.status | lower | capitalize }}
+                                        </h6>
+                                    </a>
+                                    <p>Posté le
+                                        {{ comment.posted_at | date("d, M Y") }} par
+                                        <a href="user/{{ comment.author }}">{{ comment.username | capitalize }}</a>
+                                    </p>
+                                </div>
+                                <div class="controls">
+                                    <ul>
+                                        {% if comment.status == 'PENDING' %}
+                                            <li><a href="publish/{{ comment.comment_id }}">Publier</a></li>{% endif %}
+                                        <li><a href="delete/{{ comment.comment_id }}">Supprimer</a></li>
+                                        <li><a href="post/{{ comment.post_id }}">Voir l'article associé</a></li>
+                                    </ul>
+                                </div>
+                            </section>
+                            <hr>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <section class="admin__section--comments">
-        {% for comment in comments %}
-            <ul>
-                <li>{{ comment.content }}</li>
-            </ul>
-        {% endfor %}
-    </section>
 {% endblock %}

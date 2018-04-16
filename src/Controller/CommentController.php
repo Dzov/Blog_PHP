@@ -9,11 +9,17 @@ use Blog\Model\CommentManager;
  */
 class CommentController extends Controller
 {
-    public static function addCommentAction(int $post_id, string $author, string $content)
+    public static function addCommentAction(array $parameters = []): void
     {
-        CommentManager::addComment($post_id, $author, $content);
+        $postId = $parameters['postId'];
+        $author = $_POST['author'];
+        $content = $_POST['content'];
 
-        header("Location: index.php?action=post&p=$post_id");
+        CommentManager::addComment($postId, $author, $content);
+
+        $redirectUrl = $_SERVER['BASE'] . '/post/' . $postId;
+
+        header("Location: $redirectUrl");
     }
 }
 

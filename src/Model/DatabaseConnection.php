@@ -5,6 +5,7 @@ namespace Blog\Model;
 use Blog\Config\Parameters;
 use http\Exception;
 use PDO;
+use PDOException;
 
 /**
  * @author Amélie-Dzovinar Haladjian
