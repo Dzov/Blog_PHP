@@ -11,16 +11,12 @@ use Blog\Model\UserManager;
  */
 class AdminController extends Controller
 {
-    public static function showDashboardAction()
+    public static function showDashboardAction(): void
     {
-        if ($_SESSION['user']['role'] !== 'ADMIN') {
-            header('Location: index.php');
-        } else {
         self::renderTemplate('admin-dashboard.twig', []);
-        }
     }
 
-    public static function listPostsAction()
+    public static function listPostsAction(): void
     {
         $posts = PostManager::findAllPosts();
 
@@ -30,7 +26,7 @@ class AdminController extends Controller
         );
     }
 
-    public static function listCommentsAction()
+    public static function listCommentsAction(): void
     {
         $comments = CommentManager::findAllComments();
 
@@ -40,7 +36,7 @@ class AdminController extends Controller
         );
     }
 
-    public static function listUsersAction()
+    public static function listUsersAction(): void
     {
         $users = UserManager::findAllUsers();
 
@@ -50,19 +46,25 @@ class AdminController extends Controller
         );
     }
 
-    public static function publishPendingCommentAction(array $parameters)
+    public static function publishAction(array $parameters): void
     {
         $id = $parameters['id'];
 
-        $publishedComment = CommentManager::publishComment($id);
+        CommentManager::publishComment($id);
 
         $redirectUrl = $_SERVER['BASE'] . '/adminComments';
 
-        if ($publishedComment->rowCount() > 0) {
-            header("Location: $redirectUrl");
-            echo "Le commentaire a bien été publié";
-        } else {
-            echo 'Oops, something went wrong';
-        }
+        header("Location: $redirectUrl");
+    }
+
+    public static function deleteAction(array $parameters): void
+    {
+        $id = $parameters['id'];
+
+        CommentManager::delete($id);
+
+        $redirectUrl = $_SERVER['BASE'] . '/adminComments';
+
+        header("Location: $redirectUrl");
     }
 }

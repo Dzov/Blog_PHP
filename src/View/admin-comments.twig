@@ -25,8 +25,8 @@
                                 <div class="controls">
                                     <ul>
                                         {% if comment.status == 'PENDING' %}
-                                            <li><a href="publishPendingComment/{{ comment.comment_id }}">Publier</a></li>{% endif %}
-                                        <li><a href="deleteComment/{{ comment.comment_id }}">Supprimer</a></li>
+                                            <li><a href="publish/{{ comment.comment_id }}">Publier</a></li>{% endif %}
+                                        <li><a href="delete/{{ comment.comment_id }}">Supprimer</a></li>
                                         <li><a href="post/{{ comment.post_id }}">Voir l'article associé</a></li>
                                     </ul>
                                 </div>

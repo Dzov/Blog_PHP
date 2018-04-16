@@ -7,12 +7,12 @@ namespace Blog\Entity;
  */
 abstract class Entity
 {
-    public function __construct($data)
+    public function __construct(array $data = [])
     {
         $this->hydrate($data);
     }
 
-    protected function hydrate(array $data)
+    protected function hydrate(array $data = []): void
     {
         foreach ($data as $key => $value) {
             $setterName = 'set' . ucfirst($key);

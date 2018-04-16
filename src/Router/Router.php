@@ -2,43 +2,25 @@
 
 namespace Blog\Router;
 
-use Blog\Controller\Exceptions\ControllerNotFoundException;
-use Controller\Exceptions\ActionNotFoundException;
+use Blog\Controller\Exceptions\RouteNotFoundException;
 
 /**
  * @author Amélie-Dzovinar Haladjian
  */
 class Router
 {
-    private $routes =
-        [
-            ''                      => ['controller' => 'Home', 'action' => 'listRecentPosts'],
-            'listPosts'             => ['controller' => 'Post', 'action' => 'listPosts'],
-            'post/{id}'             => [
-                'controller' => 'Post',
-                'action'     => 'showPost',
-                'parameters' => ['id' => '[0-9]+']
-            ],
-            'about'                 => ['controller' => 'About', 'action' => 'show'],
-            'contact'               => ['controller' => 'Contact', 'action' => 'show'],
-            'loginPage'             => ['controller' => 'Auth', 'action' => 'showLogin'],
-            'login'                 => ['controller' => 'Auth', 'action' => 'login'],
-            'logout'                => ['controller' => 'Auth', 'action' => 'logout'],
-            'admin'                 => ['controller' => 'Admin', 'action' => 'showDashboard'],
-            'adminPosts'            => ['controller' => 'Admin', 'action' => 'listPosts'],
-            'adminComments'         => ['controller' => 'Admin', 'action' => 'listComments'],
-            'publishPendingComment/{id}' => [
-                'controller' => 'Admin',
-                'action'     => 'publishPendingComment',
-                'parameters' => ['id' => '[0-9]+']
-            ],
-            'adminUsers'            => ['controller' => 'Admin', 'action' => 'listUsers'],
-        ];
+    private $routes;
+
+    public function __construct()
+    {
+        $routes = new Routes();
+        $this->routes = $routes->getRoutes();
+    }
 
     /**
-     * @throws \Exception
+     * @throws RouteNotFoundException
      */
-    public function get(string $requestUrl = '')
+    public function getMatchingRoute(string $requestUrl = ''): ?array
     {
         foreach ($this->routes as $uriPattern => $route) {
 
@@ -50,29 +32,14 @@ class Router
 
                 $actionName = $this->getActionName($route);
 
-                $this->executeAction($controllerClassName, $actionName, $parameters);
+                return ['controller' => $controllerClassName, 'action' => $actionName, 'parameters' => $parameters];
             }
         }
+
+        throw new RouteNotFoundException('La page que vous recherchez n\'existe pas');
     }
 
-    /**
-     * @throws ControllerNotFoundException
-     * @throws ActionNotFoundException
-     */
-    public function executeAction($controller, $action, $parameters = [])
-    {
-        if (!class_exists($controller)) {
-            throw new ControllerNotFoundException();
-        }
-
-        if (!method_exists($controller, $action)) {
-            throw new ActionNotFoundException();
-        }
-
-        $controller::$action($parameters);
-    }
-
-    private function getControllerClassName($route): string
+    private function getControllerClassName(array $route): string
     {
         $controller = $route['controller'];
         $controller = 'Blog\\Controller\\' . $controller . 'Controller';
@@ -80,7 +47,7 @@ class Router
         return $controller;
     }
 
-    private function getActionName($route): string
+    private function getActionName(array $route): string
     {
         $action = $route['action'] . 'Action';
 
@@ -106,7 +73,7 @@ class Router
         return $match;
     }
 
-    private function getParameters($parameterKeys, $parameters, $matches)
+    private function getParameters(array $parameterKeys, array $parameters, array $matches)
     {
         foreach ($parameterKeys as $key => $parameterKey) {
             if ($matches) {

@@ -9,14 +9,14 @@ use Blog\Model\PostManager;
  */
 class PostController extends Controller
 {
-    public static function listPostsAction()
+    public static function listPostsAction(): void
     {
         $posts = PostManager::findAllPosts();
 
         self::renderTemplate('posts.twig', ['posts' => $posts]);
     }
 
-    public static function showPostAction(array $parameters)
+    public static function showPostAction(array $parameters): void
     {
         $id = $parameters['id'];
 

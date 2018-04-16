@@ -47,4 +47,12 @@ abstract class CommentManager extends DatabaseConnection
 
         return parent::executeQuery($query, ['status' => 'PUBLISHED', 'id' => $id]);
     }
+
+    public static function delete(int $id)
+    {
+        $query = 'DELETE FROM comment
+                  WHERE comment.comment_id = :id';
+
+        return parent::executeQuery($query, ['id' => $id]);
+    }
 }
