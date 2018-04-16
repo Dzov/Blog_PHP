@@ -2,6 +2,7 @@
 
 namespace Blog\Controller;
 
+use Blog\Model\UserManager;
 use Exception;
 use Twig_Environment;
 use Twig_Function;
@@ -17,8 +18,10 @@ abstract class Controller
         $loader = new Twig_Loader_Filesystem('../src/View');
         $twig = new Twig_Environment($loader);
 
-        if (isset($_SESSION['user'])) {
-            $twig->addGlobal('user', $_SESSION['user']);
+        if (isset($_SESSION['userId'])) {
+            $userId = $_SESSION['userId'];
+            $user = UserManager::findById($userId);
+            $twig->addGlobal('user', $user);
         }
 
         $asset = new Twig_Function(

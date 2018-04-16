@@ -5,7 +5,6 @@ namespace Blog;
 use Blog\Controller\Exceptions\ControllerNotFoundException;
 use Blog\Controller\Exceptions\ActionNotFoundException;
 use Blog\Controller\Exceptions\RouteNotFoundException;
-use Blog\Router\Kernel;
 use Blog\Controller\Exceptions\AccessDeniedException;
 
 require_once '../vendor/autoload.php';

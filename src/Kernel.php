@@ -1,11 +1,13 @@
 <?php
 
-namespace Blog\Router;
+namespace Blog;
 
 use Blog\Controller\Exceptions\AccessDeniedException;
 use Blog\Controller\Exceptions\ActionNotFoundException;
 use Blog\Controller\Exceptions\ControllerNotFoundException;
 use Blog\Entity\User;
+use Blog\Model\UserManager;
+use Blog\Router\Router;
 
 /**
  * @author Amélie-Dzovinar Haladjian
@@ -137,6 +139,7 @@ class Kernel
     private function prepare(): void
     {
         $url = str_replace($_SERVER['BASE'] . '/', '', $_SERVER['REQUEST_URI']);
+
         $this->setRoute($this->getMatchingRoute($url));
         $this->setRoutingElements($this->getRoute());
         $this->setCurrentUser();
@@ -147,16 +150,28 @@ class Kernel
         return $this->currentUser;
     }
 
-    public function getUserRole(): ?string
+    public function getUserFromSession()
     {
-        return $this->currentUser->getRole();
+        if (!isset($_SESSION['userId'])) {
+            return null;
+        }
+
+        $userId = $_SESSION['userId'];
+
+        return UserManager::findById($userId);
     }
 
     public function setCurrentUser(): void
     {
-        if (isset($_SESSION['user']))
-        {
-            $this->currentUser = $_SESSION['user'];
+        $this->currentUser = $this->getUserFromSession();
+    }
+
+    public function getUserRole(): ?string
+    {
+        if (null === $this->currentUser) {
+            return null;
         }
+
+        return $this->currentUser->getRole();
     }
 }

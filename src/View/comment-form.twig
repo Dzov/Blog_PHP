@@ -1,7 +1,7 @@
 <div class="card my-4 commentForm">
     <h5 class="card-header">Leave a Comment:</h5>
     <div class="card-body">
-        <form action="addComment/{{ post.post_id }}" method="post">
+        <form action="{{ asset('addComment/' . {{ post.post_id }} . '') }}" method="post">
             <div class="form-group">
                 <input class="form-control" name="author" value="{% if user is defined %}{{ user.username }}{% endif %}">
                 <textarea class="form-control" rows="3" name="content"></textarea>
