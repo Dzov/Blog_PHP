@@ -10,9 +10,9 @@ use Blog\Entity\Post;
  */
 abstract class PostManager extends DatabaseConnection
 {
-    public static function findAllPosts()
+    public static function findAll()
     {
-        $query = 'SELECT p.post_id, p.title, p.subtitle, p.updated_at, u.username 
+        $query = 'SELECT p.post_id, p.title, p.subtitle, p.updated_at, p.author, u.username 
                     FROM post p
                     INNER JOIN user u ON p.author = u.user_id';
 
@@ -24,23 +24,7 @@ abstract class PostManager extends DatabaseConnection
         );
     }
 
-    public static function findRecentPosts()
-    {
-        $query = 'SELECT p.post_id, p.title, p.subtitle, p.updated_at, u.username 
-                    FROM post p
-                    INNER JOIN user u ON p.author = u.user_id 
-                    ORDER BY updated_at desc 
-                    LIMIT 3';
-
-        return array_map(
-            function ($item) {
-                return new Post($item);
-            },
-            parent::executeQuery($query)->fetchAll()
-        );
-    }
-
-    public static function findPost(int $id)
+    public static function findById(int $id)
     {
         $query = 'SELECT * FROM post 
                     WHERE post_id = :id';
@@ -63,54 +47,55 @@ abstract class PostManager extends DatabaseConnection
         );
     }
 
-    public static function deletePost(int $id)
+    public static function delete(int $id)
     {
-        $query = 'DELETE FROM post p WHERE p.post_id = :id';
+        $query = 'DELETE FROM post WHERE post.post_id = :id';
 
         return parent::executeQuery($query, [':id' => $id]);
     }
 
-    public static function updatePost(int $id, $author, $title, $subtitle, $content, $url)
+    public static function update(int $id, string $title, string $subtitle, string $content)
     {
         $query = 'UPDATE post p 
-                  SET p.author = :author, 
-                    p.title = :title, 
+                  SET p.title = :title, 
                     p.subtitle = :subtitle, 
                     p.content = :content, 
-                    p.updated_at = :updatedAt, 
-                    p.image_url = :url 
+                    p.updated_at = :updatedAt 
                   WHERE p.post_id = :id';
 
         return parent::executeQuery(
             $query,
             [
-                ':author'    => $author,
                 ':title'     => $title,
                 ':subtitle'  => $subtitle,
                 ':content'   => $content,
                 ':updatedAt' => date("Y-m-d H:i:s"),
-                ':url'       => $url,
                 ':id'        => $id
             ]
         );
     }
 
-    public static function addPost($author, $title, $subtitle, $content, $url)
+    public static function insert($author, $title, $subtitle, $content)
     {
-        $query = 'INSERT INTO post p (p.author, p.title, p.subtitle, p.content, p.updated_at, p.image_url) 
-                  VALUES (:author, :title, :subtitle, :content, :updatedAt, :url)';
+        $query = 'INSERT INTO post (post.author, post.title, post.subtitle, post.content, post.updated_at) VALUES (:author, :title, :subtitle, :content, :updatedAt)';
 
         return parent::executeQuery(
             $query,
             [
-                ':author'    => $author,
+                ':author'    => intval(self::getAuthor($author)),
                 ':title'     => $title,
                 ':subtitle'  => $subtitle,
                 ':content'   => $content,
-                ':updatedAt' => date("Y-m-d H:i:s"),
-                ':url'       => $url
+                ':updatedAt' => date("Y-m-d H:i:s")
             ]
         );
+    }
+
+    private static function getAuthor(string $author)
+    {
+        $query = 'SELECT user_id FROM user u WHERE u.username = :author';
+
+        return parent::executeQuery($query, ['author' => $author])->fetch();
     }
 }
 

@@ -7,7 +7,7 @@ namespace Blog\Model;
  */
 abstract class CommentManager extends DatabaseConnection
 {
-    public static function findAllComments()
+    public static function findAll()
     {
         $query = 'SELECT c.comment_id, c.post_id, c.author, c.content, c.posted_at, c.status, u.user_id, u.username 
                   FROM comment c INNER JOIN user u ON c.author = u.user_id ORDER BY status';
@@ -15,7 +15,7 @@ abstract class CommentManager extends DatabaseConnection
         return parent::executeQuery($query, [])->fetchAll();
     }
 
-    public static function addComment(int $post_id, string $author, string $content)
+    public static function insert(int $post_id, string $author, string $content)
     {
         $query = 'INSERT INTO comment(post_id, author, content, posted_at, status) 
                   VALUES (:post_id, :author, :content, :posted_at, :status)';
@@ -39,7 +39,7 @@ abstract class CommentManager extends DatabaseConnection
         return parent::executeQuery($query, ['author' => $author])->fetch();
     }
 
-    public static function publishComment(int $id)
+    public static function publish(int $id)
     {
         $query = 'UPDATE comment c
                   SET status = :status

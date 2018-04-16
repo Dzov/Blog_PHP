@@ -9,39 +9,55 @@ class Routes
 {
     private $routes =
         [
-            ''                    => ['controller' => 'Home', 'action' => 'listRecentPosts'],
-            'listPosts'           => ['controller' => 'Post', 'action' => 'listPosts'],
-            'post/{id}'           => [
+            ''                         => ['controller' => 'Home', 'action' => 'show'],
+            'listPosts'                => ['controller' => 'Post', 'action' => 'list'],
+            'post/{id}'                => [
                 'controller' => 'Post',
                 'action'     => 'showPost',
                 'parameters' => ['id' => '[0-9]+']
             ],
             'post/addComment/{postId}' => [
                 'controller' => 'Comment',
-                'action'     => 'addComment',
+                'action'     => 'save',
                 'parameters' => ['postId' => '[0-9]+']
             ],
-            'about'               => ['controller' => 'About', 'action' => 'show'],
-            'contact'             => ['controller' => 'Contact', 'action' => 'show'],
-            'loginPage'           => ['controller' => 'Auth', 'action' => 'showLogin'],
-            'login'               => ['controller' => 'Auth', 'action' => 'login'],
-            'logout'              => ['controller' => 'Auth', 'action' => 'logout'],
-            'admin'               => ['controller' => 'Admin', 'action' => 'showDashboard'],
-            'adminPosts'          => ['controller' => 'AdminPosts', 'action' => 'listPosts'],
-            'adminComments'       => ['controller' => 'Admin', 'action' => 'listComments'],
-            'publish/{id}'        => [
-                'controller' => 'Admin',
-                'action'     => 'publishComment',
+            'about'                    => ['controller' => 'About', 'action' => 'show'],
+            'contact'                  => ['controller' => 'Contact', 'action' => 'show'],
+            'loginPage'                => ['controller' => 'Auth', 'action' => 'show'],
+            'login'                    => ['controller' => 'Auth', 'action' => 'login'],
+            'logout'                   => ['controller' => 'Auth', 'action' => 'logout'],
+            'admin'                    => ['controller' => 'Admin', 'action' => 'show'],
+            'adminPosts'               => ['controller' => 'AdminPost', 'action' => 'list'],
+            'adminPosts/create'        => ['controller' => 'AdminPost', 'action' => 'create'],
+            'adminPosts/{id}/showEdit' => [
+                'controller' => 'AdminPost',
+                'action'     => 'showEdit',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            'delete/{id}'         => [
-                'controller' => 'Admin',
-                'action'     => 'deleteComment',
+            'adminPosts/{id}/edit'     => [
+                'controller' => 'AdminPost',
+                'action'     => 'edit',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            'adminUsers'          => ['controller' => 'Admin', 'action' => 'listUsers'],
-            '404'                 => ['controller' => 'Error', 'action' => 'show404'],
-            '403'                 => ['controller' => 'Error', 'action' => 'show403']
+            'adminPosts/{id}/delete'   => [
+                'controller' => 'AdminPost',
+                'action'     => 'delete',
+                'parameters' => ['id' => '[0-9]+']
+            ],
+            'adminComments'            => ['controller' => 'AdminComment', 'action' => 'list'],
+            'publish/{id}'             => [
+                'controller' => 'AdminComment',
+                'action'     => 'publish',
+                'parameters' => ['id' => '[0-9]+']
+            ],
+            'delete/{id}'              => [
+                'controller' => 'AdminComment',
+                'action'     => 'delete',
+                'parameters' => ['id' => '[0-9]+']
+            ],
+            'adminUsers'               => ['controller' => 'AdminUser', 'action' => 'list'],
+            '404'                      => ['controller' => 'Error', 'action' => 'show404'],
+            '403'                      => ['controller' => 'Error', 'action' => 'show403']
         ];
 
     public function getRoutes(): array

@@ -11,46 +11,8 @@ use Blog\Model\UserManager;
  */
 class AdminController extends Controller
 {
-    public static function showDashboardAction(): void
+    public static function showAction(): void
     {
         self::renderTemplate('admin-dashboard.twig', []);
-    }
-
-    public static function listCommentsAction(): void
-    {
-        $comments = CommentManager::findAllComments();
-
-        self::renderTemplate(
-            'admin-comments.twig',
-            ['comments' => $comments]
-        );
-    }
-
-    public static function listUsersAction(): void
-    {
-        $users = UserManager::findAllUsers();
-
-        self::renderTemplate(
-            'admin-users.twig',
-            ['users' => $users]
-        );
-    }
-
-    public static function publishCommentAction(array $parameters): void
-    {
-        $id = $parameters['id'];
-
-        CommentManager::publishComment($id);
-
-        self::redirect('adminComments');
-    }
-
-    public static function deleteCommentAction(array $parameters): void
-    {
-        $id = $parameters['id'];
-
-        CommentManager::delete($id);
-
-        self::redirect('adminComments');
     }
 }

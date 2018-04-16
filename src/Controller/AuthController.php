@@ -10,7 +10,7 @@ use Blog\Model\AuthManager;
  */
 class AuthController extends Controller
 {
-    public static function showLoginAction(): void
+    public static function showAction(): void
     {
         self::renderTemplate('login.twig', []);
     }

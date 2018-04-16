@@ -8,7 +8,7 @@ namespace Blog\Entity;
 class Post extends Entity
 {
     /**
-     * @var User
+     * @var int
      */
     private $author;
 
@@ -47,12 +47,12 @@ class Post extends Entity
      */
     private $username;
 
-    public function getAuthor(): User
+    public function getAuthor(): int
     {
         return $this->author;
     }
 
-    public function setAuthor($author): void
+    public function setAuthor(int $author): void
     {
         $this->author = $author;
     }
