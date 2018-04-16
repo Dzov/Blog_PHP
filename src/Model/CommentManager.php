@@ -12,7 +12,7 @@ abstract class CommentManager extends DatabaseConnection
     public static function findAll()
     {
         $query = 'SELECT c.comment_id, c.post_id, c.author, c.content, c.posted_at, c.status, u.user_id, u.username 
-                  FROM comment c INNER JOIN user u ON c.author = u.user_id ORDER BY status';
+                  FROM comment c INNER JOIN user u ON c.author = u.user_id ORDER BY status, posted_at DESC';
 
         return parent::executeQuery($query, [])->fetchAll();
     }
