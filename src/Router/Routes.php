@@ -23,6 +23,7 @@ class Routes
             ],
             'about'                    => ['controller' => 'About', 'action' => 'show'],
             'contact'                  => ['controller' => 'Contact', 'action' => 'show'],
+            'contact/send'             => ['controller' => 'Contact', 'action' => 'send'],
             'loginPage'                => ['controller' => 'Auth', 'action' => 'show'],
             'login'                    => ['controller' => 'Auth', 'action' => 'login'],
             'logout'                   => ['controller' => 'Auth', 'action' => 'logout'],
