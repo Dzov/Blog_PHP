@@ -2,6 +2,8 @@
 
 namespace Blog\Model;
 
+use Blog\Entity\User;
+
 /**
  * @author Amélie-Dzovinar Haladjian
  */
@@ -24,7 +26,7 @@ abstract class CommentManager extends DatabaseConnection
             $query,
             [
                 ':post_id'   => $post_id,
-                ':author'    => intval(self::getAuthor($author)),
+                ':author'    => self::getAuthorId($author),
                 ':content'   => $content,
                 ':posted_at' => date('Y-m-d H:i:s'),
                 ':status'    => 'PENDING'
@@ -32,11 +34,13 @@ abstract class CommentManager extends DatabaseConnection
         );
     }
 
-    private static function getAuthor(string $author)
+    private static function getAuthorId(string $author)
     {
         $query = 'SELECT user_id FROM user u WHERE u.username = :author';
 
-        return parent::executeQuery($query, ['author' => $author])->fetch();
+        $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
+
+        return $author->getUser_id();
     }
 
     public static function publish(int $id)

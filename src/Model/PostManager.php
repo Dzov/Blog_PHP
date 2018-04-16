@@ -4,13 +4,14 @@ namespace Blog\Model;
 
 use Blog\Entity\Comment;
 use Blog\Entity\Post;
+use Blog\Entity\User;
 
 /**
  * @author Amélie-Dzovinar Haladjian
  */
 abstract class PostManager extends DatabaseConnection
 {
-    public static function findAll()
+    public static function findAll(): array
     {
         $query = 'SELECT p.post_id, p.title, p.subtitle, p.updated_at, p.author, u.username 
                     FROM post p
@@ -24,7 +25,7 @@ abstract class PostManager extends DatabaseConnection
         );
     }
 
-    public static function findById(int $id)
+    public static function findById(int $id): ?Post
     {
         $query = 'SELECT * FROM post 
                     WHERE post_id = :id';
@@ -32,7 +33,7 @@ abstract class PostManager extends DatabaseConnection
         return new Post(parent::executeQuery($query, [':id' => $id])->fetch());
     }
 
-    public static function findCommentsByPost(int $id)
+    public static function findCommentsByPost(int $id): ?array
     {
         $query = 'SELECT c.content, c.posted_at, c.status, u.username
                     FROM comment c
@@ -47,14 +48,14 @@ abstract class PostManager extends DatabaseConnection
         );
     }
 
-    public static function delete(int $id)
+    public static function delete(int $id): \PDOStatement
     {
         $query = 'DELETE FROM post WHERE post.post_id = :id';
 
         return parent::executeQuery($query, [':id' => $id]);
     }
 
-    public static function update(int $id, string $title, string $subtitle, string $content)
+    public static function update(int $id, string $title, string $subtitle, string $content): \PDOStatement
     {
         $query = 'UPDATE post p 
                   SET p.title = :title, 
@@ -75,14 +76,15 @@ abstract class PostManager extends DatabaseConnection
         );
     }
 
-    public static function insert($author, $title, $subtitle, $content)
+    public static function insert(string $author, string $title, string $subtitle, string $content): \PDOStatement
     {
-        $query = 'INSERT INTO post (post.author, post.title, post.subtitle, post.content, post.updated_at) VALUES (:author, :title, :subtitle, :content, :updatedAt)';
+        $query = 'INSERT INTO post (post.author, post.title, post.subtitle, post.content, post.updated_at) 
+                  VALUES (:author, :title, :subtitle, :content, :updatedAt)';
 
         return parent::executeQuery(
             $query,
             [
-                ':author'    => intval(self::getAuthor($author)),
+                ':author'    => self::getAuthorId($author),
                 ':title'     => $title,
                 ':subtitle'  => $subtitle,
                 ':content'   => $content,
@@ -91,11 +93,13 @@ abstract class PostManager extends DatabaseConnection
         );
     }
 
-    private static function getAuthor(string $author)
+    private static function getAuthorId(string $author): ?string
     {
         $query = 'SELECT user_id FROM user u WHERE u.username = :author';
 
-        return parent::executeQuery($query, ['author' => $author])->fetch();
+        $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
+
+        return $author->getUser_id();
     }
 }
 
