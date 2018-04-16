@@ -2,6 +2,7 @@
 
 namespace Blog\Controller;
 
+use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Model\PostManager;
 
 /**
@@ -66,11 +67,12 @@ class AdminPostController extends Controller
     {
         $id = $parameters['id'];
 
-        if (false === PostManager::findById($id)) {
-            self::redirect('403');
+        try {
+            PostManager::findById($id);
+            PostManager::delete($id);
+            self::redirect('adminPosts');
+        } catch (ResourceNotFoundException $rnfe) {
+            echo 'Cet article n\existe pas';
         }
-        
-        PostManager::delete($id);
-        self::redirect('adminPosts');
     }
 }
