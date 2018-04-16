@@ -59,12 +59,18 @@ class AdminPostController extends Controller
         self::renderTemplate('admin-posts-form.twig');
     }
 
+    /**
+     * @throws Exceptions\ResourceNotFoundException
+     */
     public static function deleteAction(array $parameters): void
     {
         $id = $parameters['id'];
 
+        if (false === PostManager::findById($id)) {
+            self::redirect('403');
+        }
+        
         PostManager::delete($id);
-
         self::redirect('adminPosts');
     }
 }

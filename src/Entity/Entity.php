@@ -2,13 +2,18 @@
 
 namespace Blog\Entity;
 
+use Blog\Controller\Exceptions\ResourceNotFoundException;
+
 /**
  * @author Amélie-Dzovinar Haladjian
  */
 abstract class Entity
 {
-    public function __construct(array $data = [])
+    public function __construct($data = [])
     {
+        if (false === $data) {
+            throw new ResourceNotFoundException();
+        }
         $this->hydrate($data);
     }
 

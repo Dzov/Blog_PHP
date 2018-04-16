@@ -25,6 +25,9 @@ abstract class PostManager extends DatabaseConnection
         );
     }
 
+    /**
+     * @throws \Blog\Controller\Exceptions\ResourceNotFoundException
+     */
     public static function findById(int $id): ?Post
     {
         $query = 'SELECT * FROM post 
