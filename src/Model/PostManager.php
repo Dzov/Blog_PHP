@@ -2,6 +2,7 @@
 
 namespace Blog\Model;
 
+use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Entity\Comment;
 use Blog\Entity\Post;
 use Blog\Entity\User;
@@ -79,7 +80,7 @@ abstract class PostManager extends DatabaseConnection
         );
     }
 
-    public static function insert(string $author, string $title, string $subtitle, string $content): \PDOStatement
+    public static function create(string $author, string $title, string $subtitle, string $content): \PDOStatement
     {
         $query = 'INSERT INTO post (post.author, post.title, post.subtitle, post.content, post.updated_at) 
                   VALUES (:author, :title, :subtitle, :content, :updatedAt)';
@@ -100,9 +101,13 @@ abstract class PostManager extends DatabaseConnection
     {
         $query = 'SELECT user_id FROM user u WHERE u.username = :author';
 
-        $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
+        try {
+            $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
 
-        return $author->getUser_id();
+            return $author->getUser_id();
+        } catch (ResourceNotFoundException $rnfe) {
+            echo 'Cet utilisateur n\'existe pas';
+        }
     }
 }
 
