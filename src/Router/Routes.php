@@ -27,7 +27,7 @@ class Routes
             'login'               => ['controller' => 'Auth', 'action' => 'login'],
             'logout'              => ['controller' => 'Auth', 'action' => 'logout'],
             'admin'               => ['controller' => 'Admin', 'action' => 'showDashboard'],
-            'adminPosts'          => ['controller' => 'Admin', 'action' => 'listPosts'],
+            'adminPosts'          => ['controller' => 'AdminPosts', 'action' => 'listPosts'],
             'adminComments'       => ['controller' => 'Admin', 'action' => 'listComments'],
             'publish/{id}'        => [
                 'controller' => 'Admin',
@@ -40,7 +40,8 @@ class Routes
                 'parameters' => ['id' => '[0-9]+']
             ],
             'adminUsers'          => ['controller' => 'Admin', 'action' => 'listUsers'],
-            '404'                 => ['controller' => 'Error', 'action' => 'show']
+            '404'                 => ['controller' => 'Error', 'action' => 'show404'],
+            '403'                 => ['controller' => 'Error', 'action' => 'show403']
         ];
 
     public function getRoutes(): array

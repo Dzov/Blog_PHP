@@ -16,16 +16,6 @@ class AdminController extends Controller
         self::renderTemplate('admin-dashboard.twig', []);
     }
 
-    public static function listPostsAction(): void
-    {
-        $posts = PostManager::findAllPosts();
-
-        self::renderTemplate(
-            'admin-posts.twig',
-            ['posts' => $posts]
-        );
-    }
-
     public static function listCommentsAction(): void
     {
         $comments = CommentManager::findAllComments();
