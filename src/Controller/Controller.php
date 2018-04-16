@@ -27,7 +27,7 @@ abstract class Controller
         $asset = new Twig_Function(
             'asset',
             function ($url) {
-                return $_SERVER['BASE'] . '/' . $url;
+                return str_replace('//', '/', $_SERVER['BASE'] . '/' . $url);
             }
         );
 
@@ -42,9 +42,9 @@ abstract class Controller
         }
     }
 
-    protected static function redirect($route)
+    protected static function redirect($url)
     {
-        $url = $_SERVER['BASE'] . '/' . $route;
+        $url = str_replace('//', '/', $_SERVER['BASE'] . '/' . $url);
 
         header("Location: $url");
     }
