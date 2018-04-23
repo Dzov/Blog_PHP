@@ -24,7 +24,7 @@ class CommentController extends Controller
 
                 CommentManager::insert($postId, $author, $content);
 
-                self::redirect('/post/' . $postId);
+                self::redirect('/posts/' . $postId);
             }
         } catch (ResourceNotFoundException $rnfe) {
             echo 'Cet article n\'existe pas';

@@ -10,13 +10,13 @@ class Routes
     private $routes =
         [
             ''                            => ['controller' => 'Home', 'action' => 'show'],
-            'post/list'                   => ['controller' => 'Post', 'action' => 'list'],
-            'post/{id}'                   => [
+            'posts/list'                   => ['controller' => 'Post', 'action' => 'list'],
+            'posts/{id}'                   => [
                 'controller' => 'Post',
                 'action'     => 'showPost',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            'comment/{postId}/add'        => [
+            'comments/{postId}/add'        => [
                 'controller' => 'Comment',
                 'action'     => 'save',
                 'parameters' => ['postId' => '[0-9]+']
@@ -58,17 +58,17 @@ class Routes
                 'parameters' => ['id' => '[0-9]+']
             ],
             'admin/users'                 => ['controller' => 'AdminUser', 'action' => 'list'],
-            'admin/user/{id}/grant'       => [
+            'admin/users/{id}/grant'       => [
                 'controller' => 'AdminUser',
                 'action'     => 'grantAdmin',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            'admin/user/{id}/deny'        => [
+            'admin/users/{id}/deny'        => [
                 'controller' => 'AdminUser',
                 'action'     => 'denyAdmin',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            'admin/user/{id}/delete'      => [
+            'admin/users/{id}/delete'      => [
                 'controller' => 'AdminUser',
                 'action'     => 'delete',
                 'parameters' => ['id' => '[0-9]+']

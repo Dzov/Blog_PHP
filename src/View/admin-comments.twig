@@ -9,7 +9,7 @@
                         {% for comment in comments %}
                             <section class="flex justifyBetween">
                                 <div class="admin__comment-list">
-                                    <a href="{{ asset('post/' ~ comment.post_id ) }}">
+                                    <a href="{{ asset('posts/' ~ comment.post_id ) }}">
                                         <h5 class="comment-title">
                                             {{ comment.content }}
                                         </h5>
@@ -27,7 +27,7 @@
                                         {% if comment.status == 'PENDING' %}
                                             <li><a href="{{ asset('admin/comments/' ~ comment.comment_id ~ '/publish') }}">Publier</a></li>{% endif %}
                                         <li><a href="{{ asset('admin/comments/' ~ comment.comment_id ~ '/delete') }}">Supprimer</a></li>
-                                        <li><a href="{{ asset('post/' ~ comment.post_id) }}">Voir l'article associé</a></li>
+                                        <li><a href="{{ asset('posts/' ~ comment.post_id) }}">Voir l'article associé</a></li>
                                     </ul>
                                 </div>
                             </section>
