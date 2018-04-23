@@ -5,6 +5,7 @@ namespace Blog;
 use Blog\Controller\Exceptions\AccessDeniedException;
 use Blog\Controller\Exceptions\ActionNotFoundException;
 use Blog\Controller\Exceptions\ControllerNotFoundException;
+use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Entity\User;
 use Blog\Model\UserManager;
 use Blog\Router\Router;
@@ -126,7 +127,7 @@ class Kernel
             throw new ActionNotFoundException();
         }
 
-        if (strpos($controller, 'Admin') && $this->getUserRole() !== 'ADMIN') {
+        if (strpos($controller, 'Admin') && $this->getUserRole() !== 'ADMIN' || $this->getUserRole() === NULL) {
             throw new AccessDeniedException();
         }
 
@@ -156,9 +157,14 @@ class Kernel
             return null;
         }
 
-        $userId = $_SESSION['userId'];
+        try {
+            $userId = $_SESSION['userId'];
 
-        return UserManager::findById($userId);
+            return UserManager::findById($userId);
+        } catch (ResourceNotFoundException $rnfe) {
+            echo 'Cet utilisateur n\'existe pas';
+        }
+
     }
 
     public function setCurrentUser(): void

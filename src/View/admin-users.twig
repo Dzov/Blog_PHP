@@ -1,11 +1,42 @@
 {% extends('base.twig') %}
 
 {% block body %}
-    <section class="admin__section--users">
-        {% for user in users %}
-            <ul>
-                <li>{{ user.username }}</li>
-            </ul>
-        {% endfor %}
-    </section>
+    <main class="flex justifyBetween">
+        <section class="admin__section--users">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 m-auto">
+                        {% for user in users %}
+                            <section class="flex justifyBetween">
+                                <div class="admin__user-list">
+                                    <h5 class="user-title">
+                                        {{ user.username }}
+                                    </h5>
+                                    <h6 class="user-subtitle">
+                                        {{ user.first_name }} {{ user.last_name }}
+                                    </h6>
+                                    {% if user.role == 'ADMIN' %}
+                                        <span>Admin</span>
+                                    {% endif %}
+                                    <p>{{ user.email }}</p>
+                                </div>
+                                <div class="controls">
+                                    <ul>
+                                        {% if user.role == 'REGISTERED_USER' %}
+                                            <li><a href="user/{{ user.user_id }}/grant">Attribuer role admin</a></li>
+                                        {% endif %}
+                                        {% if user.role == 'ADMIN' %}
+                                            <li><a href="user/{{ user.user_id }}/deny">Retirer role admin</a></li>
+                                        {% endif %}
+                                        <li><a href="user/{{ user.user_id }}/delete">Supprimer</a></li>
+                                    </ul>
+                                </div>
+                            </section>
+                            <hr>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 {% endblock %}

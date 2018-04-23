@@ -58,6 +58,21 @@ class Routes
                 'parameters' => ['id' => '[0-9]+']
             ],
             'adminUsers'               => ['controller' => 'AdminUser', 'action' => 'list'],
+            'user/{id}/grant'     => [
+                'controller' => 'AdminUser',
+                'action'     => 'grantAdmin',
+                'parameters' => ['id' => '[0-9]+']
+            ],
+            'user/{id}/deny'     => [
+                'controller' => 'AdminUser',
+                'action'     => 'denyAdmin',
+                'parameters' => ['id' => '[0-9]+']
+            ],
+            'user/{id}/delete'     => [
+                'controller' => 'AdminUser',
+                'action'     => 'delete',
+                'parameters' => ['id' => '[0-9]+']
+            ],
             '404'                      => ['controller' => 'Error', 'action' => 'show404'],
             '403'                      => ['controller' => 'Error', 'action' => 'show403']
         ];

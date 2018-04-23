@@ -62,7 +62,8 @@ class AdminPostController extends Controller
                 isset($_POST['author']) &&
                 isset($_POST['title']) &&
                 isset($_POST['subtitle']) &&
-                isset($_POST['content'])) {
+                isset($_POST['content'])
+            ){
                 $author = $_POST['author'];
                 $title = $_POST['title'];
                 $subtitle = $_POST['subtitle'];
