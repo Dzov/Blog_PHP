@@ -2,6 +2,11 @@
 
 namespace Blog\Controller;
 
+use Blog\Config\Parameters;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
+
 /**
  * @author Amélie-Dzovinar Haladjian
  */
@@ -14,23 +19,33 @@ class ContactController extends Controller
 
     public static function sendAction()
     {
-        if (isset($_POST['submit']))
-        {
-            $to = "amelie2360@gmail.com";
-            $from = $_POST['email'];
-            $first_name = $_POST['first_name'];
-            $last_name = $_POST['last_name'];
-            $subject = "Quelqu'un souhaite vous contacter";
-            $subject2 = "Votre message a bien été envoyé";
-            $message = "Message de la part de " . $first_name . " " . $last_name . ": " . "\n\n" . $_POST['message'];
-            $message2 = "Voici une copie de votre message: " . "\n\n" . $_POST['message'];
+        if (isset($_POST['submit']) &&
+            isset($_POST['first_name']) &&
+            isset($_POST['last_name']) &&
+            isset($_POST['email']) &&
+            isset($_POST['message'])
+        ) {
+            $firstName = $_POST['first_name'];
+            $lastName = $_POST['last_name'];
+            $email = $_POST['email'];
+            $message = $_POST['message'];
 
-            $headers = "From:" . $from;
-            $headers2 = "From:" . $to;
-            mail($to,$subject,$message,$headers);
-            mail($from,$subject2,$message2,$headers2);
+            $transport = (new Swift_SmtpTransport(Parameters::$mail_host, Parameters::$mail_port, 'ssl'))
+                ->setUsername(Parameters::$mail_username)
+                ->setPassword(Parameters::$mail_password);
 
-            self::redirect('contact/success');
+            $mailer = new Swift_Mailer($transport);
+
+            $message = (new Swift_Message('Blog: Nouveau message'))
+                ->setFrom([$email => $firstName . $lastName])
+                ->setTo([Parameters::$mail_username => Parameters::$mail_receiver])
+                ->setBody($message);
+
+            $result = $mailer->send($message);
+
+            if ($result) {
+                self::redirect('contact/success');
+            }
         }
     }
 
