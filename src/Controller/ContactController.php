@@ -37,7 +37,7 @@ class ContactController extends Controller
             $mailer = new Swift_Mailer($transport);
 
             $message = (new Swift_Message('Blog: Nouveau message'))
-                ->setFrom([$email => $firstName . $lastName])
+                ->setFrom([$email => $firstName .' '. $lastName])
                 ->setTo([Parameters::$mail_username => Parameters::$mail_receiver])
                 ->setBody($message);
 
