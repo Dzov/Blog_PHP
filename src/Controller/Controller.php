@@ -41,4 +41,11 @@ abstract class Controller
             echo $e->getMessage();
         }
     }
+
+    protected static function redirect($route)
+    {
+        $url = $_SERVER['BASE'] . '/' . $route;
+
+        header("Location: $url");
+    }
 }

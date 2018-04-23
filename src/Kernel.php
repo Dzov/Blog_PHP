@@ -127,7 +127,7 @@ class Kernel
         }
 
         if (strpos($controller, 'Admin') && $this->getUserRole() !== 'ADMIN') {
-            throw new AccessDeniedException('Vous n\'avez pas les droits');
+            throw new AccessDeniedException();
         }
 
         $controller::$action($parameters);

@@ -18,9 +18,9 @@ try {
 } catch (ControllerNotFoundException $anfe) {
     echo $anfe->getMessage();
 } catch (AccessDeniedException $ade) {
-    echo $ade->getMessage();
+    header('Location: 403');
 } catch (RouteNotFoundException $rnfe) {
-    echo $rnfe->getMessage();
+    header('Location: 404');
 }
 
 

@@ -2,20 +2,22 @@
 
 namespace Blog\Model;
 
+use Blog\Entity\User;
+
 /**
  * @author Amélie-Dzovinar Haladjian
  */
 abstract class CommentManager extends DatabaseConnection
 {
-    public static function findAllComments()
+    public static function findAll()
     {
         $query = 'SELECT c.comment_id, c.post_id, c.author, c.content, c.posted_at, c.status, u.user_id, u.username 
-                  FROM comment c INNER JOIN user u ON c.author = u.user_id ORDER BY status';
+                  FROM comment c INNER JOIN user u ON c.author = u.user_id ORDER BY status, posted_at DESC';
 
         return parent::executeQuery($query, [])->fetchAll();
     }
 
-    public static function addComment(int $post_id, string $author, string $content)
+    public static function insert(int $post_id, string $author, string $content)
     {
         $query = 'INSERT INTO comment(post_id, author, content, posted_at, status) 
                   VALUES (:post_id, :author, :content, :posted_at, :status)';
@@ -24,7 +26,7 @@ abstract class CommentManager extends DatabaseConnection
             $query,
             [
                 ':post_id'   => $post_id,
-                ':author'    => intval(self::getAuthor($author)),
+                ':author'    => self::getAuthorId($author),
                 ':content'   => $content,
                 ':posted_at' => date('Y-m-d H:i:s'),
                 ':status'    => 'PENDING'
@@ -32,14 +34,16 @@ abstract class CommentManager extends DatabaseConnection
         );
     }
 
-    private static function getAuthor(string $author)
+    private static function getAuthorId(string $author)
     {
         $query = 'SELECT user_id FROM user u WHERE u.username = :author';
 
-        return parent::executeQuery($query, ['author' => $author])->fetch();
+        $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
+
+        return $author->getUser_id();
     }
 
-    public static function publishComment(int $id)
+    public static function publish(int $id)
     {
         $query = 'UPDATE comment c
                   SET status = :status

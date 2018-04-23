@@ -9,17 +9,15 @@ use Blog\Model\CommentManager;
  */
 class CommentController extends Controller
 {
-    public static function addCommentAction(array $parameters = []): void
+    public static function saveAction(array $parameters = []): void
     {
         $postId = $parameters['postId'];
         $author = $_POST['author'];
         $content = $_POST['content'];
 
-        CommentManager::addComment($postId, $author, $content);
+        CommentManager::insert($postId, $author, $content);
 
-        $redirectUrl = $_SERVER['BASE'] . '/post/' . $postId;
-
-        header("Location: $redirectUrl");
+        self::redirect('/post/' . $postId);
     }
 }
 

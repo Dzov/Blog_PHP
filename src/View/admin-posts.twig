@@ -1,11 +1,40 @@
 {% extends('base.twig') %}
 
 {% block body %}
-    <section class="admin__section--posts">
-        {% for post in posts %}
-            <ul>
-                <li>{{ post.title }}</li>
-            </ul>
-        {% endfor %}
-    </section>
+    <main class="flex justifyBetween">
+        <section class="admin__section--posts">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 m-auto">
+                        <p><a href="adminPosts/create">Ajouter un article</a></p>
+                        {% for post in posts %}
+                            <section class="flex justifyBetween">
+                                <div class="admin__post-list">
+                                    <a href='post/{{ post.post_id }}'>
+                                        <h5 class="post-title">
+                                            {{ post.title }}
+                                        </h5>
+                                        <h6 class="post-subtitle">
+                                            {{ post.subtitle }}
+                                        </h6>
+                                    </a>
+                                    <p>Posté le
+                                        {{ post.updated_at | date("d, M Y") }} par
+                                        <a href="user/{{ post.author }}">{{ post.username | capitalize }}</a>
+                                    </p>
+                                </div>
+                                <div class="controls">
+                                    <ul>
+                                        <li><a href="adminPosts/{{ post.post_id }}/showEdit">Modifier</a></li>
+                                        <li><a href="adminPosts/{{ post.post_id }}/delete">Supprimer</a></li>
+                                    </ul>
+                                </div>
+                            </section>
+                            <hr>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 {% endblock %}
