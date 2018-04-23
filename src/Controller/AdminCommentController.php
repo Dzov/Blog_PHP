@@ -32,6 +32,7 @@ class AdminCommentController extends Controller
     {
         $id = $parameters['id'];
 
+        CommentManager::findById($id);
         CommentManager::delete($id);
 
         self::redirect('adminComments');

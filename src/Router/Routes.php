@@ -16,13 +16,15 @@ class Routes
                 'action'     => 'showPost',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            'post/addComment/{postId}' => [
+            'addComment/{postId}'      => [
                 'controller' => 'Comment',
                 'action'     => 'save',
                 'parameters' => ['postId' => '[0-9]+']
             ],
             'about'                    => ['controller' => 'About', 'action' => 'show'],
             'contact'                  => ['controller' => 'Contact', 'action' => 'show'],
+            'contact/send'             => ['controller' => 'Contact', 'action' => 'send'],
+            'contact/success'          => ['controller' => 'Contact', 'action' => 'validate'],
             'loginPage'                => ['controller' => 'Auth', 'action' => 'show'],
             'login'                    => ['controller' => 'Auth', 'action' => 'login'],
             'logout'                   => ['controller' => 'Auth', 'action' => 'logout'],
