@@ -22,12 +22,14 @@ abstract class CommentManager extends DatabaseConnection
     public static function findById(int $id): ?Comment
     {
         $query = 'SELECT c.comment_id, c.post_id, c.author, c.content, c.posted_at, c.status, u.user_id, u.username 
-                  FROM comment c WHERE c.comment_id = :id INNER JOIN user u ON c.author = u.user_id';
+                  FROM comment c INNER JOIN user u ON c.author = u.user_id WHERE c.comment_id = :id';
+
+        var_dump(new Comment(parent::executeQuery($query, ['id' => $id])->fetch())); die;
 
         try {
             return new Comment(parent::executeQuery($query, ['id' => $id])->fetch());
         } catch (ResourceNotFoundException $rnfe) {
-            echo 'Ce commentaire n\'existe pass';
+            echo 'Ce commentaire n\'existe pas';
         }
     }
 
@@ -73,7 +75,7 @@ abstract class CommentManager extends DatabaseConnection
     public static function delete(int $id): \PDOStatement
     {
         $query = 'DELETE FROM comment
-                  WHERE comment.comment_id = :id';
+                  WHERE comment_id = :id';
 
         return parent::executeQuery($query, ['id' => $id]);
     }

@@ -26,9 +26,6 @@ abstract class PostManager extends DatabaseConnection
         );
     }
 
-    /**
-     * @throws \Blog\Controller\Exceptions\ResourceNotFoundException
-     */
     public static function findById(int $id): ?Post
     {
         $query = 'SELECT * FROM post 
@@ -36,6 +33,7 @@ abstract class PostManager extends DatabaseConnection
 
         return new Post(parent::executeQuery($query, [':id' => $id])->fetch());
     }
+
 
     public static function findCommentsByPost(int $id): ?array
     {

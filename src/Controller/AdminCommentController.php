@@ -32,13 +32,7 @@ class AdminCommentController extends Controller
     {
         $id = $parameters['id'];
 
-        try {
-            CommentManager::findById($id);
-            CommentManager::delete($id);
-            self::redirect('adminPosts');
-        } catch (ResourceNotFoundException $rnfe) {
-            echo 'Cet article n\existe pas';
-        }
+        CommentManager::findById($id);
         CommentManager::delete($id);
 
         self::redirect('adminComments');
