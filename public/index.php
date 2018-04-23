@@ -15,7 +15,9 @@ session_start();
 try {
     new Kernel();
 } catch (ActionNotFoundException $anfe) {
-} catch (ControllerNotFoundException $anfe) {
+    echo $anfe->getMessage();
+} catch (ControllerNotFoundException $cnfe) {
+    echo $cnfe->getMessage();
 } catch (AccessDeniedException $ade) {
     header('Location: 403');
 } catch (RouteNotFoundException $rnfe) {
