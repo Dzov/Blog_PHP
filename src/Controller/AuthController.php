@@ -2,7 +2,7 @@
 
 namespace Blog\Controller;
 
-use Blog\Controller\Exceptions\UserNotFoundException;
+use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Model\AuthManager;
 
 /**
@@ -28,7 +28,7 @@ class AuthController extends Controller
             $_SESSION['userId'] = $user->getUser_id();
 
             self::redirect('index.php');
-        } catch (UserNotFoundException $unfe) {
+        } catch (ResourceNotFoundException $rnfe) {
             self::renderTemplate('login.twig', ['error' => 'Ces identifiants sont erronés']);
         }
     }

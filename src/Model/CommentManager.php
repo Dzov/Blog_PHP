@@ -19,20 +19,20 @@ abstract class CommentManager extends DatabaseConnection
         return parent::executeQuery($query, [])->fetchAll();
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function findById(int $id): ?Comment
     {
         $query = 'SELECT c.comment_id, c.post_id, c.author, c.content, c.posted_at, c.status, u.user_id, u.username 
                   FROM comment c INNER JOIN user u ON c.author = u.user_id WHERE c.comment_id = :id';
 
-        var_dump(new Comment(parent::executeQuery($query, ['id' => $id])->fetch())); die;
-
-        try {
-            return new Comment(parent::executeQuery($query, ['id' => $id])->fetch());
-        } catch (ResourceNotFoundException $rnfe) {
-            echo 'Ce commentaire n\'existe pas';
-        }
+        return new Comment(parent::executeQuery($query, ['id' => $id])->fetch());
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function insert(int $post_id, string $author, string $content): \PDOStatement
     {
         $query = 'INSERT INTO comment(post_id, author, content, posted_at, status) 
@@ -50,17 +50,16 @@ abstract class CommentManager extends DatabaseConnection
         );
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     private static function getAuthorId(string $author): int
     {
         $query = 'SELECT user_id FROM user u WHERE u.username = :author';
 
-        try {
-            $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
+        $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
 
-            return $author->getUser_id();
-        } catch (ResourceNotFoundException $rnfe) {
-            echo 'Cet utilisateur n\'existe pas';
-        }
+        return $author->getUser_id();
     }
 
     public static function publish(int $id): \PDOStatement

@@ -57,23 +57,25 @@ class AdminPostController extends Controller
 
     public static function createAction(): void
     {
-        if (isset($_POST['submit']) &&
-            isset($_POST['author']) &&
-            isset($_POST['title']) &&
-            isset($_POST['subtitle']) &&
-            isset($_POST['content']))
-        {
-            $author = $_POST['author'];
-            $title = $_POST['title'];
-            $subtitle = $_POST['subtitle'];
-            $content = $_POST['content'];
+        try {
+            if (isset($_POST['submit']) &&
+                isset($_POST['author']) &&
+                isset($_POST['title']) &&
+                isset($_POST['subtitle']) &&
+                isset($_POST['content'])) {
+                $author = $_POST['author'];
+                $title = $_POST['title'];
+                $subtitle = $_POST['subtitle'];
+                $content = $_POST['content'];
 
-            PostManager::create($author, $title, $subtitle, $content);
+                PostManager::create($author, $title, $subtitle, $content);
 
-            self::redirect('adminPosts');
+                self::redirect('adminPosts');
+            }
+            self::renderTemplate('admin-posts-form.twig');
+        } catch (ResourceNotFoundException $rnfe) {
+            echo 'Cet utilisateur n\'existe pas';
         }
-
-        self::renderTemplate('admin-posts-form.twig');
     }
 
     public static function deleteAction(array $parameters): void

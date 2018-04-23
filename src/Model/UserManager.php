@@ -16,13 +16,14 @@ class UserManager extends DatabaseConnection
         return parent::executeQuery($query, [])->fetchAll();
     }
 
+    /**
+     * @throws \Blog\Controller\Exceptions\ResourceNotFoundException
+     */
     public static function findById(int $userId): ?User
     {
         $query = 'SELECT u.first_name, u.last_name, u.username, u.email, u.user_id, u.role 
                   FROM user u WHERE u.user_id = :id';
 
-        return new User(
-            self::executeQuery($query, ['id' => $userId])->fetch()
-        );
+        return new User(self::executeQuery($query, ['id' => $userId])->fetch());
     }
 }
