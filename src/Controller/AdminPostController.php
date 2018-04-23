@@ -48,7 +48,7 @@ class AdminPostController extends Controller
                 $subtitle = $_POST['subtitle'];
                 $content = $_POST['content'];
                 PostManager::update($id, $title, $subtitle, $content);
-                self::redirect('adminPosts');
+                self::redirect('admin/posts');
             }
         } catch (ResourceNotFoundException $rnfe) {
             echo 'Cet article n\'existe pas';
@@ -71,7 +71,7 @@ class AdminPostController extends Controller
 
                 PostManager::create($author, $title, $subtitle, $content);
 
-                self::redirect('adminPosts');
+                self::redirect('admin/posts');
             }
             self::renderTemplate('admin-posts-form.twig');
         } catch (ResourceNotFoundException $rnfe) {
@@ -86,7 +86,7 @@ class AdminPostController extends Controller
         try {
             PostManager::findById($id);
             PostManager::delete($id);
-            self::redirect('adminPosts');
+            self::redirect('admin/posts');
         } catch (ResourceNotFoundException $rnfe) {
             echo 'Cet article n\existe pas';
         }

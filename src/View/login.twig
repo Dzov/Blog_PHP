@@ -8,7 +8,7 @@
             {% if error is not empty %}
                 <p>{{ error }}</p>
             {% endif %}
-            <form action="login" method="post">
+            <form action="{{ asset('login') }}" method="post">
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input class="form-control" name="username">

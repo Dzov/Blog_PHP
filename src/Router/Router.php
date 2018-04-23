@@ -36,7 +36,7 @@ class Router
             }
         }
 
-        throw new RouteNotFoundException('La page que vous recherchez n\'existe pas');
+        throw new RouteNotFoundException();
     }
 
     private function getControllerClassName(array $route): string

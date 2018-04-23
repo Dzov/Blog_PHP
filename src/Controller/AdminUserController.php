@@ -28,7 +28,7 @@ class AdminUserController extends Controller
             UserManager::findById($id);
             UserManager::grant($id);
 
-            self::redirect('adminUsers');
+            self::redirect('admin/users');
         } catch (ResourceNotFoundException $rnfe) {
             self::redirect('404');
         }
@@ -42,7 +42,7 @@ class AdminUserController extends Controller
             UserManager::findById($id);
             UserManager::deny($id);
 
-            self::redirect('adminUsers');
+            self::redirect('admin/users');
         } catch (ResourceNotFoundException $rnfe) {
             self::redirect('404');
         }
@@ -56,7 +56,7 @@ class AdminUserController extends Controller
             UserManager::findById($id);
             UserManager::delete($id);
 
-            self::redirect('adminUsers');
+            self::redirect('admin/users');
         } catch (ResourceNotFoundException $rnfe) {
             self::redirect('404');
         }

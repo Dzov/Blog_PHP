@@ -127,7 +127,7 @@ class Kernel
             throw new ActionNotFoundException();
         }
 
-        if (strpos($controller, 'Admin') && $this->getUserRole() !== 'ADMIN' || $this->getUserRole() === NULL) {
+        if (strpos($controller, 'Admin') && ($this->getUserRole() !== 'ADMIN' || $this->getUserRole() === NULL)) {
             throw new AccessDeniedException();
         }
 

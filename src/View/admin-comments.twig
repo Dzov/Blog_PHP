@@ -9,7 +9,7 @@
                         {% for comment in comments %}
                             <section class="flex justifyBetween">
                                 <div class="admin__comment-list">
-                                    <a href="post/{{ comment.post_id }}">
+                                    <a href="{{ asset('post/' ~ comment.post_id ) }}">
                                         <h5 class="comment-title">
                                             {{ comment.content }}
                                         </h5>
@@ -19,15 +19,15 @@
                                     </a>
                                     <p>Posté le
                                         {{ comment.posted_at | date("d M Y \à h:m") }} par
-                                        <a href="user/{{ comment.author }}">{{ comment.username | capitalize }}</a>
+                                        {{ comment.username | capitalize }}
                                     </p>
                                 </div>
                                 <div class="controls">
                                     <ul>
                                         {% if comment.status == 'PENDING' %}
-                                            <li><a href="publish/{{ comment.comment_id }}">Publier</a></li>{% endif %}
-                                        <li><a href="delete/{{ comment.comment_id }}">Supprimer</a></li>
-                                        <li><a href="post/{{ comment.post_id }}">Voir l'article associé</a></li>
+                                            <li><a href="{{ asset('admin/comments/' ~ comment.comment_id ~ '/publish') }}">Publier</a></li>{% endif %}
+                                        <li><a href="{{ asset('admin/comments/' ~ comment.comment_id ~ '/delete') }}">Supprimer</a></li>
+                                        <li><a href="{{ asset('post/' ~ comment.post_id) }}">Voir l'article associé</a></li>
                                     </ul>
                                 </div>
                             </section>
