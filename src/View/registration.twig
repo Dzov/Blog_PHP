@@ -1,0 +1,34 @@
+{% extends('base.twig') %}
+
+{% block title %} Blog - Inscription {% endblock title %}
+
+{% block body %}
+
+    <div class="card my-4 commentForm loginForm">
+        <h5 class="card-header">S'inscrire</h5>
+        <div class="card-body">
+            {% if error is not empty %}
+                <p>{{ error }}</p>
+            {% endif %}
+            <form action="{{ asset('register') }}" method="post">
+                <div class="form-group">
+                    <label for="username">Identifiant</label>
+                    <input class="form-control" name="username" required>
+                    <label for="password">Mot de passe</label>
+                    <input class="form-control" type="password" name="password" required>
+                    <label for="first_name">Prénom</label>
+                    <input class="form-control" name="first_name" required>
+                    <label for="last_name">Nom</label>
+                    <input class="form-control" name="last_name" required>
+                    <label for="email">Email</label>
+                    <input class="form-control" type="email" name="email" required>
+                </div>
+                <button type="submit" name='submit' class="btn btn-primary">S'inscrire</button>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block footer %} {% endblock %}

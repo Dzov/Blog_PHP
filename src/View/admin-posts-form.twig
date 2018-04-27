@@ -1,17 +1,20 @@
 {% extends('base.twig') %}
 
-{% block title %} Admin - Modifier un article {% endblock title %}
+{% block title %} Blog - Admin: Modifier un article {% endblock title %}
 
 {% block body %}
     {% if post is defined %}
         <div class="card my-4 commentForm">
             <h5 class="card-header">Modifier l'article</h5>
             <div class="card-body">
-                <form action="http://localhost/OpenClassrooms/P4-BlogPHP/blog/public/adminPosts/{{ post.post_id }}/edit" method="post">
+                <form action="{{ asset('admin/posts/' ~ post.post_id ~ '/edit') }}" method="post">
                     <div class="form-group">
-                        <input class="form-control" name="title" value="{{ post.title }}">
-                        <input class="form-control" name="subtitle" value="{{ post.subtitle }}">
-                        <textarea class="form-control" rows="3" name="content">{{ post.content }}</textarea>
+                        <label for="title">Titre: </label>
+                        <input class="form-control" name="title" value="{{ post.title }}" required>
+                        <label for="subtitle">Chapô: </label>
+                        <input class="form-control" name="subtitle" value="{{ post.subtitle }}" required>
+                        <label for="content">Article: </label>
+                        <textarea class="form-control" rows="3" name="content" required>{{ post.content }}</textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                 </form>
@@ -21,12 +24,16 @@
         <div class="card my-4 commentForm">
         <h5 class="card-header">Ajouter un article</h5>
         <div class="card-body">
-            <form action="http://localhost/OpenClassrooms/P4-BlogPHP/blog/public/adminPosts/create" method="post">
+            <form action="{{ asset('admin/posts/create') }}" method="post">
                 <div class="form-group">
-                    <input class="form-control" name="title" value="">
-                    <input class="form-control" name="subtitle" value="">
-                    <textarea class="form-control" rows="3" name="content"></textarea>
-                    <input class="form-control" name="author" value="{% if user is defined %}{{ user.username }}{% endif %}">
+                    <label for="title">Titre: </label>
+                    <input class="form-control" name="title" required>
+                    <label for="subtitle">Chapô: </label>
+                    <input class="form-control" name="subtitle" required>
+                    <label for="content">Article: </label>
+                    <textarea class="form-control" rows="3" name="content" required></textarea>
+                    <label for="author">Votre identifiant: </label>
+                    <input class="form-control" name="author" value="{% if currentUser is defined %}{{ currentUser.username }}{% endif %}">
                 </div>
                 <button type="submit" class="btn btn-primary" name="submit">Enregistrer</button>
             </form>
