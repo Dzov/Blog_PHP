@@ -20,45 +20,42 @@ class AdminUserController extends Controller
         );
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function grantAdminAction(array $parameters)
     {
         $id = $parameters['id'];
 
-        try {
-            UserManager::findById($id);
-            UserManager::grant($id);
+        UserManager::findById($id);
+        UserManager::grant($id);
 
-            self::redirect('adminUsers');
-        } catch (ResourceNotFoundException $rnfe) {
-            self::redirect('404');
-        }
+        self::redirect('admin/users');
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function denyAdminAction(array $parameters)
     {
         $id = $parameters['id'];
 
-        try {
-            UserManager::findById($id);
-            UserManager::deny($id);
+        UserManager::findById($id);
+        UserManager::deny($id);
 
-            self::redirect('adminUsers');
-        } catch (ResourceNotFoundException $rnfe) {
-            self::redirect('404');
-        }
+        self::redirect('admin/users');
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function deleteAction(array $parameters): void
     {
         $id = $parameters['id'];
 
-        try {
-            UserManager::findById($id);
-            UserManager::delete($id);
+        UserManager::findById($id);
+        UserManager::delete($id);
 
-            self::redirect('adminUsers');
-        } catch (ResourceNotFoundException $rnfe) {
-            self::redirect('404');
-        }
+        self::redirect('admin/users');
     }
 }

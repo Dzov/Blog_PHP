@@ -26,20 +26,19 @@ class AdminCommentController extends Controller
 
         CommentManager::publish($id);
 
-        self::redirect('adminComments');
+        self::redirect('admin/comments');
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function deleteAction(array $parameters): void
     {
         $id = $parameters['id'];
 
-        try {
-            CommentManager::findById($id);
-            CommentManager::delete($id);
+        CommentManager::findById($id);
+        CommentManager::delete($id);
 
-            self::redirect('adminComments');
-        } catch (ResourceNotFoundException $rnfe) {
-            self::redirect('404');
-        }
+        self::redirect('admin/comments');
     }
 }

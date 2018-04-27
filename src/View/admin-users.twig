@@ -1,5 +1,7 @@
 {% extends('base.twig') %}
 
+{% block title %} Blog - Admin: Utilisateurs {% endblock title %}
+
 {% block body %}
     <main class="flex justifyBetween">
         <section class="admin__section--users">
@@ -23,12 +25,12 @@
                                 <div class="controls">
                                     <ul>
                                         {% if user.role == 'REGISTERED_USER' %}
-                                            <li><a href="user/{{ user.user_id }}/grant">Attribuer role admin</a></li>
+                                            <li><a href="{{ asset('admin/users/' ~ user.user_id ~ '/grant') }}">Attribuer role admin</a></li>
                                         {% endif %}
                                         {% if user.role == 'ADMIN' %}
-                                            <li><a href="user/{{ user.user_id }}/deny">Retirer role admin</a></li>
+                                            <li><a href="{{ asset('admin/users/' ~ user.user_id ~ '/deny') }}">Retirer role admin</a></li>
                                         {% endif %}
-                                        <li><a href="user/{{ user.user_id }}/delete">Supprimer</a></li>
+                                        <li><a href="{{ asset('admin/users/' ~ user.user_id ~ '/delete') }}">Supprimer</a></li>
                                     </ul>
                                 </div>
                             </section>

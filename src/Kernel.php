@@ -6,6 +6,7 @@ use Blog\Controller\Exceptions\AccessDeniedException;
 use Blog\Controller\Exceptions\ActionNotFoundException;
 use Blog\Controller\Exceptions\ControllerNotFoundException;
 use Blog\Controller\Exceptions\ResourceNotFoundException;
+use Blog\Controller\Exceptions\RouteNotFoundException;
 use Blog\Entity\User;
 use Blog\Model\UserManager;
 use Blog\Router\Router;
@@ -45,6 +46,13 @@ class Kernel
      */
     private $currentUser;
 
+    /**
+     * @throws RouteNotFoundException
+     * @throws AccessDeniedException
+     * @throws ActionNotFoundException
+     * @throws ControllerNotFoundException
+     * @throws ResourceNotFoundException
+     */
     public function __construct()
     {
         $this->router = new Router();
@@ -127,7 +135,7 @@ class Kernel
             throw new ActionNotFoundException();
         }
 
-        if (strpos($controller, 'Admin') && $this->getUserRole() !== 'ADMIN' || $this->getUserRole() === NULL) {
+        if (strpos($controller, 'Admin') && ($this->getUserRole() !== 'ADMIN' || $this->getUserRole() === null)) {
             throw new AccessDeniedException();
         }
 
@@ -135,7 +143,8 @@ class Kernel
     }
 
     /**
-     * @throws \Blog\Controller\Exceptions\RouteNotFoundException
+     * @throws ResourceNotFoundException
+     * @throws RouteNotFoundException
      */
     private function prepare(): void
     {
@@ -151,22 +160,23 @@ class Kernel
         return $this->currentUser;
     }
 
-    public function getUserFromSession()
+    /**
+     * @throws ResourceNotFoundException
+     */
+    public function getUserFromSession(): ?User
     {
         if (!isset($_SESSION['userId'])) {
             return null;
         }
 
-        try {
-            $userId = $_SESSION['userId'];
+        $userId = $_SESSION['userId'];
 
-            return UserManager::findById($userId);
-        } catch (ResourceNotFoundException $rnfe) {
-            echo 'Cet utilisateur n\'existe pas';
-        }
-
+        return UserManager::findById($userId);
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public function setCurrentUser(): void
     {
         $this->currentUser = $this->getUserFromSession();
