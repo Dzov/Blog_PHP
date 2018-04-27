@@ -74,7 +74,8 @@ class Routes
                 'parameters' => ['id' => '[0-9]+']
             ],
             '404'                         => ['controller' => 'Error', 'action' => 'show404'],
-            '403'                         => ['controller' => 'Error', 'action' => 'show403']
+            '403'                         => ['controller' => 'Error', 'action' => 'show403'],
+            '500'                         => ['controller' => 'Error', 'action' => 'show500'],
         ];
 
     public function getRoutes(): array
