@@ -23,7 +23,7 @@ abstract class Controller
             if (isset($_SESSION['userId'])) {
                 $userId = $_SESSION['userId'];
                 $user = UserManager::findById($userId);
-                $twig->addGlobal('user', $user);
+                $twig->addGlobal('currentUser', $user);
             }
         } catch (ResourceNotFoundException $rnfe) {
             echo 'Cet utilisateur n\'existe pas';

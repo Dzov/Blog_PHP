@@ -1,10 +1,12 @@
 <div class="card my-4 commentForm">
     <h5 class="card-header">Leave a Comment:</h5>
     <div class="card-body">
-        <form action="{{ asset('addComment/' ~ post.post_id ) }}" method="post">
+        <form action="{{ asset('comments/' ~ post.post_id ~ '/add') }}" method="post">
             <div class="form-group">
-                <input class="form-control" name="author" value="{% if user is defined %}{{ user.username }}{% endif %}">
-                <textarea class="form-control" rows="3" name="content"></textarea>
+                <label for="author">Votre identifiant: </label>
+                <input class="form-control" name="author" value="{% if currentUser is defined %}{{ currentUser.username }}{% endif %}" required>
+                <label for="content">Votre commentaire: </label>
+                <textarea class="form-control" rows="3" name="content" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

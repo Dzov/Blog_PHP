@@ -1,14 +1,14 @@
 {% extends('base.twig') %}
 
-{% block title %}Admin{% endblock %}
+{% block title %}Blog - Admin{% endblock %}
 
 {% block body %}
     <section class="flexColumn">
         <div>
             <ul>
-                <li><a href="adminPosts">Posts</a></li>
-                <li><a href="adminComments">Comments</a></li>
-                <li><a href="adminUsers">Users</a></li>
+                <li><a href="{{ asset('admin/posts') }}">Posts</a></li>
+                <li><a href="{{ asset('admin/comments') }}">Comments</a></li>
+                <li><a href="{{ asset('admin/users') }}">Users</a></li>
             </ul>
         </div>
     </section>

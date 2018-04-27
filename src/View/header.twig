@@ -17,28 +17,31 @@
                         <a class="nav-link" href="{{ asset('about') }}">A propos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ asset('listPosts') }}">Les articles</a>
+                        <a class="nav-link" href="{{ asset('posts/list') }}">Les articles</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ asset('contact') }}">Contact</a>
                     </li>
 
-                    {% if user is defined %}
-                        {% if user.role == 'ADMIN' %}
+                    {% if currentUser is defined %}
+                        {% if currentUser.role == 'ADMIN' %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ asset('admin') }}">Admin</a>
                             </li>
                         {% endif %}
 
                         <li class="nav-item auth-info flexColumn">
-                            <span class="nav-username">Welcome {{ user.username }} !</span>
+                            <span class="nav-username">Welcome {{ currentUser.username }} !</span>
                         </li>
                         <li class="nav-item flexColumn">
                             <a class="nav-link" href="{{ asset('logout') }}">Log out</a>
                         </li>
                     {% else %}
                         <li class="nav-item auth-info">
-                            <a class="nav-link" href="{{ asset('loginPage') }}">Connexion</a>
+                            <a class="nav-link" href="{{ asset('login') }}">Connexion</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ asset('register') }}">Inscription</a>
                         </li>
                     {% endif %}
 
