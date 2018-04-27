@@ -52,4 +52,28 @@ class UserManager extends DatabaseConnection
 
         return parent::executeQuery($query, ['role' => 'REGISTERED_USER', 'id' => $id]);
     }
+
+    public static function create(
+        string $firstName,
+        string $lastName,
+        string $username,
+        string $email,
+        string $password
+    ): \PDOStatement
+    {
+        $query = 'INSERT INTO user (user.first_name, user.last_name, user.username, user.email, user.password, user.role) 
+                  VALUES (:firstName, :lastName, :username, :email, :password, :role)';
+
+        return parent::executeQuery(
+            $query,
+            [
+                ':firstName' => $firstName,
+                ':lastName'  => $lastName,
+                ':username'  => $username,
+                ':email'     => $email,
+                ':password'  => $password,
+                ':role'      => 'REGISTERED_USER'
+            ]
+        );
+    }
 }

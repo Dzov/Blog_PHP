@@ -8,3 +8,4 @@ public/.sass-cache/
 public/clean-blog.css/*
 public/.htaccess
 public/css
+node_modules/

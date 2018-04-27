@@ -10,13 +10,13 @@ class Routes
     private $routes =
         [
             ''                            => ['controller' => 'Home', 'action' => 'show'],
-            'posts/list'                   => ['controller' => 'Post', 'action' => 'list'],
-            'posts/{id}'                   => [
+            'posts/list'                  => ['controller' => 'Post', 'action' => 'list'],
+            'posts/{id}'                  => [
                 'controller' => 'Post',
                 'action'     => 'showPost',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            'comments/{postId}/add'        => [
+            'comments/{postId}/add'       => [
                 'controller' => 'Comment',
                 'action'     => 'save',
                 'parameters' => ['postId' => '[0-9]+']
@@ -25,8 +25,8 @@ class Routes
             'contact'                     => ['controller' => 'Contact', 'action' => 'show'],
             'contact/send'                => ['controller' => 'Contact', 'action' => 'send'],
             'contact/success'             => ['controller' => 'Contact', 'action' => 'validate'],
-            'login/show'                  => ['controller' => 'Auth', 'action' => 'show'],
             'login'                       => ['controller' => 'Auth', 'action' => 'login'],
+            'register'                    => ['controller' => 'Auth', 'action' => 'register'],
             'logout'                      => ['controller' => 'Auth', 'action' => 'logout'],
             'admin'                       => ['controller' => 'Admin', 'action' => 'show'],
             'admin/posts'                 => ['controller' => 'AdminPost', 'action' => 'list'],
@@ -58,23 +58,24 @@ class Routes
                 'parameters' => ['id' => '[0-9]+']
             ],
             'admin/users'                 => ['controller' => 'AdminUser', 'action' => 'list'],
-            'admin/users/{id}/grant'       => [
+            'admin/users/{id}/grant'      => [
                 'controller' => 'AdminUser',
                 'action'     => 'grantAdmin',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            'admin/users/{id}/deny'        => [
+            'admin/users/{id}/deny'       => [
                 'controller' => 'AdminUser',
                 'action'     => 'denyAdmin',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            'admin/users/{id}/delete'      => [
+            'admin/users/{id}/delete'     => [
                 'controller' => 'AdminUser',
                 'action'     => 'delete',
                 'parameters' => ['id' => '[0-9]+']
             ],
             '404'                         => ['controller' => 'Error', 'action' => 'show404'],
-            '403'                         => ['controller' => 'Error', 'action' => 'show403']
+            '403'                         => ['controller' => 'Error', 'action' => 'show403'],
+            '500'                         => ['controller' => 'Error', 'action' => 'show500'],
         ];
 
     public function getRoutes(): array

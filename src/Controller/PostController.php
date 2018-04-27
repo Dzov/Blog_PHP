@@ -17,17 +17,16 @@ class PostController extends Controller
         self::renderTemplate('posts.twig', ['posts' => $posts]);
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function showPostAction(array $parameters): void
     {
         $id = $parameters['id'];
-        try {
-            $post = PostManager::findById($id);
-            $comments = PostManager::findCommentsByPost($id);
+        $post = PostManager::findById($id);
+        $comments = PostManager::findCommentsByPost($id);
 
-            self::renderTemplate('post.twig', ['post' => $post, 'comments' => $comments]);
-        } catch (ResourceNotFoundException $rnfe) {
-            echo 'Cet article n\'existe pas';
-        }
+        self::renderTemplate('post.twig', ['post' => $post, 'comments' => $comments]);
     }
 }
 
