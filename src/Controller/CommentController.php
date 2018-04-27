@@ -11,23 +11,22 @@ use Blog\Model\PostManager;
  */
 class CommentController extends Controller
 {
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function saveAction(array $parameters = []): void
     {
-        try {
-            $postId = $parameters['postId'];
+        $postId = $parameters['postId'];
 
-            PostManager::findById($postId);
+        PostManager::findById($postId);
 
-            if (isset($_POST['author']) && isset($_POST['author'])) {
-                $author = $_POST['author'];
-                $content = $_POST['content'];
+        if (isset($_POST['author']) && isset($_POST['author'])) {
+            $author = $_POST['author'];
+            $content = $_POST['content'];
 
-                CommentManager::insert($postId, $author, $content);
+            CommentManager::insert($postId, $author, $content);
 
-                self::redirect('/post/' . $postId);
-            }
-        } catch (ResourceNotFoundException $rnfe) {
-            echo 'Cet article n\'existe pas';
+            self::redirect('/posts/' . $postId);
         }
     }
 }

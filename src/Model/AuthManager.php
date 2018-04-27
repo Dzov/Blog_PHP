@@ -11,19 +11,13 @@ use Blog\Entity\User;
 class AuthManager extends DatabaseConnection
 {
     /**
-     * @throws UserNotFoundException
+     * @throws \Blog\Controller\Exceptions\ResourceNotFoundException
      */
     public static function getUserIdentification(string $username, string $password): ?User
     {
         $query = 'SELECT u.user_id
                   FROM user u WHERE u.username = :username AND u.password = :password';
 
-        $user = self::executeQuery($query, ['username' => $username, 'password' => $password])->fetch();
-
-        if (false === $user) {
-            throw new UserNotFoundException();
-        }
-
-        return new User($user);
+        return new User(self::executeQuery($query, ['username' => $username, 'password' => $password])->fetch());
     }
 }

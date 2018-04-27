@@ -26,6 +26,9 @@ abstract class PostManager extends DatabaseConnection
         );
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function findById(int $id): ?Post
     {
         $query = 'SELECT * FROM post 
@@ -33,7 +36,6 @@ abstract class PostManager extends DatabaseConnection
 
         return new Post(parent::executeQuery($query, [':id' => $id])->fetch());
     }
-
 
     public static function findCommentsByPost(int $id): ?array
     {
@@ -78,6 +80,9 @@ abstract class PostManager extends DatabaseConnection
         );
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function create(string $author, string $title, string $subtitle, string $content): \PDOStatement
     {
         $query = 'INSERT INTO post (post.author, post.title, post.subtitle, post.content, post.updated_at) 
@@ -95,17 +100,16 @@ abstract class PostManager extends DatabaseConnection
         );
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     private static function getAuthorId(string $author): ?string
     {
         $query = 'SELECT user_id FROM user u WHERE u.username = :author';
 
-        try {
-            $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
+        $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
 
-            return $author->getUser_id();
-        } catch (ResourceNotFoundException $rnfe) {
-            echo 'Cet utilisateur n\'existe pas';
-        }
+        return $author->getUser_id();
     }
 }
 

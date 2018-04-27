@@ -20,49 +20,50 @@ class AdminPostController extends Controller
         );
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function showEditAction(array $parameters)
     {
         $id = $parameters['id'];
 
-        try {
-            $post = PostManager::findById($id);
+        $post = PostManager::findById($id);
 
-            self::renderTemplate(
-                'admin-posts-form.twig',
-                ['post' => $post]
-            );
-        } catch (ResourceNotFoundException $rnfe) {
-            echo 'Cet article n\'existe pas';
-        }
+        self::renderTemplate(
+            'admin-posts-form.twig',
+            ['post' => $post]
+        );
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function editAction(array $parameters): void
     {
         $id = $parameters['id'];
 
-        try {
-            PostManager::findById($id);
+        PostManager::findById($id);
 
-            if (isset($_POST['title']) && isset($_POST['subtitle']) && isset($_POST['content'])) {
-                $title = $_POST['title'];
-                $subtitle = $_POST['subtitle'];
-                $content = $_POST['content'];
-                PostManager::update($id, $title, $subtitle, $content);
-                self::redirect('adminPosts');
-            }
-        } catch (ResourceNotFoundException $rnfe) {
-            echo 'Cet article n\'existe pas';
+        if (isset($_POST['title']) && isset($_POST['subtitle']) && isset($_POST['content'])) {
+            $title = $_POST['title'];
+            $subtitle = $_POST['subtitle'];
+            $content = $_POST['content'];
+            PostManager::update($id, $title, $subtitle, $content);
+            self::redirect('admin/posts');
         }
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function createAction(): void
     {
         if (isset($_POST['submit']) &&
             isset($_POST['author']) &&
             isset($_POST['title']) &&
             isset($_POST['subtitle']) &&
-            isset($_POST['content']))
-        {
+            isset($_POST['content'])
+        ) {
             $author = $_POST['author'];
             $title = $_POST['title'];
             $subtitle = $_POST['subtitle'];
@@ -70,22 +71,20 @@ class AdminPostController extends Controller
 
             PostManager::create($author, $title, $subtitle, $content);
 
-            self::redirect('adminPosts');
+            self::redirect('admin/posts');
         }
-
         self::renderTemplate('admin-posts-form.twig');
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function deleteAction(array $parameters): void
     {
         $id = $parameters['id'];
 
-        try {
-            PostManager::findById($id);
-            PostManager::delete($id);
-            self::redirect('adminPosts');
-        } catch (ResourceNotFoundException $rnfe) {
-            echo 'Cet article n\existe pas';
-        }
+        PostManager::findById($id);
+        PostManager::delete($id);
+        self::redirect('admin/posts');
     }
 }

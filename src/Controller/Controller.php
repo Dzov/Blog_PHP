@@ -2,6 +2,7 @@
 
 namespace Blog\Controller;
 
+use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Model\UserManager;
 use Exception;
 use Twig_Environment;
@@ -18,10 +19,14 @@ abstract class Controller
         $loader = new Twig_Loader_Filesystem('../src/View');
         $twig = new Twig_Environment($loader);
 
-        if (isset($_SESSION['userId'])) {
-            $userId = $_SESSION['userId'];
-            $user = UserManager::findById($userId);
-            $twig->addGlobal('user', $user);
+        try {
+            if (isset($_SESSION['userId'])) {
+                $userId = $_SESSION['userId'];
+                $user = UserManager::findById($userId);
+                $twig->addGlobal('currentUser', $user);
+            }
+        } catch (ResourceNotFoundException $rnfe) {
+            echo 'Cet utilisateur n\'existe pas';
         }
 
         $asset = new Twig_Function(

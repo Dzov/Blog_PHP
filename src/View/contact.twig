@@ -1,24 +1,24 @@
 {% extends('base.twig') %}
 
-{% block title %} Contact {% endblock title %}
+{% block title %} Blog - Contact {% endblock title %}
 
 {% block body %}
-        <div class="card my-4 commentForm">
-            <h5 class="card-header">Me contacter</h5>
-            <div class="card-body">
-                <form action="http://localhost/OpenClassrooms/P4-BlogPHP/blog/public/contact/send" method="post">
-                    <div class="form-group">
-                        <label for="first_name">Votre prénom: </label>
-                        <input class="form-control" type="text" name="first_name" value="{% if user is defined %} {{ user.first_name }} {% endif %}"><br>
-                        <label for="last_name">Votre nom: </label>
-                        <input class="form-control" type="text" name="last_name" value="{% if user is defined %} {{ user.last_name }} {% endif %}"><br>
-                        <label for="email">Votre email: </label>
-                        <input class="form-control" type="text" name="email"><br>
-                        <label for="message">Votre message: </label><br>
-                        <textarea class="form-control" rows="5" name="message" cols="30"></textarea><br>
-                        <button type="submit" name="submit" class="btn btn-primary">Envoyer</button>
-                    </div>
-                </form>
-            </div>
+    <div class="card my-4 commentForm">
+        <h5 class="card-header">Me contacter</h5>
+        <div class="card-body">
+            <form action="{{ asset('contact/send') }}" method="post">
+                <div class="form-group">
+                    <label for="first_name">Votre prénom: </label>
+                    <input class="form-control" type="text" name="first_name" value="{% if currentUser is defined %} {{ currentUser.first_name }} {% endif %}"><br>
+                    <label for="last_name">Votre nom: </label>
+                    <input class="form-control" type="text" name="last_name" value="{% if currentUser is defined %} {{ currentUser.last_name }} {% endif %}"><br>
+                    <label for="email">Votre email: </label>
+                    <input class="form-control" type="text" name="email"><br>
+                    <label for="message">Votre message: </label><br>
+                    <textarea class="form-control" rows="5" name="message" cols="30"></textarea><br>
+                    <button type="submit" name="submit" class="btn btn-primary">Envoyer</button>
+                </div>
+            </form>
         </div>
+    </div>
 {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace Blog\Controller;
 
+use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Model\CommentManager;
 
 /**
@@ -25,9 +26,12 @@ class AdminCommentController extends Controller
 
         CommentManager::publish($id);
 
-        self::redirect('adminComments');
+        self::redirect('admin/comments');
     }
 
+    /**
+     * @throws ResourceNotFoundException
+     */
     public static function deleteAction(array $parameters): void
     {
         $id = $parameters['id'];
@@ -35,6 +39,6 @@ class AdminCommentController extends Controller
         CommentManager::findById($id);
         CommentManager::delete($id);
 
-        self::redirect('adminComments');
+        self::redirect('admin/comments');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Blog\Controller;
 
+use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Model\UserManager;
 
 /**
@@ -17,5 +18,44 @@ class AdminUserController extends Controller
             'admin-users.twig',
             ['users' => $users]
         );
+    }
+
+    /**
+     * @throws ResourceNotFoundException
+     */
+    public static function grantAdminAction(array $parameters)
+    {
+        $id = $parameters['id'];
+
+        UserManager::findById($id);
+        UserManager::grant($id);
+
+        self::redirect('admin/users');
+    }
+
+    /**
+     * @throws ResourceNotFoundException
+     */
+    public static function denyAdminAction(array $parameters)
+    {
+        $id = $parameters['id'];
+
+        UserManager::findById($id);
+        UserManager::deny($id);
+
+        self::redirect('admin/users');
+    }
+
+    /**
+     * @throws ResourceNotFoundException
+     */
+    public static function deleteAction(array $parameters): void
+    {
+        $id = $parameters['id'];
+
+        UserManager::findById($id);
+        UserManager::delete($id);
+
+        self::redirect('admin/users');
     }
 }
