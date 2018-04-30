@@ -22,10 +22,16 @@ class AdminCommentController extends Controller
 
     public static function publishAction(array $parameters): void
     {
-        $id = $parameters['id'];
+        if (isset($_POST['submit']) && isset($_POST['token']) && isset($_SESSION['token'])) {
+            $id = $parameters['id'];
 
-        CommentManager::publish($id);
-
+            if ($_POST['token'] === $_SESSION['token']) {
+                CommentManager::publish($id);
+                $_SESSION['success'][] = 'Le commentaire a bien été publié';
+            } else {
+                $_SESSION['errors'][] = 'Une erreur de vérification est survenue';
+            }
+        }
         self::redirect('admin/comments');
     }
 
@@ -34,11 +40,18 @@ class AdminCommentController extends Controller
      */
     public static function deleteAction(array $parameters): void
     {
-        $id = $parameters['id'];
+        if (isset($_POST['submit']) && isset($_POST['token']) && isset($_SESSION['token'])) {
+            $id = $parameters['id'];
 
-        CommentManager::findById($id);
-        CommentManager::delete($id);
+            CommentManager::findById($id);
 
+            if ($_POST['token'] === $_SESSION['token']) {
+                CommentManager::delete($id);
+                $_SESSION['success'][] = 'Le commentaire a bien été supprimé';
+            } else {
+                $_SESSION['errors'][] = 'Une erreur de vérification est survenue';
+            }
+        }
         self::redirect('admin/comments');
     }
 }

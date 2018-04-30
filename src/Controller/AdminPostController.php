@@ -4,6 +4,7 @@ namespace Blog\Controller;
 
 use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Model\PostManager;
+use MongoDB\Driver\Exception\AuthenticationException;
 
 /**
  * @author Amélie-Dzovinar Haladjian
@@ -34,8 +35,8 @@ class AdminPostController extends Controller
             $subtitle = $_POST['subtitle'];
             $content = $_POST['content'];
 
-            if (strlen($title) < 2 || strlen($title) > 30) {
-                $_SESSION['errors'][] = 'Le titre doit faire entre 2 et 30 caractères';
+            if (strlen($title) < 2 || strlen($title) > 45) {
+                $_SESSION['errors'][] = 'Le titre doit faire entre 2 et 45 caractères';
             }
             if (strlen($subtitle) < 2 || strlen($subtitle) > 95) {
                 $_SESSION['errors'][] = 'Le chapô doit faire entre 5 et 95 caractères';
@@ -46,14 +47,15 @@ class AdminPostController extends Controller
 
             if (!isset($_SESSION['errors'])) {
                 PostManager::update($id, $title, $subtitle, $content);
+                $_SESSION['success'][] = 'L\'article a bien été modifié';
                 self::redirect('admin/posts');
             }
+        } else {
+            self::renderTemplate(
+                'admin-posts-form.twig',
+                ['post' => $post]
+            );
         }
-
-        self::renderTemplate(
-            'admin-posts-form.twig',
-            ['post' => $post]
-        );
     }
 
     /**
@@ -72,8 +74,8 @@ class AdminPostController extends Controller
             $subtitle = $_POST['subtitle'];
             $content = $_POST['content'];
 
-            if (strlen($title) < 2 || strlen($title) > 30) {
-                $_SESSION['errors'][] = 'Le titre doit faire entre 2 et 30 caractères';
+            if (strlen($title) < 2 || strlen($title) > 45) {
+                $_SESSION['errors'][] = 'Le titre doit faire entre 2 et 45 caractères';
             }
             if (strlen($subtitle) < 2 || strlen($subtitle) > 95) {
                 $_SESSION['errors'][] = 'Le chapô doit faire entre 5 et 95 caractères';
@@ -87,11 +89,12 @@ class AdminPostController extends Controller
 
             if (!isset($_SESSION['errors'])) {
                 PostManager::create($author, $title, $subtitle, $content);
+                $_SESSION['success'][] = 'L\'article a bien été ajouté';
                 self::redirect('admin/posts');
             }
+        } else {
+            self::renderTemplate('admin-posts-form.twig');
         }
-
-        self::renderTemplate('admin-posts-form.twig');
     }
 
     /**
@@ -99,10 +102,18 @@ class AdminPostController extends Controller
      */
     public static function deleteAction(array $parameters): void
     {
-        $id = $parameters['id'];
+        if (isset($_POST['submit']) && isset($_POST['token']) && isset($_SESSION['token'])) {
+            $id = $parameters['id'];
 
-        PostManager::findById($id);
-        PostManager::delete($id);
+            PostManager::findById($id);
+
+            if ($_POST['token'] === $_SESSION['token']) {
+                PostManager::delete($id);
+                $_SESSION['success'][] = 'L\'article a bien été supprimé';
+            } else {
+                $_SESSION['errors'][] = 'Une erreur de vérification est survenue';
+            }
+        }
         self::redirect('admin/posts');
     }
 }

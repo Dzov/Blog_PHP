@@ -39,6 +39,8 @@ class AuthController extends Controller
     public static function logoutAction(): void
     {
         unset($_SESSION['userId']);
+        unset($_SESSION['errors']);
+        unset($_SESSION['token']);
 
         self::redirect('index.php');
     }

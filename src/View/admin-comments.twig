@@ -4,6 +4,16 @@
 
 {% block body %}
     <main class="flex justifyBetween">
+        {% if success is defined %}
+            {% for message in success %}
+                <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% if errors is defined %}
+            {% for error in errors %}
+                <div class="alert alert-danger" role="alert">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
         <section class="admin__section--comments">
             <div class="container">
                 <div class="row">
@@ -25,12 +35,19 @@
                                     </p>
                                 </div>
                                 <div class="controls">
-                                    <ul>
-                                        {% if comment.status == 'PENDING' %}
-                                            <li><a href="{{ asset('admin/comments/' ~ comment.comment_id ~ '/publish') }}">Publier</a></li>{% endif %}
-                                        <li><a href="{{ asset('admin/comments/' ~ comment.comment_id ~ '/delete') }}">Supprimer</a></li>
-                                        <li><a href="{{ asset('posts/' ~ comment.post_id) }}">Voir l'article associé</a></li>
-                                    </ul>
+                                    {% if comment.status == 'PENDING' %}
+                                        <form action="{{ asset('admin/comments/' ~ comment.comment_id ~ '/publish') }}" method="post">
+                                            <input type="hidden" name="token" id="token" value="{{ token }}"/>
+                                            <button type="submit" name="submit" class="btn btn-primary">Publier</button>
+                                        </form>
+                                    {% endif %}
+                                    <a href="{{ asset('posts/' ~ comment.post_id) }}">
+                                        <button type="submit" name="submit" class="btn btn-primary my-2">Voir l'article associé</button>
+                                    </a>
+                                    <form action="{{ asset('admin/comments/' ~ comment.comment_id ~ '/delete') }}" method="post">
+                                        <input type="hidden" name="token" id="token" value="{{ token }}"/>
+                                        <button type="submit" name="submit" class="btn btn-danger">Supprimer</button>
+                                    </form>
                                 </div>
                             </section>
                             <hr>

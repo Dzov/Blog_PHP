@@ -58,11 +58,21 @@ abstract class Controller
             echo 'Cet utilisateur n\'existe pas';
         }
 
-        if (isset($_SESSION['errors']))
-        {
+        if (isset($_SESSION['errors'])) {
             $errors = $_SESSION['errors'];
             unset($_SESSION['errors']);
             $twig->addGlobal('errors', $errors);
+        }
+
+        if (isset($_SESSION['success'])) {
+            $success = $_SESSION['success'];
+            unset($_SESSION['success']);
+            $twig->addGlobal('success', $success);
+        }
+
+        if (isset($_SESSION['token'])) {
+            $token = $_SESSION['token'];
+            $twig->addGlobal('token', $token);
         }
     }
 }

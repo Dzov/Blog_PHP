@@ -4,6 +4,16 @@
 
 {% block body %}
     <main class="flex justifyBetween">
+        {% if success is defined %}
+            {% for message in success %}
+                <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% if errors is defined %}
+            {% for error in errors %}
+                <div class="alert alert-danger" role="alert">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
         <section class="admin__section--posts">
             <div class="container">
                 <div class="row">
@@ -26,14 +36,14 @@
                                     </p>
                                 </div>
                                 <div class="controls">
-                                    <ul>
-                                        <li>
-                                            <a href="{{ asset('admin/posts/' ~ post.post_id ~ '/edit') }}">Modifier</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ asset('admin/posts/' ~ post.post_id ~ '/delete') }}">Supprimer</a>
-                                        </li>
-                                    </ul>
+                                    <form action="{{ asset('admin/posts/' ~ post.post_id ~ '/edit') }}" method="post">
+                                        <input type="hidden" name="token" id="token" value="{{ token }}"/>
+                                        <button type="submit" name="submit" class="btn btn-primary">Modifier</button>
+                                    </form>
+                                    <form action="{{ asset('admin/posts/' ~ post.post_id ~ '/delete') }}" method="post" class="my-2">
+                                        <input type="hidden" name="token" id="token" value="{{ token }}"/>
+                                        <button type="submit" name="submit" class="btn btn-danger">Supprimer</button>
+                                    </form>
                                 </div>
                             </section>
                             <hr>

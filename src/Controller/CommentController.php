@@ -33,6 +33,7 @@ class CommentController extends Controller
 
             if (!isset($_SESSION['errors'])) {
                 CommentManager::insert($postId, $author, $content);
+                $_SESSION['success'][] = 'Le commentaire a bien été enregistré, il sera publié après validation';
             }
         }
 

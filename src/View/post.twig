@@ -8,6 +8,11 @@
             <div class="alert alert-danger" role="alert">{{ error }}</div>
         {% endfor %}
     {% endif %}
+    {% if success is defined %}
+        {% for message in success %}
+            <div class="alert alert-success" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
     <article>
         <div class="container">
             <div class="row">

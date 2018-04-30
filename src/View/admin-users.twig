@@ -4,6 +4,16 @@
 
 {% block body %}
     <main class="flex justifyBetween">
+        {% if success is defined %}
+            {% for message in success %}
+                <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% if errors is defined %}
+            {% for error in errors %}
+                <div class="alert alert-danger" role="alert">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
         <section class="admin__section--users">
             <div class="container">
                 <div class="row">
@@ -23,15 +33,22 @@
                                     <p>{{ user.email }}</p>
                                 </div>
                                 <div class="controls">
-                                    <ul>
-                                        {% if user.role == 'REGISTERED_USER' %}
-                                            <li><a href="{{ asset('admin/users/' ~ user.user_id ~ '/grant') }}">Attribuer role admin</a></li>
-                                        {% endif %}
-                                        {% if user.role == 'ADMIN' %}
-                                            <li><a href="{{ asset('admin/users/' ~ user.user_id ~ '/deny') }}">Retirer role admin</a></li>
-                                        {% endif %}
-                                        <li><a href="{{ asset('admin/users/' ~ user.user_id ~ '/delete') }}">Supprimer</a></li>
-                                    </ul>
+                                    {% if user.role == 'REGISTERED_USER' %}
+                                        <form action="{{ asset('admin/users/' ~ user.user_id ~ '/grant') }}" method="post">
+                                            <input type="hidden" name="token" id="token" value="{{ token }}"/>
+                                            <button type="submit" name="submit" class="btn btn-primary">Attribuer le role admin</button>
+                                        </form>
+                                    {% endif %}
+                                    {% if user.role == 'ADMIN' %}
+                                        <form action="{{ asset('admin/users/' ~ user.user_id ~ '/deny') }}" method="post">
+                                            <input type="hidden" name="token" id="token" value="{{ token }}"/>
+                                            <button type="submit" name="submit" class="btn btn-secondary">Retirer le role admin</button>
+                                        </form>
+                                    {% endif %}
+                                    <form action="{{ asset('admin/users/' ~ user.user_id ~ '/delete') }}" method="post" class="my-2">
+                                        <input type="hidden" name="token" id="token" value="{{ token }}"/>
+                                        <button type="submit" name="submit" class="btn btn-danger">Supprimer</button>
+                                    </form>
                                 </div>
                             </section>
                             <hr>

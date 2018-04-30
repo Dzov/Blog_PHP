@@ -25,10 +25,18 @@ class AdminUserController extends Controller
      */
     public static function grantAdminAction(array $parameters)
     {
-        $id = $parameters['id'];
+        if (isset($_POST['submit']) && isset($_POST['token']) && isset($_SESSION['token'])) {
+            $id = $parameters['id'];
 
-        UserManager::findById($id);
-        UserManager::grant($id);
+            UserManager::findById($id);
+
+            if ($_POST['token'] === $_SESSION['token']) {
+                UserManager::grant($id);
+                $_SESSION['success'][] = 'L\'utilisateur a maintenant le role admin';
+            } else {
+                $_SESSION['errors'][] = 'Une erreur de vérification est survenue';
+            }
+        }
 
         self::redirect('admin/users');
     }
@@ -38,10 +46,18 @@ class AdminUserController extends Controller
      */
     public static function denyAdminAction(array $parameters)
     {
-        $id = $parameters['id'];
+        if (isset($_POST['submit']) && isset($_POST['token']) && isset($_SESSION['token'])) {
+            $id = $parameters['id'];
 
-        UserManager::findById($id);
-        UserManager::deny($id);
+            UserManager::findById($id);
+
+            if ($_POST['token'] === $_SESSION['token']) {
+                UserManager::deny($id);
+                $_SESSION['success'][] = 'Le role admin de l\'utilisateur a bien été retiré';
+            } else {
+                $_SESSION['errors'][] = 'Une erreur de vérification est survenue';
+            }
+        }
 
         self::redirect('admin/users');
     }
@@ -51,10 +67,18 @@ class AdminUserController extends Controller
      */
     public static function deleteAction(array $parameters): void
     {
-        $id = $parameters['id'];
+        if (isset($_POST['submit']) && isset($_POST['token']) && isset($_SESSION['token'])) {
+            $id = $parameters['id'];
 
-        UserManager::findById($id);
-        UserManager::delete($id);
+            UserManager::findById($id);
+
+            if ($_POST['token'] === $_SESSION['token']) {
+                UserManager::delete($id);
+                $_SESSION['success'][] = 'L\'utilisateur a bien été supprimé';
+            } else {
+                $_SESSION['errors'][] = 'Une erreur de vérification est survenue';
+            }
+        }
 
         self::redirect('admin/users');
     }

@@ -67,8 +67,8 @@ class Routes
                 'action'     => 'delete',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            '404'                         => ['controller' => 'Error', 'action' => 'show404'],
             '403'                         => ['controller' => 'Error', 'action' => 'show403'],
+            '404'                         => ['controller' => 'Error', 'action' => 'show404'],
             '500'                         => ['controller' => 'Error', 'action' => 'show500'],
         ];
 
