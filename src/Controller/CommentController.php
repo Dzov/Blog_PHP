@@ -33,10 +33,10 @@ class CommentController extends Controller
 
             if (!isset($_SESSION['errors'])) {
                 CommentManager::insert($postId, $author, $content);
-
-                self::redirect('/posts/' . $postId);
             }
         }
+
+        self::redirect('/posts/' . $postId);
     }
 }
 
