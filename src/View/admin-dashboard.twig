@@ -3,13 +3,14 @@
 {% block title %}Blog - Admin{% endblock %}
 
 {% block body %}
-    <section class="flexColumn">
-        <div>
-            <ul>
-                <li><a href="{{ asset('admin/posts') }}">Posts</a></li>
-                <li><a href="{{ asset('admin/comments') }}">Comments</a></li>
-                <li><a href="{{ asset('admin/users') }}">Users</a></li>
+    <main>
+        <section class="admin__dashboard d-flex flex-column align-items-center">
+            <h3>Dashboard Administrateur</h3>
+            <ul class="admin__dashboard--list d-flex flex-column justify-content-around my-5">
+                <li><a href="{{ asset('admin/posts') }}">Les articles</a></li>
+                <li><a href="{{ asset('admin/comments') }}">Les commentaires</a></li>
+                <li><a href="{{ asset('admin/users') }}">Les utilisateurs</a></li>
             </ul>
-        </div>
-    </section>
+        </section>
+    </main>
 {% endblock %}
