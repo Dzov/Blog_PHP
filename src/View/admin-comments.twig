@@ -14,12 +14,13 @@
                 <div class="alert alert-danger" role="alert">{{ error }}</div>
             {% endfor %}
         {% endif %}
-        <section class="admin__section--comments">
-            <div class="container">
+        <section class="admin__section--comments d-flex flex-column align-items-center">
+            <h3 class="my-3">Les commentaires</h3>
+            <div class="container my-3">
                 <div class="row">
                     <div class="col-lg-8 col-md-10 m-auto">
                         {% for comment in comments %}
-                            <section class="flex justifyBetween">
+                            <section class="d-flex justify-content-between">
                                 <div class="admin__comment-list">
                                     <a href="{{ asset('posts/' ~ comment.post_id ) }}">
                                         <h5 class="comment-title">
@@ -42,7 +43,7 @@
                                         </form>
                                     {% endif %}
                                     <a href="{{ asset('posts/' ~ comment.post_id) }}">
-                                        <button type="submit" name="submit" class="btn btn-primary my-2">Voir l'article associé</button>
+                                        <button type="submit" name="submit" class="btn btn-secondary my-2">Voir l'article associé</button>
                                     </a>
                                     <form action="{{ asset('admin/comments/' ~ comment.comment_id ~ '/delete') }}" method="post">
                                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
