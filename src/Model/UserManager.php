@@ -27,6 +27,28 @@ class UserManager extends DatabaseConnection
         return new User(self::executeQuery($query, ['id' => $userId])->fetch());
     }
 
+    /**
+     * @throws \Blog\Controller\Exceptions\ResourceNotFoundException
+     */
+    public static function findByUsername(string $username): ?User
+    {
+        $query = 'SELECT u.first_name, u.last_name, u.username, u.email, u.user_id, u.role 
+                  FROM user u WHERE u.username = :username';
+
+        return new User(self::executeQuery($query, ['username' => $username])->fetch());
+    }
+
+    /**
+     * @throws \Blog\Controller\Exceptions\ResourceNotFoundException
+     */
+    public static function findByEmail(string $email): ?User
+    {
+        $query = 'SELECT u.first_name, u.last_name, u.username, u.email, u.user_id, u.role 
+                  FROM user u WHERE u.email = :email';
+
+        return new User(self::executeQuery($query, ['email' => $email])->fetch());
+    }
+
     public static function delete(int $id): \PDOStatement
     {
         $query = 'DELETE FROM user
