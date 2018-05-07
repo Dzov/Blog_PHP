@@ -40,7 +40,7 @@ class AuthController extends Controller
     {
         unset($_SESSION['userId']);
         unset($_SESSION['errors']);
-        unset($_SESSION['token']);
+        unset($_SESSION['security']);
 
         self::redirect('index.php');
     }

@@ -13,6 +13,8 @@ class AdminPostController extends Controller
 {
     public static function listAction(): void
     {
+        self::setToken();
+
         $posts = PostManager::findAll();
 
         self::renderTemplate(
@@ -107,11 +109,11 @@ class AdminPostController extends Controller
 
             PostManager::findById($id);
 
-            if ($_POST['token'] === $_SESSION['token']) {
+            if (self::tokenIsValid($_POST['token'])) {
                 PostManager::delete($id);
                 $_SESSION['success'][] = 'L\'article a bien été supprimé';
             } else {
-                $_SESSION['errors'][] = 'Une erreur de vérification est survenue';
+                $_SESSION['errors'][] = 'La session a expiré';
             }
         }
         self::redirect('admin/posts');

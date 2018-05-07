@@ -20,6 +20,7 @@
                         <input class="form-control" name="subtitle" value="{{ post.subtitle }}" required>
                         <label for="content">Article: </label>
                         <textarea class="form-control" rows="3" name="content" required>{{ post.content }}</textarea>
+                        <input type="hidden" name="token" id="token" value="{{ token }}"/>
                     </div>
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                 </form>
@@ -44,6 +45,7 @@
                         <textarea class="form-control" rows="3" name="content" required></textarea>
                         <label for="author">Votre identifiant: </label>
                         <input class="form-control" name="author" value="{% if currentUser is defined %}{{ currentUser.username }}{% endif %}">
+                        <input type="hidden" name="token" id="token" value="{{ token }}"/>
                     </div>
                     <button type="submit" class="btn btn-primary" name="submit">Enregistrer</button>
                 </form>
