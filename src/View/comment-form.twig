@@ -19,7 +19,7 @@
                 {% if vm.content is defined %}
                     <textarea class="form-control" rows="3" name="content" required>{{ vm.content }}</textarea>
                 {% else %}
-                    <textarea class="form-control" rows="3" name="content" ></textarea>
+                    <textarea class="form-control" rows="3" name="content" required></textarea>
                 {% endif %}
             </div>
             <button type="submit" name="submit" class="btn btn-primary">Valider</button>

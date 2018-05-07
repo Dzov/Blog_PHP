@@ -77,7 +77,7 @@ abstract class Controller
 
         header("Location: $url");
 
-        //return;
+        return;
     }
 
     protected static function addGlobalVariables(Twig_Environment $twig): void
@@ -100,6 +100,7 @@ abstract class Controller
 
         if (isset($_SESSION['success'])) {
             $success = $_SESSION['success'];
+            var_dump($success);
             unset($_SESSION['success']);
             $twig->addGlobal('success', $success);
         }

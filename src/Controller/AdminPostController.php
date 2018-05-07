@@ -71,6 +71,7 @@ class AdminPostController extends Controller
             if (!isset($vm['errors'])) {
                 PostManager::update($id, $title, $subtitle, $content);
                 $_SESSION['success'][] = 'L\'article a bien été modifié';
+
                 self::redirect('admin/posts');
             } else {
                 self::renderTemplate('admin-posts-form.twig', ['vm' => $vm, 'post' => $post]);
