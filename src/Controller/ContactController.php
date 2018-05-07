@@ -12,11 +12,6 @@ use Swift_SmtpTransport;
  */
 class ContactController extends Controller
 {
-    public static function showAction()
-    {
-        self::renderTemplate('contact.twig');
-    }
-
     public static function sendAction()
     {
         if (isset($_POST['submit']) &&
@@ -27,26 +22,43 @@ class ContactController extends Controller
         ) {
             $firstName = $_POST['first_name'];
             $lastName = $_POST['last_name'];
-            $email = $_POST['email'];
+            $email = str_replace(array("\n", "\r", PHP_EOL), '', $_POST['email']);
             $message = $_POST['message'];
 
-            $transport = (new Swift_SmtpTransport(Parameters::$mail_host, Parameters::$mail_port, 'ssl'))
-                ->setUsername(Parameters::$mail_username)
-                ->setPassword(Parameters::$mail_password);
+            if (strlen($firstName) < 2 || strlen($firstName) >= 30) {
+                $_SESSION['errors'][] = 'Votre prénom doit faire entre 2 et 30 caractères';
+            }
+            if (strlen($lastName) < 2 || strlen($lastName) >= 40) {
+                $_SESSION['errors'][] = 'Votre nom de famille doit faire entre 2 et 40 caractères';
+            }
+            if (strlen($email) < 6 || strlen($lastName) >= 50) {
+                $_SESSION['errors'][] = 'Votre email doit faire entre 6 et 50 caractères';
+            }
+            if (strlen($message) < 5) {
+                $_SESSION['errors'][] = 'Votre message doit contenir au moins 5 caractères';
+            }
 
-            $mailer = new Swift_Mailer($transport);
+            if (!isset($_SESSION['errors'])) {
+                $transport = (new Swift_SmtpTransport(Parameters::$mail_host, Parameters::$mail_port, 'ssl'))
+                    ->setUsername(Parameters::$mail_username)
+                    ->setPassword(Parameters::$mail_password);
 
-            $message = (new Swift_Message('Blog: Nouveau message'))
-                ->setFrom([$email => $firstName .' '. $lastName])
-                ->setTo([Parameters::$mail_username => Parameters::$mail_receiver])
-                ->setBody($message);
+                $mailer = new Swift_Mailer($transport);
 
-            $result = $mailer->send($message);
+                $message = (new Swift_Message('Blog: Nouveau message'))
+                    ->setFrom([$email => $firstName . ' ' . $lastName])
+                    ->setTo([Parameters::$mail_username => Parameters::$mail_receiver])
+                    ->setBody($message);
 
-            if ($result) {
-                self::redirect('contact/success');
+                $result = $mailer->send($message);
+
+                if ($result) {
+                    self::redirect('contact/success');
+                }
             }
         }
+
+        self::renderTemplate('contact.twig');
     }
 
     public static function validateAction()

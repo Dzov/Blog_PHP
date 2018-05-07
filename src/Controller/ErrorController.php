@@ -18,6 +18,7 @@ class ErrorController extends Controller
         header('HTTP/1.0 403 Forbidden');
         self::renderTemplate('403.twig');
     }
+
     public static function show500Action(): void
     {
         self::renderTemplate('500.twig');

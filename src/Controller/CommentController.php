@@ -24,10 +24,20 @@ class CommentController extends Controller
             $author = $_POST['author'];
             $content = $_POST['content'];
 
-            CommentManager::insert($postId, $author, $content);
+            if (strlen($author) < 2 || strlen($author) >= 20) {
+                $_SESSION['errors'][] = 'Votre identifiant doit faire entre 2 et 20 caractères';
+            }
+            if (strlen($content) < 5) {
+                $_SESSION['errors'][] = 'Votre commentaire doit contenir au moins 5 caractères';
+            }
 
-            self::redirect('/posts/' . $postId);
+            if (!isset($_SESSION['errors'])) {
+                CommentManager::insert($postId, $author, $content);
+                $_SESSION['success'][] = 'Le commentaire a bien été enregistré, il sera publié après validation';
+            }
         }
+
+        self::redirect('/posts/' . $postId);
     }
 }
 

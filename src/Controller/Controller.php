@@ -19,15 +19,7 @@ abstract class Controller
         $loader = new Twig_Loader_Filesystem('../src/View');
         $twig = new Twig_Environment($loader);
 
-        try {
-            if (isset($_SESSION['userId'])) {
-                $userId = $_SESSION['userId'];
-                $user = UserManager::findById($userId);
-                $twig->addGlobal('currentUser', $user);
-            }
-        } catch (ResourceNotFoundException $rnfe) {
-            echo 'Cet utilisateur n\'existe pas';
-        }
+        self::addGlobalVariables($twig);
 
         $asset = new Twig_Function(
             'asset',
@@ -52,5 +44,35 @@ abstract class Controller
         $url = str_replace('//', '/', $_SERVER['BASE'] . '/' . $url);
 
         header("Location: $url");
+    }
+
+    protected static function addGlobalVariables(Twig_Environment $twig): void
+    {
+        try {
+            if (isset($_SESSION['userId'])) {
+                $userId = $_SESSION['userId'];
+                $user = UserManager::findById($userId);
+                $twig->addGlobal('currentUser', $user);
+            }
+        } catch (ResourceNotFoundException $rnfe) {
+            echo 'Cet utilisateur n\'existe pas';
+        }
+
+        if (isset($_SESSION['errors'])) {
+            $errors = $_SESSION['errors'];
+            unset($_SESSION['errors']);
+            $twig->addGlobal('errors', $errors);
+        }
+
+        if (isset($_SESSION['success'])) {
+            $success = $_SESSION['success'];
+            unset($_SESSION['success']);
+            $twig->addGlobal('success', $success);
+        }
+
+        if (isset($_SESSION['token'])) {
+            $token = $_SESSION['token'];
+            $twig->addGlobal('token', $token);
+        }
     }
 }

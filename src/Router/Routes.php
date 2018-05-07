@@ -22,8 +22,7 @@ class Routes
                 'parameters' => ['postId' => '[0-9]+']
             ],
             'about'                       => ['controller' => 'About', 'action' => 'show'],
-            'contact'                     => ['controller' => 'Contact', 'action' => 'show'],
-            'contact/send'                => ['controller' => 'Contact', 'action' => 'send'],
+            'contact'                     => ['controller' => 'Contact', 'action' => 'send'],
             'contact/success'             => ['controller' => 'Contact', 'action' => 'validate'],
             'login'                       => ['controller' => 'Auth', 'action' => 'login'],
             'register'                    => ['controller' => 'Auth', 'action' => 'register'],
@@ -31,11 +30,6 @@ class Routes
             'admin'                       => ['controller' => 'Admin', 'action' => 'show'],
             'admin/posts'                 => ['controller' => 'AdminPost', 'action' => 'list'],
             'admin/posts/create'          => ['controller' => 'AdminPost', 'action' => 'create'],
-            'admin/posts/{id}/showEdit'   => [
-                'controller' => 'AdminPost',
-                'action'     => 'showEdit',
-                'parameters' => ['id' => '[0-9]+']
-            ],
             'admin/posts/{id}/edit'       => [
                 'controller' => 'AdminPost',
                 'action'     => 'edit',
@@ -73,8 +67,8 @@ class Routes
                 'action'     => 'delete',
                 'parameters' => ['id' => '[0-9]+']
             ],
-            '404'                         => ['controller' => 'Error', 'action' => 'show404'],
             '403'                         => ['controller' => 'Error', 'action' => 'show403'],
+            '404'                         => ['controller' => 'Error', 'action' => 'show404'],
             '500'                         => ['controller' => 'Error', 'action' => 'show500'],
         ];
 

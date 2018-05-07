@@ -3,13 +3,14 @@
 {% block title %} Blog - Connexion {% endblock title %}
 
 {% block body %}
-
+    {% if errors is defined %}
+        {% for error in errors %}
+            <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
     <div class="card my-4 commentForm loginForm">
         <h5 class="card-header">Connexion</h5>
         <div class="card-body">
-            {% if error is not empty %}
-                <p>{{ error }}</p>
-            {% endif %}
             <form action="{{ asset('login') }}" method="post">
                 <div class="form-group">
                     <label for="username">Identifiant</label>
