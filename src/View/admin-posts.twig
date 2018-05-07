@@ -41,10 +41,9 @@
                                     </p>
                                 </div>
                                 <div class="controls">
-                                    <form action="{{ asset('admin/posts/' ~ post.post_id ~ '/edit') }}" method="post">
-                                        <input type="hidden" name="token" id="token" value="{{ token }}"/>
+                                    <a href="{{ asset('admin/posts/' ~ post.post_id ~ '/edit') }}">
                                         <button type="submit" name="submit" class="btn btn-primary">Modifier</button>
-                                    </form>
+                                    </a>
                                     <form action="{{ asset('admin/posts/' ~ post.post_id ~ '/delete') }}" method="post" class="my-2">
                                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                         <button type="submit" name="submit" class="btn btn-danger">Supprimer</button>

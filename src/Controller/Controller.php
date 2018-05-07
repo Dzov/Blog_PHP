@@ -46,14 +46,12 @@ abstract class Controller
         if (!isset ($_SESSION['security'])) {
             $_SESSION['security']['token'] = $token;
             $_SESSION['security']['createdAt'] = new \DateTime();
+            $_SESSION['security']['attempts'] = 0;
         }
     }
 
     protected static function tokenIsValid(string $token): bool
     {
-        var_dump($_SESSION['security']['token'] === $token);
-
-
         $createdAt = $_SESSION['security']['createdAt'];
         $expiresAt = $createdAt->add(new \DateInterval('PT10M'));
 
@@ -64,7 +62,12 @@ abstract class Controller
             return true;
         }
 
-        unset($_SESSION['security']);
+        $_SESSION['security']['attempts'] += 1;
+
+        if ($_SESSION['security']['attempts'] >= 3) {
+            unset($_SESSION['security']);
+        }
+
         return false;
     }
 
@@ -74,7 +77,7 @@ abstract class Controller
 
         header("Location: $url");
 
-        return;
+        //return;
     }
 
     protected static function addGlobalVariables(Twig_Environment $twig): void

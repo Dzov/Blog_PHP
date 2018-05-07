@@ -32,32 +32,54 @@ class AdminPostController extends Controller
 
         $post = PostManager::findById($id);
 
-        if (isset($_POST['title']) && isset($_POST['subtitle']) && isset($_POST['content'])) {
-            $title = $_POST['title'];
-            $subtitle = $_POST['subtitle'];
-            $content = $_POST['content'];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $vm = [];
 
-            if (strlen($title) < 2 || strlen($title) > 45) {
-                $_SESSION['errors'][] = 'Le titre doit faire entre 2 et 45 caractères';
-            }
-            if (strlen($subtitle) < 2 || strlen($subtitle) > 95) {
-                $_SESSION['errors'][] = 'Le chapô doit faire entre 5 et 95 caractères';
-            }
-            if (strlen($content) < 15) {
-                $_SESSION['errors'][] = 'L\'article doit contenir au moins 15 caractères';
+            if (empty($_POST['title']) || !isset($_POST['title'])) {
+                $vm['errors']['title'] = 'Veuillez renseigner le titre';
+            } else {
+                $title = $_POST['title'];
+                $vm['title'] = $title;
+
+                if (strlen($title) < 2 || strlen($title) > 45) {
+                    $vm['errors']['title'] = 'Le titre doit faire entre 2 et 45 caractères';
+                }
             }
 
-            if (!isset($_SESSION['errors'])) {
+            if (empty($_POST['subtitle']) || !isset($_POST['subtitle'])) {
+                $vm['errors']['subtitle'] = 'Veuillez renseigner le chapô';
+            } else {
+                $subtitle = $_POST['subtitle'];
+                $vm['subtitle'] = $subtitle;
+
+                if (strlen($subtitle) < 2 || strlen($subtitle) > 95) {
+                    $vm['errors']['subtitle'] = 'Le chapô doit faire entre 5 et 95 caractères';
+                }
+            }
+
+            if (empty($_POST['content']) || !isset($_POST['content'])) {
+                $vm['errors']['content'] = 'Veuillez renseigner le contenu de l\'article';
+            } else {
+                $content = $_POST['content'];
+                $vm['content'] = $content;
+
+                if (strlen($content) < 15) {
+                    $vm['errors']['content'] = 'L\'article doit contenir au moins 15 caractères';
+                }
+            }
+
+            if (!isset($vm['errors'])) {
                 PostManager::update($id, $title, $subtitle, $content);
                 $_SESSION['success'][] = 'L\'article a bien été modifié';
                 self::redirect('admin/posts');
+            } else {
+                self::renderTemplate('admin-posts-form.twig', ['vm' => $vm, 'post' => $post]);
+
+                return;
             }
-        } else {
-            self::renderTemplate(
-                'admin-posts-form.twig',
-                ['post' => $post]
-            );
         }
+
+        self::renderTemplate('admin-posts-form.twig', ['post' => $post]);
     }
 
     /**
@@ -65,38 +87,66 @@ class AdminPostController extends Controller
      */
     public static function createAction(): void
     {
-        if (isset($_POST['submit']) &&
-            isset($_POST['author']) &&
-            isset($_POST['title']) &&
-            isset($_POST['subtitle']) &&
-            isset($_POST['content'])
-        ) {
-            $author = $_POST['author'];
-            $title = $_POST['title'];
-            $subtitle = $_POST['subtitle'];
-            $content = $_POST['content'];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $vm = [];
 
-            if (strlen($title) < 2 || strlen($title) > 45) {
-                $_SESSION['errors'][] = 'Le titre doit faire entre 2 et 45 caractères';
-            }
-            if (strlen($subtitle) < 2 || strlen($subtitle) > 95) {
-                $_SESSION['errors'][] = 'Le chapô doit faire entre 5 et 95 caractères';
-            }
-            if (strlen($content) < 15) {
-                $_SESSION['errors'][] = 'L\'article doit contenir au moins 15 caractères';
-            }
-            if (strlen($author) < 2) {
-                $_SESSION['errors'][] = 'Votre identifiant doit faire au moins 2 caractères';
+            if (empty($_POST['title']) || !isset($_POST['title'])) {
+                $vm['errors']['title'] = 'Veuillez renseigner le titre';
+            } else {
+                $title = $_POST['title'];
+                $vm['title'] = $title;
+
+                if (strlen($title) < 2 || strlen($title) > 45) {
+                    $vm['errors']['title'] = 'Le titre doit faire entre 2 et 45 caractères';
+                }
             }
 
-            if (!isset($_SESSION['errors'])) {
+            if (empty($_POST['subtitle']) || !isset($_POST['subtitle'])) {
+                $vm['errors']['subtitle'] = 'Veuillez renseigner le chapô';
+            } else {
+                $subtitle = $_POST['subtitle'];
+                $vm['subtitle'] = $subtitle;
+
+                if (strlen($subtitle) < 2 || strlen($subtitle) > 95) {
+                    $vm['errors']['subtitle'] = 'Le chapô doit faire entre 5 et 95 caractères';
+                }
+            }
+
+            if (empty($_POST['content']) || !isset($_POST['content'])) {
+                $vm['errors']['content'] = 'Veuillez renseigner le contenu de l\'article';
+            } else {
+                $content = $_POST['content'];
+                $vm['content'] = $content;
+
+                if (strlen($content) < 15) {
+                    $vm['errors']['content'] = 'L\'article doit contenir au moins 15 caractères';
+                }
+            }
+
+            if (empty($_POST['author']) || !isset($_POST['author'])) {
+                $vm['errors']['author'] = 'Veuillez renseigner votre identifiant';
+            } else {
+                $author = $_POST['author'];
+                $vm['author'] = $author;
+
+                if (strlen($author) < 2) {
+                    $vm['errors']['author'] = 'Votre identifiant doit faire au moins 2 caractères';
+                }
+            }
+
+            if (!isset($vm['errors'])) {
                 PostManager::create($author, $title, $subtitle, $content);
                 $_SESSION['success'][] = 'L\'article a bien été ajouté';
+
                 self::redirect('admin/posts');
+            } else {
+                self::renderTemplate('admin-posts-form.twig', ['vm' => $vm]);
+
+                return;
             }
-        } else {
-            self::renderTemplate('admin-posts-form.twig');
         }
+
+        self::renderTemplate('admin-posts-form.twig');
     }
 
     /**
