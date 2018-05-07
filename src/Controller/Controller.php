@@ -19,8 +19,6 @@ abstract class Controller
         $loader = new Twig_Loader_Filesystem('../src/View');
         $twig = new Twig_Environment($loader);
 
-        self::addGlobalVariables($twig);
-
         $asset = new Twig_Function(
             'asset',
             function ($url) {
@@ -29,6 +27,8 @@ abstract class Controller
         );
 
         $twig->addFunction($asset);
+
+        self::addGlobalVariables($twig);
 
         try {
             $twig->load($path);
@@ -43,7 +43,7 @@ abstract class Controller
     {
         $token = bin2hex(random_bytes(64));
 
-        if (!isset ($_SESSION['security'])) {
+        if (!isset($_SESSION['security'])) {
             $_SESSION['security']['token'] = $token;
             $_SESSION['security']['createdAt'] = new \DateTime();
             $_SESSION['security']['attempts'] = 0;
@@ -71,7 +71,7 @@ abstract class Controller
         return false;
     }
 
-    protected static function redirect($url): void
+    protected static function redirect(string $url): void
     {
         $url = str_replace('//', '/', $_SERVER['BASE'] . '/' . $url);
 
@@ -100,7 +100,6 @@ abstract class Controller
 
         if (isset($_SESSION['success'])) {
             $success = $_SESSION['success'];
-            var_dump($success);
             unset($_SESSION['success']);
             $twig->addGlobal('success', $success);
         }

@@ -17,10 +17,7 @@ class AdminPostController extends Controller
 
         $posts = PostManager::findAll();
 
-        self::renderTemplate(
-            'admin-posts.twig',
-            ['posts' => $posts]
-        );
+        self::renderTemplate('admin-posts.twig', ['posts' => $posts]);
     }
 
     /**
@@ -167,6 +164,7 @@ class AdminPostController extends Controller
                 $_SESSION['errors'][] = 'La session a expiré';
             }
         }
+
         self::redirect('admin/posts');
     }
 }
