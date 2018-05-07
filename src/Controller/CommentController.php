@@ -20,18 +20,26 @@ class CommentController extends Controller
 
         PostManager::findById($postId);
 
-        if (isset($_POST['author']) && isset($_POST['author'])) {
-            $author = $_POST['author'];
-            $content = $_POST['content'];
-
-            if (strlen($author) < 2 || strlen($author) >= 20) {
-                $_SESSION['errors'][] = 'Votre identifiant doit faire entre 2 et 20 caractères';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (empty($_POST['author'])) {
+                $_SESSION['comment_errors']['author'] = 'Veuillez renseigner votre identifiant';
+            } else {
+                $author = $_POST['author'];
+                if (strlen($author) < 2 || strlen($author) >= 20) {
+                    $_SESSION['comment_errors']['title'] = 'Votre identifiant doit faire entre 2 et 20 caractères';
+                }
             }
-            if (strlen($content) < 5) {
-                $_SESSION['errors'][] = 'Votre commentaire doit contenir au moins 5 caractères';
+
+            if (empty($_POST['content'])) {
+                $_SESSION['comment_errors']['content'] = 'Veuillez renseigner le corps du commentaire';
+            } else {
+                $content = $_POST['content'];
+                if (strlen($content) < 4) {
+                    $_SESSION['comment_errors']['content'] = 'Votre commentaire doit contenir au moins 4 caractères';
+                }
             }
 
-            if (!isset($_SESSION['errors'])) {
+            if (!isset($_SESSION['comment_errors'])) {
                 CommentManager::insert($postId, $author, $content);
                 $_SESSION['success'][] = 'Le commentaire a bien été enregistré, il sera publié après validation';
             }
@@ -40,4 +48,5 @@ class CommentController extends Controller
         self::redirect('/posts/' . $postId);
     }
 }
+
 

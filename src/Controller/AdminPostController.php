@@ -35,7 +35,7 @@ class AdminPostController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $vm = [];
 
-            if (empty($_POST['title']) || !isset($_POST['title'])) {
+            if (empty($_POST['title'])) {
                 $vm['errors']['title'] = 'Veuillez renseigner le titre';
             } else {
                 $title = $_POST['title'];
@@ -46,7 +46,7 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (empty($_POST['subtitle']) || !isset($_POST['subtitle'])) {
+            if (empty($_POST['subtitle'])) {
                 $vm['errors']['subtitle'] = 'Veuillez renseigner le chapô';
             } else {
                 $subtitle = $_POST['subtitle'];
@@ -57,7 +57,7 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (empty($_POST['content']) || !isset($_POST['content'])) {
+            if (empty($_POST['content'])) {
                 $vm['errors']['content'] = 'Veuillez renseigner le contenu de l\'article';
             } else {
                 $content = $_POST['content'];
@@ -90,7 +90,7 @@ class AdminPostController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $vm = [];
 
-            if (empty($_POST['title']) || !isset($_POST['title'])) {
+            if (empty($_POST['title'])) {
                 $vm['errors']['title'] = 'Veuillez renseigner le titre';
             } else {
                 $title = $_POST['title'];
@@ -101,7 +101,7 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (empty($_POST['subtitle']) || !isset($_POST['subtitle'])) {
+            if (empty($_POST['subtitle'])) {
                 $vm['errors']['subtitle'] = 'Veuillez renseigner le chapô';
             } else {
                 $subtitle = $_POST['subtitle'];
@@ -112,7 +112,7 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (empty($_POST['content']) || !isset($_POST['content'])) {
+            if (empty($_POST['content'])) {
                 $vm['errors']['content'] = 'Veuillez renseigner le contenu de l\'article';
             } else {
                 $content = $_POST['content'];
@@ -123,7 +123,7 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (empty($_POST['author']) || !isset($_POST['author'])) {
+            if (empty($_POST['author'])) {
                 $vm['errors']['author'] = 'Veuillez renseigner votre identifiant';
             } else {
                 $author = $_POST['author'];

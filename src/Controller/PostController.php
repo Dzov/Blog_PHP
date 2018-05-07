@@ -26,6 +26,14 @@ class PostController extends Controller
         $post = PostManager::findById($id);
         $comments = PostManager::findCommentsByPost($id);
 
+        if (isset($_SESSION['comment_errors'])) {
+            $vm['errors'] = $_SESSION['comment_errors'];
+            unset($_SESSION['comment_errors']);
+            self::renderTemplate('post.twig', ['post' => $post, 'comments' => $comments, 'vm' => $vm]);
+
+            return;
+        }
+
         self::renderTemplate('post.twig', ['post' => $post, 'comments' => $comments]);
     }
 }
