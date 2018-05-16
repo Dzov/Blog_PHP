@@ -12,9 +12,13 @@ use Blog\Utils\Request;
  */
 class AuthController extends Controller
 {
+    /**
+     * @throws \Exception
+     */
     public static function loginAction(): void
     {
         $submit = Request::post('submit');
+        $token = Request::post('token');
         $username = Request::post('username');
         $password = Request::post('password');
 
@@ -24,16 +28,21 @@ class AuthController extends Controller
         ) {
             $encryptedPassword = sha1($password);
 
-            try {
-                $user = AuthManager::getUserIdentification($username, $encryptedPassword);
+            if (self::tokenIsValid($token)) {
+                try {
+                    $user = AuthManager::getUserIdentification($username, $encryptedPassword);
 
-                $_SESSION['userId'] = $user->getUser_id();
+                    $_SESSION['userId'] = $user->getUser_id();
 
-                self::redirect('index.php');
-            } catch (ResourceNotFoundException $rnfe) {
-                $_SESSION['errors'][] = 'Ces identifiants sont erronés';
+                    self::redirect('index.php');
+                } catch (ResourceNotFoundException $rnfe) {
+                    $_SESSION['errors'][] = 'Ces identifiants sont erronés';
+                }
+            } else {
+                $_SESSION['errors'] = 'Une erreur d\'authentification est survenue';
             }
         }
+        self::setToken();
 
         self::renderTemplate('login-form.twig');
     }
@@ -127,8 +136,8 @@ class AuthController extends Controller
             }
 
             if (!isset($vm['errors'])) {
-                var_dump(isset($vm['errors']));
                 UserManager::create($firstName, $lastName, $username, $email, $password);
+                $_SESSION['success'] = "Bienvenue . $username . ! Vous pouvez maintenant vous connecter";
                 self::redirect('login');
 
                 return;
