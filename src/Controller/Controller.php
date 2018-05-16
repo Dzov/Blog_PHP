@@ -50,6 +50,9 @@ abstract class Controller
         }
     }
 
+    /**
+     * @throws Exception
+     */
     protected static function tokenIsValid(string $token): bool
     {
         $createdAt = $_SESSION['security']['createdAt'];
@@ -76,8 +79,6 @@ abstract class Controller
         $url = str_replace('//', '/', $_SERVER['BASE'] . '/' . $url);
 
         header("Location: $url");
-
-        return;
     }
 
     protected static function addGlobalVariables(Twig_Environment $twig): void

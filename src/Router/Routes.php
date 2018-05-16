@@ -70,6 +70,7 @@ class Routes
             '403'                         => ['controller' => 'Error', 'action' => 'show403'],
             '404'                         => ['controller' => 'Error', 'action' => 'show404'],
             '500'                         => ['controller' => 'Error', 'action' => 'show500'],
+            'error'                       => ['controller' => 'Error', 'action' => 'showError'],
         ];
 
     public function getRoutes(): array

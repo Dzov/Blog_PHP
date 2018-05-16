@@ -4,6 +4,7 @@ namespace Blog;
 
 use Blog\Controller\Exceptions\AccessDeniedException;
 use Blog\Controller\Exceptions\ActionNotFoundException;
+use Blog\Controller\Exceptions\AuthenticationErrorException;
 use Blog\Controller\Exceptions\ControllerNotFoundException;
 use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Controller\Exceptions\RouteNotFoundException;
@@ -52,6 +53,7 @@ class Kernel
      * @throws ActionNotFoundException
      * @throws ControllerNotFoundException
      * @throws ResourceNotFoundException
+     * @throws AuthenticationErrorException
      */
     public function __construct()
     {
@@ -124,6 +126,7 @@ class Kernel
      * @throws AccessDeniedException
      * @throws ActionNotFoundException
      * @throws ControllerNotFoundException
+     * @throws AuthenticationErrorException
      */
     public function execute(string $controller, string $action, array $parameters = []): void
     {

@@ -2,6 +2,7 @@
 
 namespace Blog;
 
+use Blog\Controller\Exceptions\AuthenticationErrorException;
 use Blog\Controller\Exceptions\ControllerNotFoundException;
 use Blog\Controller\Exceptions\ActionNotFoundException;
 use Blog\Controller\Exceptions\ResourceNotFoundException;
@@ -24,6 +25,8 @@ try {
     header('Location: 404');
 } catch (ResourceNotFoundException $rnfe) {
     header('Location: 404');
+} catch (AuthenticationErrorException $aee) {
+    header('Location: error');
 }
 
 

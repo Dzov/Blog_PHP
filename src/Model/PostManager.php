@@ -16,7 +16,8 @@ abstract class PostManager extends DatabaseConnection
     {
         $query = 'SELECT p.post_id, p.title, p.subtitle, p.updated_at, p.author, u.username 
                     FROM post p
-                    INNER JOIN user u ON p.author = u.user_id';
+                    INNER JOIN user u ON p.author = u.user_id
+                    ORDER BY p.updated_at DESC';
 
         return array_map(
             function ($item) {
