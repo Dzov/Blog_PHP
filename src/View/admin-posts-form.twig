@@ -13,29 +13,17 @@
                         {% if vm.errors.title is defined %}
                             <div class="alert alert-danger" role="alert">{{ vm.errors.title }}</div>
                         {% endif %}
-                        {% if vm.title is defined %}
-                            <input class="form-control" name="title" value="{{ vm.title }}" required>
-                        {% else %}
-                            <input class="form-control" name="title" value="{{ post.title }}" required>
-                        {% endif %}
+                        <input class="form-control" name="title" value="{% if vm.title is defined %}{{ vm.title }}{% else %}{{ post.title }}{% endif %}" required>
                         <label for="subtitle">Chapô: </label>
                         {% if vm.errors.subtitle is defined %}
                             <div class="alert alert-danger" role="alert">{{ vm.errors.subtitle }}</div>
                         {% endif %}
-                        {% if vm.subtitle is defined %}
-                            <input class="form-control" name="title" value="{{ vm.subtitle }}" required>
-                        {% else %}
-                            <input class="form-control" name="subtitle" value="{{ post.subtitle }}" required>
-                        {% endif %}
+                        <input class="form-control" name="title" value="{% if vm.subtitle is defined %}{{ vm.subtitle }}{% else %}{{ post.subtitle }}{% endif %}" required>
                         <label for="content">Article: </label>
                         {% if vm.errors.content is defined %}
                             <div class="alert alert-danger" role="alert">{{ vm.errors.content }}</div>
                         {% endif %}
-                        {% if vm.content is defined %}
-                            <input class="form-control" name="title" value="{{ vm.content }}" required>
-                        {% else %}
-                            <textarea class="form-control" rows="3" name="content" required>{{ post.content }}</textarea>
-                        {% endif %}
+                        <textarea class="form-control" rows="3" name="content" required>{% if vm.content is defined %}{{ vm.content }}{% else %}{{ post.content }}{% endif %}</textarea>
                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
                     </div>
                     <button type="submit" class="btn btn-primary" name="submitPost">Enregistrer</button>
@@ -52,38 +40,22 @@
                         {% if vm.errors.title is defined %}
                             <div class="alert alert-danger" role="alert">{{ vm.errors.title }}</div>
                         {% endif %}
-                        {% if vm.title is defined %}
-                            <input class="form-control" name="title" value="{{ vm.title }}" required>
-                        {% else %}
-                            <input class="form-control" name="title" required>
-                        {% endif %}
+                        <input class="form-control" name="title" value="{% if vm.title is defined %}{{ vm.title }}{% endif %}" required>
                         <label for="subtitle">Chapô: </label>
                         {% if vm.errors.subtitle is defined %}
                             <div class="alert alert-danger" role="alert">{{ vm.errors.subtitle }}</div>
                         {% endif %}
-                        {% if vm.subtitle is defined %}
-                            <input class="form-control" name="subtitle" value="{{ vm.subtitle }}" required>
-                        {% else %}
-                            <input class="form-control" name="subtitle" required>
-                        {% endif %}
+                        <input class="form-control" name="subtitle" value="{% if vm.subtitle is defined %}{{ vm.subtitle }}{% endif %}" required>
                         <label for="content">Article: </label>
                         {% if vm.errors.content is defined %}
                             <div class="alert alert-danger" role="alert">{{ vm.errors.content }}</div>
                         {% endif %}
-                        {% if vm.content is defined %}
-                            <textarea class="form-control" rows="3" name="content" required>{{ vm.content }}</textarea>
-                        {% else %}
-                            <textarea class="form-control" rows="3" name="content" required></textarea>
-                        {% endif %}
+                        <textarea class="form-control" rows="3" name="content" required>{% if vm.content is defined %}{{ vm.content }}{% endif %}</textarea>
                         <label for="author">Votre identifiant: </label>
                         {% if vm.errors.author is defined %}
                             <div class="alert alert-danger" role="alert">{{ vm.errors.author }}</div>
                         {% endif %}
-                        {% if vm.author is defined %}
-                            <input class="form-control" name="author" value="{{ vm.author }}">
-                        {% else %}
-                            <input class="form-control" name="author" value="{% if currentUser is defined %}{{ currentUser.username }}{% endif %}">
-                        {% endif %}
+                        <input class="form-control" name="author" value="{% if vm.author is defined %}{{ vm.author }}{% elseif currentUser is defined %}{{ currentUser.username }}{% endif %}">
                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
                     </div>
                     <button type="submit" class="btn btn-primary" name="submitPost">Enregistrer</button>

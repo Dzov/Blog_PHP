@@ -53,7 +53,6 @@ class Kernel
      * @throws ActionNotFoundException
      * @throws ControllerNotFoundException
      * @throws ResourceNotFoundException
-     * @throws AuthenticationErrorException
      */
     public function __construct()
     {
@@ -126,7 +125,6 @@ class Kernel
      * @throws AccessDeniedException
      * @throws ActionNotFoundException
      * @throws ControllerNotFoundException
-     * @throws AuthenticationErrorException
      */
     public function execute(string $controller, string $action, array $parameters = []): void
     {

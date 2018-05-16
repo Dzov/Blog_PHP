@@ -94,8 +94,7 @@ class ContactController extends Controller
         self::renderTemplate('contact.twig');
     }
 
-    public
-    static function validateAction()
+    public static function validateAction()
     {
         self::renderTemplate('message-sent.twig');
     }

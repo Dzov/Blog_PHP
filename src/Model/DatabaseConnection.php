@@ -29,7 +29,7 @@ abstract class DatabaseConnection
 
             return self::$db;
         } catch (\PDOException $e) {
-            die('Erreur : ' . $e->getMessage());
+            die('Erreur : ' . htmlspecialchars($e->getMessage()));
         }
     }
 

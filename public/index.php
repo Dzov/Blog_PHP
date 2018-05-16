@@ -25,10 +25,7 @@ try {
     header('Location: 404');
 } catch (ResourceNotFoundException $rnfe) {
     header('Location: 404');
-} catch (AuthenticationErrorException $aee) {
-    header('Location: error');
 }
-
 
 
 

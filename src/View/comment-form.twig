@@ -7,20 +7,13 @@
                 {% if vm.errors.author is defined %}
                     <div class="alert alert-danger" role="alert">{{ vm.errors.author }}</div>
                 {% endif %}
-                {% if vm.author is defined %}
-                    <input class="form-control" name="author" value="{{ vm.author }}" required>
-                {% else %}
-                    <input class="form-control" name="author" value="{% if currentUser is defined %}{{ currentUser.username }}{% endif %}" required>
-                {% endif %}
+
+                <input class="form-control" name="author" value="{% if vm.author is defined %}{{ vm.author }}{% elsif currentUser is defined %}{{ currentUser.username }}{% endif %}" required>
                 <label for="content">Votre commentaire: </label>
                 {% if vm.errors.content is defined %}
                     <div class="alert alert-danger" role="alert">{{ vm.errors.content }}</div>
                 {% endif %}
-                {% if vm.content is defined %}
-                    <textarea class="form-control" rows="3" name="content" required>{{ vm.content }}</textarea>
-                {% else %}
-                    <textarea class="form-control" rows="3" name="content" required></textarea>
-                {% endif %}
+                <textarea class="form-control" rows="3" name="content" required>{% if vm.content is defined %}{{ vm.content }}{% endif %}</textarea>
             </div>
             <button type="submit" name="submit" class="btn btn-primary">Valider</button>
         </form>

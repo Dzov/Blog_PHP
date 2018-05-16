@@ -12,6 +12,9 @@ use Blog\Utils\Request;
  */
 class AdminPostController extends Controller
 {
+    /**
+     * @throws \Exception
+     */
     public static function listAction(): void
     {
         self::setToken();
@@ -73,21 +76,21 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (self::tokenIsValid(Request::post('token'))) {
-                if (!isset($vm['errors'])) {
-                    PostManager::update($id, $title, $subtitle, $content);
-                    $_SESSION['success'][] = 'L\'article a bien été modifié';
+            if (!self::tokenIsValid(Request::post('token'))) {
+                $vm['errors']['security'] = '';
+            }
 
-                    self::redirect('admin/posts');
+            if (!isset($vm['errors'])) {
+                PostManager::update($id, $title, $subtitle, $content);
+                $_SESSION['success'][] = 'L\'article a bien été modifié';
 
-                    return;
-                } else {
-                    self::renderTemplate('admin-posts-form.twig', ['vm' => $vm, 'post' => $post]);
+                self::redirect('admin/posts');
 
-                    return;
-                }
+                return;
             } else {
-                throw new AuthenticationErrorException();
+                self::renderTemplate('admin-posts-form.twig', ['vm' => $vm, 'post' => $post]);
+
+                return;
             }
         }
 
@@ -99,7 +102,8 @@ class AdminPostController extends Controller
      * @throws AuthenticationErrorException
      * @throws \Exception
      */
-    public static function createAction(): void
+    public
+    static function createAction(): void
     {
         $submit = Request::post('submitPost');
 
@@ -142,7 +146,6 @@ class AdminPostController extends Controller
                 }
             }
 
-
             $author = Request::post('author');
 
             if (empty($author)) {
@@ -155,34 +158,35 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (self::tokenIsValid(Request::post('token'))) {
-                if (!isset($vm['errors'])) {
-                    PostManager::create($author, $title, $subtitle, $content);
-                    $_SESSION['success'][] = 'L\'article a bien été ajouté';
-
-                    self::redirect('admin/posts');
-
-                    return;
-                } else {
-                    self::renderTemplate('admin-posts-form.twig', ['vm' => $vm]);
-
-                    return;
-                }
-            } else {
-                throw new AuthenticationErrorException();
+            if (!self::tokenIsValid(Request::post('token'))) {
+                $vm['errors']['security'] = 'Une erreur d\'authentification est survenue';
             }
 
+            if (!isset($vm['errors'])) {
+                PostManager::create($author, $title, $subtitle, $content);
+                $_SESSION['success'][] = 'L\'article a bien été ajouté';
+
+                self::redirect('admin/posts');
+
+                return;
+            } else {
+                self::renderTemplate('admin-posts-form.twig', ['vm' => $vm]);
+
+                return;
+            }
         }
 
         self::renderTemplate('admin-posts-form.twig');
     }
 
     /**
-     * @throws AuthenticationErrorException
      * @throws ResourceNotFoundException
      * @throws \Exception
      */
-    public static function deleteAction(array $parameters): void
+    public
+    static function deleteAction(
+        array $parameters
+    ): void
     {
         $submit = Request::post('submit');
         $token = Request::post('token');
@@ -197,7 +201,7 @@ class AdminPostController extends Controller
                 PostManager::delete($id);
                 $_SESSION['success'][] = 'L\'article a bien été supprimé';
             } else {
-                throw new AuthenticationErrorException();
+                $_SESSION['errors'][] = 'La session a expiré';
             }
         }
 
