@@ -2,7 +2,6 @@
 
 namespace Blog\Controller;
 
-use Blog\Controller\Exceptions\AuthenticationErrorException;
 use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Model\PostManager;
 use Blog\Utils\Request;
@@ -26,7 +25,6 @@ class AdminPostController extends Controller
 
     /**
      * @throws ResourceNotFoundException
-     * @throws AuthenticationErrorException
      * @throws \Exception
      */
     public static function editAction(array $parameters): void
@@ -77,7 +75,7 @@ class AdminPostController extends Controller
             }
 
             if (!self::tokenIsValid(Request::post('token'))) {
-                $vm['errors']['security'] = '';
+                $vm['errors']['security'] = 'Une erreur d\'authentification est survenue';
             }
 
             if (!isset($vm['errors'])) {
@@ -99,7 +97,6 @@ class AdminPostController extends Controller
 
     /**
      * @throws ResourceNotFoundException
-     * @throws AuthenticationErrorException
      * @throws \Exception
      */
     public
