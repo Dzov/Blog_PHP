@@ -2,7 +2,7 @@
 
 namespace Blog\Router;
 
-use Blog\Controller\Exceptions\RouteNotFoundException;
+use Blog\Exceptions\RouteNotFoundException;
 
 /**
  * @author Amélie-Dzovinar Haladjian

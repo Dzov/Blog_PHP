@@ -7,9 +7,11 @@
 {% block body %}
     <div class="row">
         <div class="col-lg-5 col-md-10 mx-auto">
-            <div class="site-heading">
+            <div class="site-heading d-flex flex-column align-items-center">
                 <h1>ERREUR 404</h1>
                 <span class="subheading">La page que vous recherchez n'existe pas</span>
+                <br>
+                <a href="{{ asset('index.php') }}" class="btn btn-primary">Retourner à la page d'accueil</a>
             </div>
         </div>
     </div>

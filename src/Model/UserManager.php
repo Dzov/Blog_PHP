@@ -17,7 +17,7 @@ class UserManager extends DatabaseConnection
     }
 
     /**
-     * @throws \Blog\Controller\Exceptions\ResourceNotFoundException
+     * @throws \Blog\Exceptions\ResourceNotFoundException
      */
     public static function findById(int $userId): ?User
     {
@@ -28,7 +28,7 @@ class UserManager extends DatabaseConnection
     }
 
     /**
-     * @throws \Blog\Controller\Exceptions\ResourceNotFoundException
+     * @throws \Blog\Exceptions\ResourceNotFoundException
      */
     public static function findByUsername(string $username): ?User
     {
@@ -39,7 +39,7 @@ class UserManager extends DatabaseConnection
     }
 
     /**
-     * @throws \Blog\Controller\Exceptions\ResourceNotFoundException
+     * @throws \Blog\Exceptions\ResourceNotFoundException
      */
     public static function findByEmail(string $email): ?User
     {

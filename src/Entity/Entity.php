@@ -2,7 +2,7 @@
 
 namespace Blog\Entity;
 
-use Blog\Controller\Exceptions\ResourceNotFoundException;
+use Blog\Exceptions\ResourceNotFoundException;
 
 /**
  * @author Amélie-Dzovinar Haladjian
