@@ -3,7 +3,7 @@
 {% block title %} Blog - Admin: Posts {% endblock title %}
 
 {% block body %}
-    <main class="flex justifyBetween">
+    <main>
         {% if success is defined %}
             {% for message in success %}
                 <div class="alert alert-success" role="alert">{{ message }}</div>
@@ -14,13 +14,18 @@
                 <div class="alert alert-danger" role="alert">{{ error }}</div>
             {% endfor %}
         {% endif %}
-        <section class="admin__section--posts">
-            <div class="container">
+        <section class="admin__section--posts d-flex flex-column align-items-center">
+            <h3 class="my-3">Les articles</h3>
+
+            <a href="{{ asset('admin/posts/create') }}">
+                <button type="submit" name="submit" class="btn btn-success my-2">Ajouter</button>
+            </a>
+
+            <div class="container my-3">
                 <div class="row">
-                    <div class="col-lg-8 col-md-10 m-auto">
-                        <p><a href="{{ asset('admin/posts/create') }}">Ajouter un article</a></p>
+                    <div class="col-lg-9 col-md-10 m-auto">
                         {% for post in posts %}
-                            <section class="flex justifyBetween">
+                            <section class="d-flex justify-content-between">
                                 <div class="admin__post-list">
                                     <a href="{{ asset('posts/' ~ post.post_id) }}">
                                         <h5 class="post-title">

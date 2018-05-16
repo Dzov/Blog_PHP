@@ -14,12 +14,13 @@
                 <div class="alert alert-danger" role="alert">{{ error }}</div>
             {% endfor %}
         {% endif %}
-        <section class="admin__section--users">
-            <div class="container">
+        <section class="admin__section--posts d-flex flex-column align-items-center">
+            <h3 class="my-3">Les utilisateurs</h3>
+            <div class="container my-3">
                 <div class="row">
                     <div class="col-lg-8 col-md-10 m-auto">
                         {% for user in users %}
-                            <section class="flex justifyBetween">
+                            <section class="d-flex justify-content-between">
                                 <div class="admin__user-list">
                                     <h5 class="user-title">
                                         {{ user.username }}
