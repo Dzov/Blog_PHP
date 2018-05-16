@@ -4,6 +4,7 @@ namespace Blog\Controller;
 
 use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Model\CommentManager;
+use Blog\Utils\Request;
 
 /**
  * @author Amélie-Dzovinar Haladjian
@@ -22,12 +23,18 @@ class AdminCommentController extends Controller
         );
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function publishAction(array $parameters): void
     {
-        if (isset($_POST['submit']) && isset($_POST['token']) && isset($_SESSION['security'])) {
+        $submit = Request::post('submit');
+        $token = Request::post('token');
+
+        if (isset($submit) && isset($token) && isset($_SESSION['security'])) {
             $id = $parameters['id'];
 
-            if (self::tokenIsValid($_POST['token'])) {
+            if (self::tokenIsValid($token)) {
                 CommentManager::publish($id);
                 $_SESSION['success'][] = 'Le commentaire a bien été publié';
             } else {
@@ -39,15 +46,19 @@ class AdminCommentController extends Controller
 
     /**
      * @throws ResourceNotFoundException
+     * @throws \Exception
      */
     public static function deleteAction(array $parameters): void
     {
-        if (isset($_POST['submit']) && isset($_POST['token']) && isset($_SESSION['security'])) {
+        $submit = Request::post('submit');
+        $token = Request::post('token');
+
+        if (isset($submit) && isset($token) && isset($_SESSION['security'])) {
             $id = $parameters['id'];
 
             CommentManager::findById($id);
 
-            if (self::tokenIsValid($_POST['token'])) {
+            if (self::tokenIsValid($token)) {
                 CommentManager::delete($id);
                 $_SESSION['success'][] = 'Le commentaire a bien été supprimé';
             } else {

@@ -5,6 +5,7 @@ namespace Blog\Controller;
 use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Model\AuthManager;
 use Blog\Model\UserManager;
+use Blog\Utils\Request;
 
 /**
  * @author Amélie-Dzovinar Haladjian
@@ -13,13 +14,14 @@ class AuthController extends Controller
 {
     public static function loginAction(): void
     {
-        if (isset($_POST['submit']) &&
-            isset($_POST['username']) &&
-            isset($_POST['password'])
-        ) {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
+        $submit = Request::post('submit');
+        $username = Request::post('username');
+        $password = Request::post('password');
 
+        if (isset($submit) &&
+            isset($username) &&
+            isset($password)
+        ) {
             $encryptedPassword = sha1($password);
 
             try {
@@ -50,19 +52,19 @@ class AuthController extends Controller
      */
     public static function registerAction(): void
     {
-        if (isset($_POST['submit']) &&
-            isset($_POST['first_name']) &&
-            isset($_POST['last_name']) &&
-            isset($_POST['email']) &&
-            isset($_POST['password']) &&
-            isset($_POST['username'])
-        ) {
-            $firstName = $_POST['first_name'];
-            $lastName = $_POST['last_name'];
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = sha1($_POST['password']);
+        $firstName = Request::post('first_name');
+        $lastName = Request::post('last_name');
+        $username = Request::post('username');
+        $email = Request::post('email');
+        $password = sha1(Request::post('password'));
 
+        if (isset($submit) &&
+            isset($first_name) &&
+            isset($last_name) &&
+            isset($email) &&
+            isset($password) &&
+            isset($username)
+        ) {
             if (UserManager::findByUsername($username)) {
                 $_SESSION['errors'][] = 'Cet identifiant existe déjà';
             }

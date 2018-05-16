@@ -24,6 +24,7 @@ class AdminPostController extends Controller
     /**
      * @throws ResourceNotFoundException
      * @throws AuthenticationErrorException
+     * @throws \Exception
      */
     public static function editAction(array $parameters): void
     {
@@ -96,6 +97,7 @@ class AdminPostController extends Controller
     /**
      * @throws ResourceNotFoundException
      * @throws AuthenticationErrorException
+     * @throws \Exception
      */
     public static function createAction(): void
     {
@@ -140,6 +142,7 @@ class AdminPostController extends Controller
                 }
             }
 
+
             $author = Request::post('author');
 
             if (empty($author)) {
@@ -177,6 +180,7 @@ class AdminPostController extends Controller
     /**
      * @throws AuthenticationErrorException
      * @throws ResourceNotFoundException
+     * @throws \Exception
      */
     public static function deleteAction(array $parameters): void
     {
