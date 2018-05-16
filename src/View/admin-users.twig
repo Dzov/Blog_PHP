@@ -26,7 +26,7 @@
                                         {{ user.username }}
                                     </h5>
                                     <h6 class="user-subtitle">
-                                        {{ user.first_name }} {{ user.last_name }}
+                                        {{ user.firstName }} {{ user.lastName }}
                                     </h6>
                                     {% if user.role == 'ADMIN' %}
                                         <span>Admin</span>
@@ -35,18 +35,18 @@
                                 </div>
                                 <div class="controls">
                                     {% if user.role == 'REGISTERED_USER' %}
-                                        <form action="{{ asset('admin/users/' ~ user.user_id ~ '/grant') }}" method="post">
+                                        <form action="{{ asset('admin/users/' ~ user.userId ~ '/grant') }}" method="post">
                                             <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                             <button type="submit" name="submit" class="btn btn-primary">Attribuer le role admin</button>
                                         </form>
                                     {% endif %}
                                     {% if user.role == 'ADMIN' %}
-                                        <form action="{{ asset('admin/users/' ~ user.user_id ~ '/deny') }}" method="post">
+                                        <form action="{{ asset('admin/users/' ~ user.userId ~ '/deny') }}" method="post">
                                             <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                             <button type="submit" name="submit" class="btn btn-secondary">Retirer le role admin</button>
                                         </form>
                                     {% endif %}
-                                    <form action="{{ asset('admin/users/' ~ user.user_id ~ '/delete') }}" method="post" class="my-2">
+                                    <form action="{{ asset('admin/users/' ~ user.userId ~ '/delete') }}" method="post" class="my-2">
                                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                         <button type="submit" name="submit" class="btn btn-danger">Supprimer</button>
                                     </form>

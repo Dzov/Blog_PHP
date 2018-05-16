@@ -2,7 +2,7 @@
 
 namespace Blog\Controller;
 
-use Blog\Controller\Exceptions\ResourceNotFoundException;
+use Blog\Exceptions\ResourceNotFoundException;
 use Blog\Model\PostManager;
 use Blog\Utils\Request;
 
@@ -24,8 +24,8 @@ class AdminPostController extends Controller
     }
 
     /**
-     * @throws ResourceNotFoundException
      * @throws \Exception
+     * @throws ResourceNotFoundException
      */
     public static function editAction(array $parameters): void
     {

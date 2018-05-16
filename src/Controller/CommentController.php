@@ -2,7 +2,7 @@
 
 namespace Blog\Controller;
 
-use Blog\Controller\Exceptions\ResourceNotFoundException;
+use Blog\Exceptions\ResourceNotFoundException;
 use Blog\Model\CommentManager;
 use Blog\Model\PostManager;
 use Blog\Utils\Request;

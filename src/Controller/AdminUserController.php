@@ -2,7 +2,7 @@
 
 namespace Blog\Controller;
 
-use Blog\Controller\Exceptions\ResourceNotFoundException;
+use Blog\Exceptions\ResourceNotFoundException;
 use Blog\Model\UserManager;
 use Blog\Utils\Request;
 

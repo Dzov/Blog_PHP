@@ -20,6 +20,15 @@ abstract class Entity
     protected function hydrate(array $data = []): void
     {
         foreach ($data as $key => $value) {
+            if (preg_match('/^[a-z]+_[a-z]+$/i', $key)) {
+                $key = str_replace('_', '', ucwords($key, '_'));
+            }
+
+            if($key === 'UpdatedAt' || $key === 'PostedAt')
+            {
+                $value = new \DateTime($value);
+            }
+
             $setterName = 'set' . ucfirst($key);
 
             if (method_exists($this, $setterName)) {

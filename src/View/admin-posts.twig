@@ -28,7 +28,7 @@
                         {% for post in posts %}
                             <section class="d-md-flex justify-content-md-between align-items-center">
                                 <div class="admin__post-list">
-                                    <a href="{{ asset('posts/' ~ post.post_id) }}">
+                                    <a href="{{ asset('posts/' ~ post.postId) }}">
                                         <h5 class="post-title">
                                             {{ post.title }}
                                         </h5>
@@ -37,16 +37,16 @@
                                         </h6>
                                     </a>
                                     <p>Posté le
-                                        {{ post.updated_at | date("d m Y \à h:i:s") }} par
+                                        {{ post.updatedAt | date("d m Y \à h:i:s") }} par
                                         <a href="{{ asset('user/' ~ post.author) }}">{{ post.username | capitalize }}</a>
                                     </p>
                                 </div>
                                 <div class="controls">
-                                    <form action="{{ asset('admin/posts/' ~ post.post_id ~ '/edit') }}" method="post" class="my-2">
+                                    <form action="{{ asset('admin/posts/' ~ post.postId ~ '/edit') }}" method="post" class="my-2">
                                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                         <button type="submit" name="submit" class="btn btn-primary">Modifier</button>
                                     </form>
-                                    <form action="{{ asset('admin/posts/' ~ post.post_id ~ '/delete') }}" method="post" class="my-2">
+                                    <form action="{{ asset('admin/posts/' ~ post.postId ~ '/delete') }}" method="post" class="my-2">
                                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                         <button type="submit" name="submit" class="btn btn-danger">Supprimer</button>
                                     </form>

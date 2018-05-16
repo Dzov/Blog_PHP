@@ -32,7 +32,7 @@ class AuthController extends Controller
                 try {
                     $user = AuthManager::getUserIdentification($username, $encryptedPassword);
 
-                    $_SESSION['userId'] = $user->getUser_id();
+                    $_SESSION['userId'] = $user->getUserId();
 
                     self::redirect('index.php');
                 } catch (ResourceNotFoundException $rnfe) {

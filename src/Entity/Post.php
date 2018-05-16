@@ -20,12 +20,12 @@ class Post extends Entity
     /**
      * @var int
      */
-    private $id;
+    private $postId;
 
     /**
      * @var string
      */
-    private $image_url;
+    private $imageUrl;
 
     /**
      * @var string
@@ -40,7 +40,7 @@ class Post extends Entity
     /**
      * @var \DateTime
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @var string
@@ -67,24 +67,24 @@ class Post extends Entity
         $this->content = $content;
     }
 
-    public function getPost_id(): int
+    public function getPostId(): int
     {
-        return $this->id;
+        return $this->postId;
     }
 
-    public function setPost_id(int $id): void
+    public function setPostId(int $id): void
     {
-        $this->id = $id;
+        $this->postId = $id;
     }
 
     public function getImageUrl(): string
     {
-        return $this->image_url;
+        return $this->imageUrl;
     }
 
-    public function setImageUrl(string $image_url): void
+    public function setImageUrl(string $imageUrl): void
     {
-        $this->image_url = $image_url;
+        $this->imageUrl = $imageUrl;
     }
 
     public function getSubtitle(): string
@@ -109,12 +109,12 @@ class Post extends Entity
 
     public function getUpdatedAt(): \DateTime
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTime $updated_at): void
+    public function setUpdatedAt(\DateTime $updatedAt): void
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
     }
 
     public function getUsername(): string
