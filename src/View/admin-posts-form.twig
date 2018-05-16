@@ -4,46 +4,87 @@
 
 {% block body %}
     {% if post is defined %}
-        {% if errors is defined %}
-            {% for error in errors %}
-                <div class="alert alert-danger" role="alert">{{ error }}</div>
-            {% endfor %}
-        {% endif %}
         <div class="card my-4 commentForm">
             <h5 class="card-header">Modifier l'article</h5>
             <div class="card-body">
                 <form action="{{ asset('admin/posts/' ~ post.post_id ~ '/edit') }}" method="post">
                     <div class="form-group">
                         <label for="title">Titre: </label>
-                        <input class="form-control" name="title" value="{{ post.title }}" required>
+                        {% if vm.errors.title is defined %}
+                            <div class="alert alert-danger" role="alert">{{ vm.errors.title }}</div>
+                        {% endif %}
+                        {% if vm.title is defined %}
+                            <input class="form-control" name="title" value="{{ vm.title }}" required>
+                        {% else %}
+                            <input class="form-control" name="title" value="{{ post.title }}" required>
+                        {% endif %}
                         <label for="subtitle">Chapô: </label>
-                        <input class="form-control" name="subtitle" value="{{ post.subtitle }}" required>
+                        {% if vm.errors.subtitle is defined %}
+                            <div class="alert alert-danger" role="alert">{{ vm.errors.subtitle }}</div>
+                        {% endif %}
+                        {% if vm.subtitle is defined %}
+                            <input class="form-control" name="title" value="{{ vm.subtitle }}" required>
+                        {% else %}
+                            <input class="form-control" name="subtitle" value="{{ post.subtitle }}" required>
+                        {% endif %}
                         <label for="content">Article: </label>
-                        <textarea class="form-control" rows="3" name="content" required>{{ post.content }}</textarea>
+                        {% if vm.errors.content is defined %}
+                            <div class="alert alert-danger" role="alert">{{ vm.errors.content }}</div>
+                        {% endif %}
+                        {% if vm.content is defined %}
+                            <input class="form-control" name="title" value="{{ vm.content }}" required>
+                        {% else %}
+                            <textarea class="form-control" rows="3" name="content" required>{{ post.content }}</textarea>
+                        {% endif %}
+                        <input type="hidden" name="token" id="token" value="{{ token }}"/>
                     </div>
-                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <button type="submit" class="btn btn-primary" name="submitPost">Enregistrer</button>
                 </form>
             </div>
         </div>
     {% else %}
-        {% if errors is defined %}
-            {% for error in errors %}
-                <div class="alert alert-danger" role="alert">{{ error }}</div>
-            {% endfor %}
-        {% endif %}
         <div class="card my-4 commentForm">
             <h5 class="card-header">Ajouter un article</h5>
             <div class="card-body">
                 <form action="{{ asset('admin/posts/create') }}" method="post">
                     <div class="form-group">
                         <label for="title">Titre: </label>
-                        <input class="form-control" name="title" required>
+                        {% if vm.errors.title is defined %}
+                            <div class="alert alert-danger" role="alert">{{ vm.errors.title }}</div>
+                        {% endif %}
+                        {% if vm.title is defined %}
+                            <input class="form-control" name="title" value="{{ vm.title }}" required>
+                        {% else %}
+                            <input class="form-control" name="title" required>
+                        {% endif %}
                         <label for="subtitle">Chapô: </label>
-                        <input class="form-control" name="subtitle" required>
+                        {% if vm.errors.subtitle is defined %}
+                            <div class="alert alert-danger" role="alert">{{ vm.errors.subtitle }}</div>
+                        {% endif %}
+                        {% if vm.subtitle is defined %}
+                            <input class="form-control" name="subtitle" value="{{ vm.subtitle }}" required>
+                        {% else %}
+                            <input class="form-control" name="subtitle" required>
+                        {% endif %}
                         <label for="content">Article: </label>
-                        <textarea class="form-control" rows="3" name="content" required></textarea>
+                        {% if vm.errors.content is defined %}
+                            <div class="alert alert-danger" role="alert">{{ vm.errors.content }}</div>
+                        {% endif %}
+                        {% if vm.content is defined %}
+                            <textarea class="form-control" rows="3" name="content" required>{{ vm.content }}</textarea>
+                        {% else %}
+                            <textarea class="form-control" rows="3" name="content" required></textarea>
+                        {% endif %}
                         <label for="author">Votre identifiant: </label>
-                        <input class="form-control" name="author" value="{% if currentUser is defined %}{{ currentUser.username }}{% endif %}">
+                        {% if vm.errors.author is defined %}
+                            <div class="alert alert-danger" role="alert">{{ vm.errors.author }}</div>
+                        {% endif %}
+                        {% if vm.author is defined %}
+                            <input class="form-control" name="author" value="{{ vm.author }}">
+                        {% else %}
+                            <input class="form-control" name="author" value="{% if currentUser is defined %}{{ currentUser.username }}{% endif %}">
+                        {% endif %}
+                        <input type="hidden" name="token" id="token" value="{{ token }}"/>
                     </div>
                     <button type="submit" class="btn btn-primary" name="submit">Enregistrer</button>
                 </form>

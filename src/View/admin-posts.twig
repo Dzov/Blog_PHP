@@ -25,7 +25,7 @@
                 <div class="row">
                     <div class="col-lg-9 col-md-10 m-auto">
                         {% for post in posts %}
-                            <section class="d-flex justify-content-between">
+                            <section class="d-md-flex justify-content-md-between align-items-center">
                                 <div class="admin__post-list">
                                     <a href="{{ asset('posts/' ~ post.post_id) }}">
                                         <h5 class="post-title">
@@ -41,10 +41,9 @@
                                     </p>
                                 </div>
                                 <div class="controls">
-                                    <form action="{{ asset('admin/posts/' ~ post.post_id ~ '/edit') }}" method="post">
-                                        <input type="hidden" name="token" id="token" value="{{ token }}"/>
+                                    <a href="{{ asset('admin/posts/' ~ post.post_id ~ '/edit') }}">
                                         <button type="submit" name="submit" class="btn btn-primary">Modifier</button>
-                                    </form>
+                                    </a>
                                     <form action="{{ asset('admin/posts/' ~ post.post_id ~ '/delete') }}" method="post" class="my-2">
                                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                         <button type="submit" name="submit" class="btn btn-danger">Supprimer</button>

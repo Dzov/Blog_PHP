@@ -12,6 +12,8 @@ class AdminUserController extends Controller
 {
     public static function listAction(): void
     {
+        self::setToken();
+
         $users = UserManager::findAll();
 
         self::renderTemplate(
@@ -30,11 +32,11 @@ class AdminUserController extends Controller
 
             UserManager::findById($id);
 
-            if ($_POST['token'] === $_SESSION['token']) {
+            if (self::tokenIsValid($_POST['token'])) {
                 UserManager::grant($id);
                 $_SESSION['success'][] = 'L\'utilisateur a maintenant le role admin';
             } else {
-                $_SESSION['errors'][] = 'Une erreur de vérification est survenue';
+                $_SESSION['errors'][] = 'La session a expiré';
             }
         }
 
@@ -51,11 +53,11 @@ class AdminUserController extends Controller
 
             UserManager::findById($id);
 
-            if ($_POST['token'] === $_SESSION['token']) {
+            if (self::tokenIsValid($_POST['token'])) {
                 UserManager::deny($id);
                 $_SESSION['success'][] = 'Le role admin de l\'utilisateur a bien été retiré';
             } else {
-                $_SESSION['errors'][] = 'Une erreur de vérification est survenue';
+                $_SESSION['errors'][] = 'La session a expiré';
             }
         }
 
@@ -72,11 +74,11 @@ class AdminUserController extends Controller
 
             UserManager::findById($id);
 
-            if ($_POST['token'] === $_SESSION['token']) {
+            if (self::tokenIsValid($_POST['token'])) {
                 UserManager::delete($id);
                 $_SESSION['success'][] = 'L\'utilisateur a bien été supprimé';
             } else {
-                $_SESSION['errors'][] = 'Une erreur de vérification est survenue';
+                $_SESSION['errors'][] = 'La session a expiré';
             }
         }
 

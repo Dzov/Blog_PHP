@@ -14,31 +14,54 @@ class ContactController extends Controller
 {
     public static function sendAction()
     {
-        if (isset($_POST['submit']) &&
-            isset($_POST['first_name']) &&
-            isset($_POST['last_name']) &&
-            isset($_POST['email']) &&
-            isset($_POST['message'])
-        ) {
-            $firstName = $_POST['first_name'];
-            $lastName = $_POST['last_name'];
-            $email = str_replace(array("\n", "\r", PHP_EOL), '', $_POST['email']);
-            $message = $_POST['message'];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $vm = [];
 
-            if (strlen($firstName) < 2 || strlen($firstName) >= 30) {
-                $_SESSION['errors'][] = 'Votre prénom doit faire entre 2 et 30 caractères';
-            }
-            if (strlen($lastName) < 2 || strlen($lastName) >= 40) {
-                $_SESSION['errors'][] = 'Votre nom de famille doit faire entre 2 et 40 caractères';
-            }
-            if (strlen($email) < 6 || strlen($lastName) >= 50) {
-                $_SESSION['errors'][] = 'Votre email doit faire entre 6 et 50 caractères';
-            }
-            if (strlen($message) < 5) {
-                $_SESSION['errors'][] = 'Votre message doit contenir au moins 5 caractères';
+            if (empty($_POST['first_name'])) {
+                $vm['errors']['firstName'] = 'Veuillez renseigner votre prénom';
+            } else {
+                $firstName = $_POST['first_name'];
+                $vm['firstName'] = $firstName;
+
+                if (strlen($firstName) < 2 || strlen($firstName) >= 30) {
+                    $vm['errors']['firstName'] = 'Votre prénom doit faire entre 2 et 30 caractères';
+                }
             }
 
-            if (!isset($_SESSION['errors'])) {
+            if (empty($_POST['last_name'])) {
+                $vm['errors']['lastName'] = 'Veuillez renseigner votre nom de famille';
+            } else {
+                $lastName = $_POST['last_name'];
+                $vm['lastName'] = $lastName;
+
+                if (strlen($lastName) < 2 || strlen($lastName) >= 40) {
+                    $vm['errors']['lastName'] = 'Votre nom de famille doit faire entre 2 et 40 caractères';
+                }
+            }
+
+            if (empty($_POST['email'])) {
+                $vm['errors']['email'] = 'Veuillez renseigner votre email';
+            } else {
+                $email = str_replace(array("\n", "\r", PHP_EOL), '', $_POST['email']);
+                $vm['email'] = $email;
+
+                if (strlen($email) < 6 || strlen($lastName) >= 50) {
+                    $vm['errors']['email'] = 'Votre email doit faire entre 6 et 50 caractères';
+                }
+            }
+
+            if (empty($_POST['message'])) {
+                $vm['errors']['message'] = 'Veuillez renseigner le corps du mail';
+            } else {
+                $message = $_POST['message'];
+                $vm['message'] = $message;
+
+                if (strlen($message) < 5) {
+                    $vm['errors']['message'] = 'Votre message doit contenir au moins 5 caractères';
+                }
+            }
+
+            if (!isset($vm['errors'])) {
                 $transport = (new Swift_SmtpTransport(Parameters::$mail_host, Parameters::$mail_port, 'ssl'))
                     ->setUsername(Parameters::$mail_username)
                     ->setPassword(Parameters::$mail_password);
@@ -55,13 +78,18 @@ class ContactController extends Controller
                 if ($result) {
                     self::redirect('contact/success');
                 }
+            } else {
+                self::renderTemplate('contact.twig', ['vm' => $vm]);
+
+                return;
             }
         }
 
         self::renderTemplate('contact.twig');
     }
 
-    public static function validateAction()
+    public
+    static function validateAction()
     {
         self::renderTemplate('message-sent.twig');
     }
