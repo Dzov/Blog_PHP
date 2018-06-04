@@ -14,9 +14,9 @@ abstract class PostManager extends DatabaseConnection
 {
     public static function findAll(): array
     {
-        $query = 'SELECT p.post_id, p.title, p.subtitle, p.updated_at, p.author, u.username 
+        $query = 'SELECT p.id, p.title, p.subtitle, p.updated_at, p.author, u.username 
                     FROM post p
-                    INNER JOIN user u ON p.author = u.user_id
+                    INNER JOIN user u ON p.author = u.id
                     ORDER BY p.updated_at DESC';
 
         return array_map(
@@ -33,7 +33,7 @@ abstract class PostManager extends DatabaseConnection
     public static function findById(int $id): ?Post
     {
         $query = 'SELECT * FROM post 
-                    WHERE post_id = :id';
+                    WHERE id = :id';
 
         return new Post(parent::executeQuery($query, [':id' => $id])->fetch());
     }
@@ -42,7 +42,7 @@ abstract class PostManager extends DatabaseConnection
     {
         $query = 'SELECT c.content, c.posted_at, c.status, u.username
                     FROM comment c
-                    INNER JOIN user u ON c.author = u.user_id
+                    INNER JOIN user u ON c.author = u.id
                     WHERE c.post_id = :id AND c.status = "PUBLISHED"
                     ORDER BY c.posted_at DESC';
 
@@ -56,7 +56,7 @@ abstract class PostManager extends DatabaseConnection
 
     public static function delete(int $id): \PDOStatement
     {
-        $query = 'DELETE FROM post WHERE post.post_id = :id';
+        $query = 'DELETE FROM post WHERE post.id = :id';
 
         return parent::executeQuery($query, [':id' => $id]);
     }
@@ -68,7 +68,7 @@ abstract class PostManager extends DatabaseConnection
                     p.subtitle = :subtitle, 
                     p.content = :content, 
                     p.updated_at = :updatedAt 
-                  WHERE p.post_id = :id';
+                  WHERE p.id = :id';
 
         return parent::executeQuery(
             $query,
@@ -107,11 +107,11 @@ abstract class PostManager extends DatabaseConnection
      */
     private static function getAuthorId(string $author): ?string
     {
-        $query = 'SELECT user_id FROM user u WHERE u.username = :author';
+        $query = 'SELECT id FROM user u WHERE u.username = :author';
 
         $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
 
-        return $author->getUserId();
+        return $author->getId();
     }
 }
 

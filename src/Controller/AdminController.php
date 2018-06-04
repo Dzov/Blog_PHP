@@ -11,6 +11,11 @@ use Blog\Model\UserManager;
  */
 class AdminController extends Controller
 {
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
     public static function showAction(): void
     {
         self::renderTemplate('admin-dashboard.twig', []);

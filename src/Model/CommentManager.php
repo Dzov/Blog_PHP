@@ -13,8 +13,8 @@ abstract class CommentManager extends DatabaseConnection
 {
     public static function findAll(): array
     {
-        $query = 'SELECT c.comment_id, c.post_id, c.author, c.content, c.posted_at, c.status, u.user_id, u.username 
-                  FROM comment c INNER JOIN user u ON c.author = u.user_id ORDER BY status, posted_at DESC';
+        $query = 'SELECT c.id, c.post_id, c.author, c.content, c.posted_at, c.status, u.id, u.username 
+                  FROM comment c INNER JOIN user u ON c.author = u.id ORDER BY status, posted_at DESC';
 
         return array_map(
             function ($item) {
@@ -29,8 +29,8 @@ abstract class CommentManager extends DatabaseConnection
      */
     public static function findById(int $id): ?Comment
     {
-        $query = 'SELECT c.comment_id, c.post_id, c.author, c.content, c.posted_at, c.status, u.user_id, u.username 
-                  FROM comment c INNER JOIN user u ON c.author = u.user_id WHERE c.comment_id = :id';
+        $query = 'SELECT c.id, c.post_id, c.author, c.content, c.posted_at, c.status, u.id, u.username 
+                  FROM comment c INNER JOIN user u ON c.author = u.id WHERE c.id = :id';
 
         return new Comment(parent::executeQuery($query, ['id' => $id])->fetch());
     }
@@ -60,18 +60,18 @@ abstract class CommentManager extends DatabaseConnection
      */
     private static function getAuthorId(string $author): int
     {
-        $query = 'SELECT user_id FROM user u WHERE u.username = :author';
+        $query = 'SELECT id FROM user u WHERE u.username = :author';
 
         $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
 
-        return $author->getUserId();
+        return $author->getId();
     }
 
     public static function publish(int $id): \PDOStatement
     {
         $query = 'UPDATE comment c
                   SET status = :status
-                  WHERE c.comment_id = :id';
+                  WHERE c.id = :id';
 
         return parent::executeQuery($query, ['status' => 'PUBLISHED', 'id' => $id]);
     }
@@ -79,7 +79,7 @@ abstract class CommentManager extends DatabaseConnection
     public static function delete(int $id): \PDOStatement
     {
         $query = 'DELETE FROM comment
-                  WHERE comment_id = :id';
+                  WHERE id = :id';
 
         return parent::executeQuery($query, ['id' => $id]);
     }

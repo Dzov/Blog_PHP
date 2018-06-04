@@ -20,7 +20,7 @@ class User extends Entity
     /**
      * @var int
      */
-    private $userId;
+    private $id;
 
     /**
      * @var string
@@ -62,14 +62,14 @@ class User extends Entity
         $this->firstName = $firstName;
     }
 
-    public function getUserId(): int
+    public function getId(): int
     {
-        return $this->userId;
+        return $this->id;
     }
 
-    public function setUserId(int $id): void
+    public function setId(int $id): void
     {
-        $this->userId = $id;
+        $this->id = $id;
     }
 
     public function getLastName(): string

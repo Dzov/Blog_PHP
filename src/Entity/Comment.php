@@ -20,7 +20,7 @@ class Comment extends Entity
     /**
      * @var int
      */
-    private $commentId;
+    private $id;
 
     /**
      * @var Post
@@ -67,14 +67,14 @@ class Comment extends Entity
         $this->content = $content;
     }
 
-    public function getCommentId(): int
+    public function getId(): int
     {
-        return $this->commentId;
+        return $this->id;
     }
 
-    public function setCommentId(int $id): void
+    public function setId(int $id): void
     {
-        $this->commentId = $id;
+        $this->id = $id;
     }
 
     public function getPost(): Post

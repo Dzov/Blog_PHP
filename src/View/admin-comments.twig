@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="controls">
                                     {% if comment.status == 'PENDING' %}
-                                        <form action="{{ asset('admin/comments/' ~ comment.commentId ~ '/publish') }}" method="post">
+                                        <form action="{{ asset('admin/comments/' ~ comment.id ~ '/publish') }}" method="post">
                                             <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                             <button type="submit" name="submit" class="btn btn-primary">Publier</button>
                                         </form>
@@ -45,7 +45,7 @@
                                     <a href="{{ asset('posts/' ~ comment.postId) }}">
                                         <button type="submit" name="submit" class="btn btn-secondary my-2">Voir l'article associé</button>
                                     </a>
-                                    <form action="{{ asset('admin/comments/' ~ comment.commentId ~ '/delete') }}" method="post">
+                                    <form action="{{ asset('admin/comments/' ~ comment.id ~ '/delete') }}" method="post">
                                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                         <button type="submit" name="submit" class="btn btn-danger">Supprimer</button>
                                     </form>

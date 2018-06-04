@@ -11,7 +11,7 @@ class UserManager extends DatabaseConnection
 {
     public static function findAll(): array
     {
-        $query = 'SELECT * FROM user ORDER BY role, user_id DESC';
+        $query = 'SELECT * FROM user ORDER BY role, id DESC';
 
         return array_map(
             function ($item) {
@@ -26,8 +26,8 @@ class UserManager extends DatabaseConnection
      */
     public static function findById(int $userId): ?User
     {
-        $query = 'SELECT u.first_name, u.last_name, u.username, u.email, u.user_id, u.role 
-                  FROM user u WHERE u.user_id = :id';
+        $query = 'SELECT u.first_name, u.last_name, u.username, u.email, u.id, u.role 
+                  FROM user u WHERE u.id = :id';
 
         return new User(self::executeQuery($query, ['id' => $userId])->fetch());
     }
@@ -37,7 +37,7 @@ class UserManager extends DatabaseConnection
      */
     public static function findByUsername(string $username): ?User
     {
-        $query = 'SELECT u.first_name, u.last_name, u.username, u.email, u.user_id, u.role 
+        $query = 'SELECT u.first_name, u.last_name, u.username, u.email, u.id, u.role 
                   FROM user u WHERE u.username = :username';
 
         return new User(self::executeQuery($query, ['username' => $username])->fetch());
@@ -48,7 +48,7 @@ class UserManager extends DatabaseConnection
      */
     public static function findByEmail(string $email): ?User
     {
-        $query = 'SELECT u.first_name, u.last_name, u.username, u.email, u.user_id, u.role 
+        $query = 'SELECT u.first_name, u.last_name, u.username, u.email, u.id, u.role 
                   FROM user u WHERE u.email = :email';
 
         return new User(self::executeQuery($query, ['email' => $email])->fetch());
@@ -57,7 +57,7 @@ class UserManager extends DatabaseConnection
     public static function delete(int $id): \PDOStatement
     {
         $query = 'DELETE FROM user
-                  WHERE user_id = :id';
+                  WHERE id = :id';
 
         return parent::executeQuery($query, ['id' => $id]);
     }
@@ -66,7 +66,7 @@ class UserManager extends DatabaseConnection
     {
         $query = 'UPDATE user 
                     SET role = :role
-                  WHERE user_id = :id';
+                  WHERE id = :id';
 
         return parent::executeQuery($query, ['role' => 'ADMIN', 'id' => $id]);
     }
@@ -75,7 +75,7 @@ class UserManager extends DatabaseConnection
     {
         $query = 'UPDATE user 
                     SET role = :role
-                  WHERE user_id = :id';
+                  WHERE id = :id';
 
         return parent::executeQuery($query, ['role' => 'REGISTERED_USER', 'id' => $id]);
     }

@@ -10,6 +10,9 @@ use Blog\Model\PostManager;
  */
 class PostController extends Controller
 {
+    /**
+     * {@inheritdoc}
+     */
     public static function listAction(): void
     {
         $posts = PostManager::findAll();
@@ -18,7 +21,7 @@ class PostController extends Controller
     }
 
     /**
-     * @throws ResourceNotFoundException
+     * {@inheritdoc}
      */
     public static function showPostAction(array $parameters): void
     {

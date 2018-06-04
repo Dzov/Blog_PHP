@@ -20,7 +20,7 @@ class Post extends Entity
     /**
      * @var int
      */
-    private $postId;
+    private $id;
 
     /**
      * @var string
@@ -67,14 +67,14 @@ class Post extends Entity
         $this->content = $content;
     }
 
-    public function getPostId(): int
+    public function getId(): int
     {
-        return $this->postId;
+        return $this->id;
     }
 
-    public function setPostId(int $id): void
+    public function setId(int $id): void
     {
-        $this->postId = $id;
+        $this->id = $id;
     }
 
     public function getImageUrl(): string
@@ -121,7 +121,7 @@ class Post extends Entity
     {
         return $this->username;
     }
-    
+
     public function setUsername(string $username): void
     {
         $this->username = $username;
