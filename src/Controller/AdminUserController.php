@@ -12,6 +12,9 @@ use Blog\Utils\TokenCSRF;
  */
 class AdminUserController extends Controller
 {
+    /**
+     * @throws \Exception
+     */
     public static function listAction(): void
     {
         TokenCSRF::setToken();

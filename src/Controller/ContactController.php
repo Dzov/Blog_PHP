@@ -20,7 +20,7 @@ class ContactController extends Controller
 
             $firstName = Request::post('first_name');
 
-            if (empty($first_name)) {
+            if (empty($firstName)) {
                 $vm['errors']['firstName'] = 'Veuillez renseigner votre prénom';
             } else {
                 $vm['firstName'] = $firstName;
@@ -32,7 +32,7 @@ class ContactController extends Controller
 
             $lastName = Request::post('last_name');
 
-            if (empty($last_name)) {
+            if (empty($lastName)) {
                 $vm['errors']['lastName'] = 'Veuillez renseigner votre nom de famille';
             } else {
                 $vm['lastName'] = $lastName;
