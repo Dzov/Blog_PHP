@@ -2,18 +2,22 @@
 
 namespace Blog\Controller;
 
-use Blog\Controller\Exception\ResourceNotFoundException;
+use Blog\Exception\ResourceNotFoundException;
 use Blog\Model\CommentManager;
 use Blog\Utils\Request;
+use Blog\Utils\TokenCSRF;
 
 /**
  * @author Amélie-Dzovinar Haladjian
  */
 class AdminCommentController extends Controller
 {
+    /**
+     * @throws \Exception
+     */
     public static function listAction(): void
     {
-        self::setToken();
+        TokenCSRF::setToken();
 
         $comments = CommentManager::findAll();
 
@@ -29,12 +33,11 @@ class AdminCommentController extends Controller
     public static function publishAction(array $parameters): void
     {
         $submit = Request::post('submit');
-        $token = Request::post('token');
 
-        if (isset($submit) && isset($token) && isset($_SESSION['security'])) {
+        if (isset($submit)) {
             $id = $parameters['id'];
 
-            if (self::tokenIsValid($token)) {
+            if (TokenCSRF::isValid(Request::post('token'))) {
                 CommentManager::publish($id);
                 $_SESSION['success'][] = 'Le commentaire a bien été publié';
             } else {
@@ -51,14 +54,13 @@ class AdminCommentController extends Controller
     public static function deleteAction(array $parameters): void
     {
         $submit = Request::post('submit');
-        $token = Request::post('token');
 
-        if (isset($submit) && isset($token) && isset($_SESSION['security'])) {
+        if (isset($submit)) {
             $id = $parameters['id'];
 
             CommentManager::findById($id);
 
-            if (self::tokenIsValid($token)) {
+            if (TokenCSRF::isValid(Request::post('token'))) {
                 CommentManager::delete($id);
                 $_SESSION['success'][] = 'Le commentaire a bien été supprimé';
             } else {

@@ -5,6 +5,7 @@ namespace Blog\Controller;
 use Blog\Exception\ResourceNotFoundException;
 use Blog\Model\PostManager;
 use Blog\Utils\Request;
+use Blog\Utils\TokenCSRF;
 
 /**
  * @author Amélie-Dzovinar Haladjian
@@ -16,7 +17,7 @@ class AdminPostController extends Controller
      */
     public static function listAction(): void
     {
-        self::setToken();
+        TokenCSRF::setToken();
 
         $posts = PostManager::findAll();
 
@@ -74,7 +75,7 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (!self::tokenIsValid(Request::post('token'))) {
+            if (!TokenCSRF::isValid(Request::post('token'))) {
                 $vm['errors']['security'] = 'Une erreur d\'authentification est survenue';
             }
 
@@ -155,7 +156,7 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (!self::tokenIsValid(Request::post('token'))) {
+            if (!TokenCSRF::isValid(Request::post('token'))) {
                 $vm['errors']['security'] = 'Une erreur d\'authentification est survenue';
             }
 
@@ -186,15 +187,13 @@ class AdminPostController extends Controller
     ): void
     {
         $submit = Request::post('submit');
-        $token = Request::post('token');
-        $sessionToken = $_SESSION['token'];
 
-        if (isset($submit) && isset($token) && isset($sessionToken)) {
+        if (isset($submit)) {
             $id = $parameters['id'];
 
             PostManager::findById($id);
 
-            if (self::tokenIsValid($token)) {
+            if (TokenCSRF::isValid(Request::post('token'))) {
                 PostManager::delete($id);
                 $_SESSION['success'][] = 'L\'article a bien été supprimé';
             } else {

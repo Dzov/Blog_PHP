@@ -10,7 +10,7 @@ class TokenCSRF
     /**
      * @throws \Exception
      */
-    protected static function setToken(): void
+    public static function setToken(): void
     {
         $token = bin2hex(random_bytes(64));
 
@@ -24,22 +24,24 @@ class TokenCSRF
     /**
      * @throws \Exception
      */
-    protected static function isValid(string $token): bool
+    public static function isValid(string $token): bool
     {
-        $createdAt = $_SESSION['security']['createdAt'];
-        $expiresAt = $createdAt->add(new \DateInterval('PT10M'));
+        if (isset($token) && isset($_SESSION['token'])) {
+            $createdAt = $_SESSION['security']['createdAt'];
+            $expiresAt = $createdAt->add(new \DateInterval('PT10M'));
 
-        if (isset($_SESSION['security']) &&
-            (new \DateTime() < $expiresAt) &&
-            $_SESSION['security']['token'] === $token
-        ) {
-            return true;
-        }
+            if (isset($_SESSION['security']) &&
+                (new \DateTime() < $expiresAt) &&
+                $_SESSION['security']['token'] === $token
+            ) {
+                return true;
+            }
 
-        $_SESSION['security']['attempts'] += 1;
+            $_SESSION['security']['attempts'] += 1;
 
-        if ($_SESSION['security']['attempts'] >= 3) {
-            unset($_SESSION['security']);
+            if ($_SESSION['security']['attempts'] >= 3) {
+                unset($_SESSION['security']);
+            }
         }
 
         return false;
