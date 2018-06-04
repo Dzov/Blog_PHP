@@ -2,14 +2,15 @@
 
 namespace Blog;
 
-use Blog\Exceptions\AccessDeniedException;
-use Blog\Exceptions\ActionNotFoundException;
-use Blog\Exceptions\ControllerNotFoundException;
-use Blog\Exceptions\ResourceNotFoundException;
-use Blog\Exceptions\RouteNotFoundException;
+use Blog\Exception\AccessDeniedException;
+use Blog\Exception\ActionNotFoundException;
+use Blog\Exception\ControllerNotFoundException;
+use Blog\Exception\ResourceNotFoundException;
+use Blog\Exception\RouteNotFoundException;
 use Blog\Entity\User;
 use Blog\Model\UserManager;
 use Blog\Router\Router;
+use Blog\Utils\Request;
 
 /**
  * @author Amélie-Dzovinar Haladjian

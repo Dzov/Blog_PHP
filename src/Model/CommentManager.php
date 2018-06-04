@@ -4,7 +4,7 @@ namespace Blog\Model;
 
 use Blog\Entity\Comment;
 use Blog\Entity\User;
-use Blog\Exceptions\ResourceNotFoundException;
+use Blog\Exception\ResourceNotFoundException;
 
 /**
  * @author Amélie-Dzovinar Haladjian

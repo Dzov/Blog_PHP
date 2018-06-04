@@ -7,19 +7,19 @@ namespace Blog\Utils;
  */
 class Request
 {
-    public static function get(string $name)
+    public static function get(string $key)
     {
-        if (isset($_GET[$name])) {
-            return $_GET[$name];
+        if (isset($_GET[$key])) {
+            return $_GET[$key];
         }
 
         return null;
     }
 
-    public static function post(string $name)
+    public static function post(string $key)
     {
-        if (isset($_POST[$name])) {
-            return $_POST[$name];
+        if (isset($_POST[$key])) {
+            return $_POST[$key];
         }
 
         return null;

@@ -2,7 +2,7 @@
 
 namespace Blog\Model;
 
-use Blog\Exceptions\ResourceNotFoundException;
+use Blog\Exception\ResourceNotFoundException;
 use Blog\Entity\Comment;
 use Blog\Entity\Post;
 use Blog\Entity\User;
