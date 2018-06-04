@@ -14,6 +14,11 @@ use Twig_Loader_Filesystem;
  */
 abstract class Controller
 {
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
     protected static function renderTemplate(string $path, array $parameters = []): void
     {
         $loader = new Twig_Loader_Filesystem('../src/View');
@@ -30,13 +35,9 @@ abstract class Controller
 
         self::addGlobalVariables($twig);
 
-        try {
-            $twig->load($path);
+        $twig->load($path);
 
-            echo $twig->render($path, $parameters);
-        } catch (Exception $e) {
-            echo htmlspecialchars($e->getMessage());
-        }
+        echo $twig->render($path, $parameters);
     }
 
     protected static function redirect(string $url): void

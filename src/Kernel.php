@@ -53,6 +53,9 @@ class Kernel
      * @throws ActionNotFoundException
      * @throws ControllerNotFoundException
      * @throws ResourceNotFoundException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function __construct()
     {
@@ -125,6 +128,9 @@ class Kernel
      * @throws AccessDeniedException
      * @throws ActionNotFoundException
      * @throws ControllerNotFoundException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function execute(string $controller, string $action, array $parameters = []): void
     {

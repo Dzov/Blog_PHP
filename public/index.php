@@ -24,6 +24,12 @@ try {
     header('Location: 404');
 } catch (ResourceNotFoundException $rnfe) {
     header('Location: 404');
+} catch (\Twig_Error_Loader $e) {
+    header('Location: 500');
+} catch (\Twig_Error_Runtime $e) {
+    header('Location: 500');
+} catch (\Twig_Error_Syntax $e) {
+    header('Location: 500');
 }
 
 
