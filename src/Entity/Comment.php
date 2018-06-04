@@ -28,6 +28,11 @@ class Comment extends Entity
     private $post;
 
     /**
+     * @var int
+     */
+    private $postId;
+
+    /**
      * @var \DateTime
      */
     private $postedAt;
@@ -80,6 +85,16 @@ class Comment extends Entity
     public function setPost(Post $post): void
     {
         $this->post = $post;
+    }
+
+    public function getPostId(): int
+    {
+        return $this->postId;
+    }
+
+    public function setPostId(int $postId): void
+    {
+        $this->postId = $postId;
     }
 
     public function getPostedAt(): \DateTime
