@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-lg-9 col-md-10 m-auto">
                         {% for post in posts %}
-                            <section class="d-md-flex justify-content-md-between align-items-center">
+                            <section class="d-flex flex-column align-items-center justify-content-md-between flex-md-row">
                                 <div class="admin__post-list">
                                     <a href="{{ asset('posts/' ~ post.id) }}">
                                         <h5 class="post-title">
@@ -41,7 +41,7 @@
                                         <a href="{{ asset('user/' ~ post.author) }}">{{ post.username | capitalize }}</a>
                                     </p>
                                 </div>
-                                <div class="controls">
+                                <div class="controls d-flex flex-column align-items-center align-items-md-end align-self-start">
                                     <form action="{{ asset('admin/posts/' ~ post.id ~ '/edit') }}" method="post" class="my-2">
                                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                         <button type="submit" name="submit" class="btn btn-primary">Modifier</button>
