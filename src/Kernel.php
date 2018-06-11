@@ -2,14 +2,15 @@
 
 namespace Blog;
 
-use Blog\Exceptions\AccessDeniedException;
-use Blog\Exceptions\ActionNotFoundException;
-use Blog\Exceptions\ControllerNotFoundException;
-use Blog\Exceptions\ResourceNotFoundException;
-use Blog\Exceptions\RouteNotFoundException;
+use Blog\Exception\AccessDeniedException;
+use Blog\Exception\ActionNotFoundException;
+use Blog\Exception\ControllerNotFoundException;
+use Blog\Exception\ResourceNotFoundException;
+use Blog\Exception\RouteNotFoundException;
 use Blog\Entity\User;
 use Blog\Model\UserManager;
 use Blog\Router\Router;
+use Blog\Utils\Request;
 
 /**
  * @author Amélie-Dzovinar Haladjian
@@ -52,6 +53,9 @@ class Kernel
      * @throws ActionNotFoundException
      * @throws ControllerNotFoundException
      * @throws ResourceNotFoundException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function __construct()
     {
@@ -124,6 +128,9 @@ class Kernel
      * @throws AccessDeniedException
      * @throws ActionNotFoundException
      * @throws ControllerNotFoundException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function execute(string $controller, string $action, array $parameters = []): void
     {

@@ -22,7 +22,7 @@
                         {% for comment in comments %}
                             <section class="d-flex justify-content-between">
                                 <div class="admin__comment-list">
-                                    <a href="{{ asset('posts/' ~ comment.post_id ) }}">
+                                    <a href="{{ asset('posts/' ~ comment.postId ) }}">
                                         <h5 class="comment-title">
                                             {{ comment.content }}
                                         </h5>
@@ -31,21 +31,21 @@
                                         </h6>
                                     </a>
                                     <p>Posté le
-                                        {{ comment.posted_at | date("d M Y \à h:m") }} par
+                                        {{ comment.postedAt | date("d M Y \à h:m") }} par
                                         {{ comment.username | capitalize }}
                                     </p>
                                 </div>
                                 <div class="controls">
                                     {% if comment.status == 'PENDING' %}
-                                        <form action="{{ asset('admin/comments/' ~ comment.comment_id ~ '/publish') }}" method="post">
+                                        <form action="{{ asset('admin/comments/' ~ comment.commentId ~ '/publish') }}" method="post">
                                             <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                             <button type="submit" name="submit" class="btn btn-primary">Publier</button>
                                         </form>
                                     {% endif %}
-                                    <a href="{{ asset('posts/' ~ comment.post_id) }}">
+                                    <a href="{{ asset('posts/' ~ comment.postId) }}">
                                         <button type="submit" name="submit" class="btn btn-secondary my-2">Voir l'article associé</button>
                                     </a>
-                                    <form action="{{ asset('admin/comments/' ~ comment.comment_id ~ '/delete') }}" method="post">
+                                    <form action="{{ asset('admin/comments/' ~ comment.commentId ~ '/delete') }}" method="post">
                                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                         <button type="submit" name="submit" class="btn btn-danger">Supprimer</button>
                                     </form>

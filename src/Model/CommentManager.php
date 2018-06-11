@@ -2,9 +2,9 @@
 
 namespace Blog\Model;
 
-use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Entity\Comment;
 use Blog\Entity\User;
+use Blog\Exception\ResourceNotFoundException;
 
 /**
  * @author Amélie-Dzovinar Haladjian
@@ -16,7 +16,12 @@ abstract class CommentManager extends DatabaseConnection
         $query = 'SELECT c.comment_id, c.post_id, c.author, c.content, c.posted_at, c.status, u.user_id, u.username 
                   FROM comment c INNER JOIN user u ON c.author = u.user_id ORDER BY status, posted_at DESC';
 
-        return parent::executeQuery($query, [])->fetchAll();
+        return array_map(
+            function ($item) {
+                return new Comment($item);
+            },
+            parent::executeQuery($query)->fetchAll()
+        );
     }
 
     /**
@@ -59,7 +64,7 @@ abstract class CommentManager extends DatabaseConnection
 
         $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
 
-        return $author->getUser_id();
+        return $author->getUserId();
     }
 
     public static function publish(int $id): \PDOStatement

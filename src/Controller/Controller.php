@@ -2,7 +2,7 @@
 
 namespace Blog\Controller;
 
-use Blog\Controller\Exceptions\ResourceNotFoundException;
+use Blog\Exception\ResourceNotFoundException;
 use Blog\Model\UserManager;
 use Exception;
 use Twig_Environment;
@@ -14,6 +14,11 @@ use Twig_Loader_Filesystem;
  */
 abstract class Controller
 {
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
     protected static function renderTemplate(string $path, array $parameters = []): void
     {
         $loader = new Twig_Loader_Filesystem('../src/View');
@@ -30,51 +35,9 @@ abstract class Controller
 
         self::addGlobalVariables($twig);
 
-        try {
-            $twig->load($path);
+        $twig->load($path);
 
-            echo $twig->render($path, $parameters);
-        } catch (Exception $e) {
-            echo htmlspecialchars($e->getMessage());
-        }
-    }
-
-    /**
-     * @throws Exception
-     */
-    protected static function setToken(): void
-    {
-        $token = bin2hex(random_bytes(64));
-
-        if (!isset($_SESSION['security'])) {
-            $_SESSION['security']['token'] = $token;
-            $_SESSION['security']['createdAt'] = new \DateTime();
-            $_SESSION['security']['attempts'] = 0;
-        }
-    }
-
-    /**
-     * @throws Exception
-     */
-    protected static function tokenIsValid(string $token): bool
-    {
-        $createdAt = $_SESSION['security']['createdAt'];
-        $expiresAt = $createdAt->add(new \DateInterval('PT10M'));
-
-        if (isset($_SESSION['security']) &&
-            (new \DateTime() < $expiresAt) &&
-            $_SESSION['security']['token'] === $token
-        ) {
-            return true;
-        }
-
-        $_SESSION['security']['attempts'] += 1;
-
-        if ($_SESSION['security']['attempts'] >= 3) {
-            unset($_SESSION['security']);
-        }
-
-        return false;
+        echo $twig->render($path, $parameters);
     }
 
     protected static function redirect(string $url): void

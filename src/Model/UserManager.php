@@ -13,11 +13,16 @@ class UserManager extends DatabaseConnection
     {
         $query = 'SELECT * FROM user ORDER BY role, user_id DESC';
 
-        return parent::executeQuery($query, [])->fetchAll();
+        return array_map(
+            function ($item) {
+                return new User($item);
+            },
+            parent::executeQuery($query)->fetchAll()
+        );
     }
 
     /**
-     * @throws \Blog\Exceptions\ResourceNotFoundException
+     * @throws \Blog\Exception\ResourceNotFoundException
      */
     public static function findById(int $userId): ?User
     {
@@ -28,7 +33,7 @@ class UserManager extends DatabaseConnection
     }
 
     /**
-     * @throws \Blog\Exceptions\ResourceNotFoundException
+     * @throws \Blog\Exception\ResourceNotFoundException
      */
     public static function findByUsername(string $username): ?User
     {
@@ -39,7 +44,7 @@ class UserManager extends DatabaseConnection
     }
 
     /**
-     * @throws \Blog\Exceptions\ResourceNotFoundException
+     * @throws \Blog\Exception\ResourceNotFoundException
      */
     public static function findByEmail(string $email): ?User
     {

@@ -2,11 +2,11 @@
 
 namespace Blog;
 
-use Blog\Exceptions\ControllerNotFoundException;
-use Blog\Exceptions\ActionNotFoundException;
-use Blog\Exceptions\ResourceNotFoundException;
-use Blog\Exceptions\RouteNotFoundException;
-use Blog\Exceptions\AccessDeniedException;
+use Blog\Exception\ControllerNotFoundException;
+use Blog\Exception\ActionNotFoundException;
+use Blog\Exception\ResourceNotFoundException;
+use Blog\Exception\RouteNotFoundException;
+use Blog\Exception\AccessDeniedException;
 
 require_once '../vendor/autoload.php';
 
@@ -24,6 +24,12 @@ try {
     header('Location: 404');
 } catch (ResourceNotFoundException $rnfe) {
     header('Location: 404');
+} catch (\Twig_Error_Loader $e) {
+    header('Location: 500');
+} catch (\Twig_Error_Runtime $e) {
+    header('Location: 500');
+} catch (\Twig_Error_Syntax $e) {
+    header('Location: 500');
 }
 
 

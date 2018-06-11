@@ -1,5 +1,5 @@
 <div class="post-preview">
-    <a href="{{ asset('posts/' ~ post.post_id) }}">
+    <a href="{{ asset('posts/' ~ post.postId) }}">
         <h2 class="post-title">
             {{ post.title }}
         </h2>
@@ -8,6 +8,6 @@
         </h3>
     </a>
     <p class="post-meta">Modifié le
-        {{ post.updated_at | date("d, M Y") }} par {{ post.username | capitalize }}</p>
+        {{ post.updatedAt | date("d, M Y") }} par {{ post.username | capitalize }}</p>
 </div>
 <hr>

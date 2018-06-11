@@ -21,7 +21,7 @@
                         <input class="form-control" type="text" name="first_name" required value="{{ vm.firstName }}">
                         <br>
                     {% else %}
-                        <input class="form-control" type="text" name="first_name" required value="{% if currentUser is defined %} {{ currentUser.first_name }} {% endif %}">
+                        <input class="form-control" type="text" name="first_name" required value="{% if currentUser is defined %} {{ currentUser.firstName }} {% endif %}">
                         <br>
                     {% endif %}
                     <label for="last_name">Votre nom: </label>
@@ -31,7 +31,7 @@
                     {% if vm.lastName is defined %}
                         <input class="form-control" type="text" name="last_name" required value="{{ vm.lastName }}"><br>
                     {% else %}
-                        <input class="form-control" type="text" name="last_name" required value="{% if currentUser is defined %} {{ currentUser.last_name }} {% endif %}">
+                        <input class="form-control" type="text" name="last_name" required value="{% if currentUser is defined %} {{ currentUser.lastName }} {% endif %}">
                         <br>
                     {% endif %}
                     <label for="email">Votre email: </label>

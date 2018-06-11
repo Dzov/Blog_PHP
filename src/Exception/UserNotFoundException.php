@@ -1,6 +1,6 @@
 <?php
 
-namespace Blog\Exceptions;
+namespace Blog\Exception;
 
 /**
  * @author Amélie-Dzovinar Haladjian

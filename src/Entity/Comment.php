@@ -20,12 +20,17 @@ class Comment extends Entity
     /**
      * @var int
      */
-    private $id;
+    private $commentId;
 
     /**
      * @var Post
      */
     private $post;
+
+    /**
+     * @var int
+     */
+    private $postId;
 
     /**
      * @var \DateTime
@@ -62,14 +67,14 @@ class Comment extends Entity
         $this->content = $content;
     }
 
-    public function getId(): int
+    public function getCommentId(): int
     {
-        return $this->id;
+        return $this->commentId;
     }
 
-    public function setId(int $id): void
+    public function setCommentId(int $id): void
     {
-        $this->id = $id;
+        $this->commentId = $id;
     }
 
     public function getPost(): Post
@@ -82,12 +87,22 @@ class Comment extends Entity
         $this->post = $post;
     }
 
-    public function getPosted_at()
+    public function getPostId(): int
+    {
+        return $this->postId;
+    }
+
+    public function setPostId(int $postId): void
+    {
+        $this->postId = $postId;
+    }
+
+    public function getPostedAt(): \DateTime
     {
         return $this->postedAt;
     }
 
-    public function setPosted_at($postedAt): void
+    public function setPostedAt(\DateTime $postedAt): void
     {
         $this->postedAt = $postedAt;
     }

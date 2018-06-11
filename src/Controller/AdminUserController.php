@@ -2,18 +2,22 @@
 
 namespace Blog\Controller;
 
-use Blog\Controller\Exceptions\ResourceNotFoundException;
+use Blog\Exception\ResourceNotFoundException;
 use Blog\Model\UserManager;
 use Blog\Utils\Request;
+use Blog\Utils\TokenCSRF;
 
 /**
  * @author Amélie-Dzovinar Haladjian
  */
 class AdminUserController extends Controller
 {
+    /**
+     * @throws \Exception
+     */
     public static function listAction(): void
     {
-        self::setToken();
+        TokenCSRF::setToken();
 
         $users = UserManager::findAll();
 
@@ -30,14 +34,13 @@ class AdminUserController extends Controller
     public static function grantAdminAction(array $parameters)
     {
         $submit = Request::post('submit');
-        $token = Request::post('token');
 
-        if (isset($submit) && isset($token) && isset($_SESSION['token'])) {
+        if (isset($submit)) {
             $id = $parameters['id'];
 
             UserManager::findById($id);
 
-            if (self::tokenIsValid($token)) {
+            if (TokenCSRF::isValid(Request::post('token'))) {
                 UserManager::grant($id);
                 $_SESSION['success'][] = 'L\'utilisateur a maintenant le role admin';
             } else {
@@ -55,14 +58,13 @@ class AdminUserController extends Controller
     public static function denyAdminAction(array $parameters)
     {
         $submit = Request::post('submit');
-        $token = Request::post('token');
 
-        if (isset($submit) && isset($token) && isset($_SESSION['token'])) {
+        if (isset($submit)) {
             $id = $parameters['id'];
 
             UserManager::findById($id);
 
-            if (self::tokenIsValid($token)) {
+            if (TokenCSRF::isValid(Request::post('token'))) {
                 UserManager::deny($id);
                 $_SESSION['success'][] = 'Le role admin de l\'utilisateur a bien été retiré';
             } else {
@@ -80,14 +82,13 @@ class AdminUserController extends Controller
     public static function deleteAction(array $parameters): void
     {
         $submit = Request::post('submit');
-        $token = Request::post('token');
 
-        if (isset($submit) && isset($token) && isset($_SESSION['token'])) {
+        if (isset($submit)) {
             $id = $parameters['id'];
 
             UserManager::findById($id);
 
-            if (self::tokenIsValid($token)) {
+            if (TokenCSRF::isValid(Request::post('token'))) {
                 UserManager::delete($id);
                 $_SESSION['success'][] = 'L\'utilisateur a bien été supprimé';
             } else {

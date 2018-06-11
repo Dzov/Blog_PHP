@@ -20,7 +20,7 @@ class User extends Entity
     /**
      * @var int
      */
-    private $id;
+    private $userId;
 
     /**
      * @var string
@@ -52,32 +52,32 @@ class User extends Entity
         $this->email = $email;
     }
 
-    public function getFirst_name(): string
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    public function setFirst_name(string $firstName): void
+    public function setFirstName(string $firstName): void
     {
         $this->firstName = $firstName;
     }
 
-    public function getUser_id(): int
+    public function getUserId(): int
     {
-        return $this->id;
+        return $this->userId;
     }
 
-    public function setUser_id(int $id): void
+    public function setUserId(int $id): void
     {
-        $this->id = $id;
+        $this->userId = $id;
     }
 
-    public function getLast_name(): string
+    public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    public function setLast_name(string $lastName): void
+    public function setLastName(string $lastName): void
     {
         $this->lastName = $lastName;
     }

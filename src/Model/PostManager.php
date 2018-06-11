@@ -2,7 +2,7 @@
 
 namespace Blog\Model;
 
-use Blog\Controller\Exceptions\ResourceNotFoundException;
+use Blog\Exception\ResourceNotFoundException;
 use Blog\Entity\Comment;
 use Blog\Entity\Post;
 use Blog\Entity\User;
@@ -111,7 +111,7 @@ abstract class PostManager extends DatabaseConnection
 
         $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
 
-        return $author->getUser_id();
+        return $author->getUserId();
     }
 }
 

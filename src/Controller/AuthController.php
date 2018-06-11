@@ -2,10 +2,11 @@
 
 namespace Blog\Controller;
 
-use Blog\Exceptions\ResourceNotFoundException;
+use Blog\Exception\ResourceNotFoundException;
 use Blog\Model\AuthManager;
 use Blog\Model\UserManager;
 use Blog\Utils\Request;
+use Blog\Utils\TokenCSRF;
 
 /**
  * @author Amélie-Dzovinar Haladjian
@@ -18,7 +19,6 @@ class AuthController extends Controller
     public static function loginAction(): void
     {
         $submit = Request::post('submit');
-        $token = Request::post('token');
         $username = Request::post('username');
         $password = Request::post('password');
 
@@ -28,11 +28,11 @@ class AuthController extends Controller
         ) {
             $encryptedPassword = sha1($password);
 
-            if (self::tokenIsValid($token)) {
+            if (TokenCSRF::isValid(Request::post('token'))) {
                 try {
                     $user = AuthManager::getUserIdentification($username, $encryptedPassword);
 
-                    $_SESSION['userId'] = $user->getUser_id();
+                    $_SESSION['userId'] = $user->getUserId();
 
                     self::redirect('index.php');
                 } catch (ResourceNotFoundException $rnfe) {
@@ -42,7 +42,7 @@ class AuthController extends Controller
                 $_SESSION['errors'] = 'Une erreur d\'authentification est survenue';
             }
         }
-        self::setToken();
+        TokenCSRF::setToken();
 
         self::renderTemplate('login-form.twig');
     }
@@ -131,7 +131,7 @@ class AuthController extends Controller
                 $vm['errors']['password'] = 'Votre mot de passe doit faire au moins 6 caractères';
             }
 
-            if (!self::tokenIsValid(Request::post('token'))) {
+            if (!TokenCSRF::isValid(Request::post('token'))) {
                 $vm['errors']['security'] = 'Une erreur d\'authentification est survenue, veuillez reesayer ultérieurement';
             }
 
@@ -147,7 +147,7 @@ class AuthController extends Controller
                 return;
             }
         }
-        self::setToken();
+        TokenCSRF::setToken();
 
         self::renderTemplate('registration-form.twig');
     }

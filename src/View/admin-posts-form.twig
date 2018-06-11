@@ -7,7 +7,7 @@
         <div class="card my-4 commentForm">
             <h5 class="card-header">Modifier l'article</h5>
             <div class="card-body">
-                <form action="{{ asset('admin/posts/' ~ post.post_id ~ '/edit') }}" method="post">
+                <form action="{{ asset('admin/posts/' ~ post.postId ~ '/edit') }}" method="post">
                     <div class="form-group">
                         <label for="title">Titre: </label>
                         {% if vm.errors.title is defined %}
@@ -18,7 +18,7 @@
                         {% if vm.errors.subtitle is defined %}
                             <div class="alert alert-danger" role="alert">{{ vm.errors.subtitle }}</div>
                         {% endif %}
-                        <input class="form-control" name="title" value="{% if vm.subtitle is defined %}{{ vm.subtitle }}{% else %}{{ post.subtitle }}{% endif %}" required>
+                        <input class="form-control" name="subtitle" value="{% if vm.subtitle is defined %}{{ vm.subtitle }}{% else %}{{ post.subtitle }}{% endif %}" required>
                         <label for="content">Article: </label>
                         {% if vm.errors.content is defined %}
                             <div class="alert alert-danger" role="alert">{{ vm.errors.content }}</div>
@@ -40,12 +40,12 @@
                         {% if vm.errors.title is defined %}
                             <div class="alert alert-danger" role="alert">{{ vm.errors.title }}</div>
                         {% endif %}
-                        <input class="form-control" name="title" value="{% if vm.title is defined %}{{ vm.title }}{% endif %}" required>
+                        <input class="form-control" name="title" {% if vm.title is defined %}value="{{ vm.title }}"{% endif %} required>
                         <label for="subtitle">Chapô: </label>
                         {% if vm.errors.subtitle is defined %}
                             <div class="alert alert-danger" role="alert">{{ vm.errors.subtitle }}</div>
                         {% endif %}
-                        <input class="form-control" name="subtitle" value="{% if vm.subtitle is defined %}{{ vm.subtitle }}{% endif %}" required>
+                        <input class="form-control" name="subtitle" {% if vm.subtitle is defined %}value="{{ vm.subtitle }}"{% endif %} required>
                         <label for="content">Article: </label>
                         {% if vm.errors.content is defined %}
                             <div class="alert alert-danger" role="alert">{{ vm.errors.content }}</div>
