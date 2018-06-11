@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-lg-8 col-md-10 m-auto">
                         {% for comment in comments %}
-                            <section class="d-flex justify-content-between">
+                            <section class="d-flex flex-column align-items-center justify-content-md-between flex-md-row">
                                 <div class="admin__comment-list">
                                     <a href="{{ asset('posts/' ~ comment.postId ) }}">
                                         <h5 class="comment-title">
@@ -39,7 +39,7 @@
                                         {% endif %}
                                     </p>
                                 </div>
-                                <div class="controls">
+                                <div class="controls d-flex flex-column align-items-center align-items-md-end">
                                     {% if comment.status == 'PENDING' %}
                                         <form action="{{ asset('admin/comments/' ~ comment.id ~ '/publish') }}" method="post">
                                             <input type="hidden" name="token" id="token" value="{{ token }}"/>
@@ -47,7 +47,7 @@
                                         </form>
                                     {% endif %}
                                     <a href="{{ asset('posts/' ~ comment.postId) }}">
-                                        <button type="submit" name="submit" class="btn btn-secondary my-2">Voir l'article associé</button>
+                                        <button type="submit" name="submit" class="btn btn-secondary my-2">Voir l'article</button>
                                     </a>
                                     <form action="{{ asset('admin/comments/' ~ comment.id ~ '/delete') }}" method="post">
                                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
