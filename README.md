@@ -33,6 +33,14 @@ composer install
 
 Check out the blog in your browser ! 
 
+## Resources 
+
+Diagrams can be found here : [UML Diagrams](https://github.com/Dzov/Blog_PHP/tree/master/resources/diagrammes)
+
+Code quality has been analyzed with [Codacy](https://app.codacy.com/project/amelie.haladjian/Blog_PHP/dashboard?branchId=7250899)
+
+The different issues can be found on [Github](https://github.com/Dzov/Blog_PHP/issues?q=is%3Aissue+is%3Aclosed)
+
 ## Versioning
 
 I used [GitHub](https://github.com/Dzov/Blog_PHP) for versioning. 
