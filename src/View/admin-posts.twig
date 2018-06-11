@@ -17,9 +17,10 @@
         <section class="admin__section--posts d-flex flex-column align-items-center">
             <h3 class="my-3">Les articles</h3>
 
-            <a href="{{ asset('admin/posts/create') }}">
+            <form action="{{ asset('admin/posts/create') }}" method="post" class="my-2">
+                <input type="hidden" name="token" id="token" value="{{ token }}"/>
                 <button type="submit" name="submit" class="btn btn-success my-2">Ajouter</button>
-            </a>
+            </form>
 
             <div class="container my-3">
                 <div class="row">
@@ -36,14 +37,15 @@
                                         </h6>
                                     </a>
                                     <p>Posté le
-                                        {{ post.updated_at | date("d, M Y") }} par
+                                        {{ post.updated_at | date("d m Y \à h:i:s") }} par
                                         <a href="{{ asset('user/' ~ post.author) }}">{{ post.username | capitalize }}</a>
                                     </p>
                                 </div>
                                 <div class="controls">
-                                    <a href="{{ asset('admin/posts/' ~ post.post_id ~ '/edit') }}">
+                                    <form action="{{ asset('admin/posts/' ~ post.post_id ~ '/edit') }}" method="post" class="my-2">
+                                        <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                         <button type="submit" name="submit" class="btn btn-primary">Modifier</button>
-                                    </a>
+                                    </form>
                                     <form action="{{ asset('admin/posts/' ~ post.post_id ~ '/delete') }}" method="post" class="my-2">
                                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                         <button type="submit" name="submit" class="btn btn-danger">Supprimer</button>

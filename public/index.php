@@ -2,11 +2,11 @@
 
 namespace Blog;
 
-use Blog\Controller\Exceptions\ControllerNotFoundException;
-use Blog\Controller\Exceptions\ActionNotFoundException;
-use Blog\Controller\Exceptions\ResourceNotFoundException;
-use Blog\Controller\Exceptions\RouteNotFoundException;
-use Blog\Controller\Exceptions\AccessDeniedException;
+use Blog\Exceptions\ControllerNotFoundException;
+use Blog\Exceptions\ActionNotFoundException;
+use Blog\Exceptions\ResourceNotFoundException;
+use Blog\Exceptions\RouteNotFoundException;
+use Blog\Exceptions\AccessDeniedException;
 
 require_once '../vendor/autoload.php';
 
@@ -25,7 +25,6 @@ try {
 } catch (ResourceNotFoundException $rnfe) {
     header('Location: 404');
 }
-
 
 
 

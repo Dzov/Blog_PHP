@@ -35,10 +35,13 @@ abstract class Controller
 
             echo $twig->render($path, $parameters);
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo htmlspecialchars($e->getMessage());
         }
     }
 
+    /**
+     * @throws Exception
+     */
     protected static function setToken(): void
     {
         $token = bin2hex(random_bytes(64));
@@ -50,6 +53,9 @@ abstract class Controller
         }
     }
 
+    /**
+     * @throws Exception
+     */
     protected static function tokenIsValid(string $token): bool
     {
         $createdAt = $_SESSION['security']['createdAt'];
@@ -76,8 +82,6 @@ abstract class Controller
         $url = str_replace('//', '/', $_SERVER['BASE'] . '/' . $url);
 
         header("Location: $url");
-
-        return;
     }
 
     protected static function addGlobalVariables(Twig_Environment $twig): void

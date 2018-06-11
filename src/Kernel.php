@@ -2,11 +2,11 @@
 
 namespace Blog;
 
-use Blog\Controller\Exceptions\AccessDeniedException;
-use Blog\Controller\Exceptions\ActionNotFoundException;
-use Blog\Controller\Exceptions\ControllerNotFoundException;
-use Blog\Controller\Exceptions\ResourceNotFoundException;
-use Blog\Controller\Exceptions\RouteNotFoundException;
+use Blog\Exceptions\AccessDeniedException;
+use Blog\Exceptions\ActionNotFoundException;
+use Blog\Exceptions\ControllerNotFoundException;
+use Blog\Exceptions\ResourceNotFoundException;
+use Blog\Exceptions\RouteNotFoundException;
 use Blog\Entity\User;
 use Blog\Model\UserManager;
 use Blog\Router\Router;
@@ -106,7 +106,7 @@ class Kernel
     }
 
     /**
-     * @throws \Blog\Controller\Exceptions\RouteNotFoundException
+     * @throws RouteNotFoundException
      */
     public function getMatchingRoute(string $url): ?array
     {

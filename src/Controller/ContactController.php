@@ -3,6 +3,7 @@
 namespace Blog\Controller;
 
 use Blog\Config\Parameters;
+use Blog\Utils\Request;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
@@ -17,10 +18,11 @@ class ContactController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $vm = [];
 
-            if (empty($_POST['first_name'])) {
+            $firstName = Request::post('first_name');
+
+            if (empty($first_name)) {
                 $vm['errors']['firstName'] = 'Veuillez renseigner votre prénom';
             } else {
-                $firstName = $_POST['first_name'];
                 $vm['firstName'] = $firstName;
 
                 if (strlen($firstName) < 2 || strlen($firstName) >= 30) {
@@ -28,10 +30,11 @@ class ContactController extends Controller
                 }
             }
 
-            if (empty($_POST['last_name'])) {
+            $lastName = Request::post('last_name');
+
+            if (empty($last_name)) {
                 $vm['errors']['lastName'] = 'Veuillez renseigner votre nom de famille';
             } else {
-                $lastName = $_POST['last_name'];
                 $vm['lastName'] = $lastName;
 
                 if (strlen($lastName) < 2 || strlen($lastName) >= 40) {
@@ -39,10 +42,12 @@ class ContactController extends Controller
                 }
             }
 
-            if (empty($_POST['email'])) {
+            $email = Request::post('email');
+
+            if (empty($email)) {
                 $vm['errors']['email'] = 'Veuillez renseigner votre email';
             } else {
-                $email = str_replace(array("\n", "\r", PHP_EOL), '', $_POST['email']);
+                $email = str_replace(array("\n", "\r", PHP_EOL), '', $email);
                 $vm['email'] = $email;
 
                 if (strlen($email) < 6 || strlen($lastName) >= 50) {
@@ -50,10 +55,11 @@ class ContactController extends Controller
                 }
             }
 
-            if (empty($_POST['message'])) {
+            $message = sha1(Request::post('message'));
+
+            if (empty($message)) {
                 $vm['errors']['message'] = 'Veuillez renseigner le corps du mail';
             } else {
-                $message = $_POST['message'];
                 $vm['message'] = $message;
 
                 if (strlen($message) < 5) {
@@ -88,8 +94,7 @@ class ContactController extends Controller
         self::renderTemplate('contact.twig');
     }
 
-    public
-    static function validateAction()
+    public static function validateAction()
     {
         self::renderTemplate('message-sent.twig');
     }

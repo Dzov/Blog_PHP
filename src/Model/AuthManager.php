@@ -2,7 +2,7 @@
 
 namespace Blog\Model;
 
-use Blog\Controller\Exceptions\UserNotFoundException;
+use Blog\Exceptions\UserNotFoundException;
 use Blog\Entity\User;
 
 /**
@@ -11,7 +11,7 @@ use Blog\Entity\User;
 class AuthManager extends DatabaseConnection
 {
     /**
-     * @throws \Blog\Controller\Exceptions\ResourceNotFoundException
+     * @throws \Blog\Exceptions\ResourceNotFoundException
      */
     public static function getUserIdentification(string $username, string $password): ?User
     {

@@ -4,13 +4,16 @@ namespace Blog\Controller;
 
 use Blog\Controller\Exceptions\ResourceNotFoundException;
 use Blog\Model\PostManager;
-use MongoDB\Driver\Exception\AuthenticationException;
+use Blog\Utils\Request;
 
 /**
  * @author Amélie-Dzovinar Haladjian
  */
 class AdminPostController extends Controller
 {
+    /**
+     * @throws \Exception
+     */
     public static function listAction(): void
     {
         self::setToken();
@@ -22,6 +25,7 @@ class AdminPostController extends Controller
 
     /**
      * @throws ResourceNotFoundException
+     * @throws \Exception
      */
     public static function editAction(array $parameters): void
     {
@@ -29,13 +33,16 @@ class AdminPostController extends Controller
 
         $post = PostManager::findById($id);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $submit = Request::post('submitPost');
+
+        if (isset($submit)) {
             $vm = [];
 
-            if (empty($_POST['title'])) {
+            $title = Request::post('title');
+
+            if (empty($title)) {
                 $vm['errors']['title'] = 'Veuillez renseigner le titre';
             } else {
-                $title = $_POST['title'];
                 $vm['title'] = $title;
 
                 if (strlen($title) < 2 || strlen($title) > 45) {
@@ -43,10 +50,11 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (empty($_POST['subtitle'])) {
+            $subtitle = Request::post('subtitle');
+
+            if (empty($subtitle)) {
                 $vm['errors']['subtitle'] = 'Veuillez renseigner le chapô';
             } else {
-                $subtitle = $_POST['subtitle'];
                 $vm['subtitle'] = $subtitle;
 
                 if (strlen($subtitle) < 2 || strlen($subtitle) > 95) {
@@ -54,10 +62,11 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (empty($_POST['content'])) {
+            $content = Request::post('content');
+
+            if (empty($content)) {
                 $vm['errors']['content'] = 'Veuillez renseigner le contenu de l\'article';
             } else {
-                $content = $_POST['content'];
                 $vm['content'] = $content;
 
                 if (strlen($content) < 15) {
@@ -65,11 +74,17 @@ class AdminPostController extends Controller
                 }
             }
 
+            if (!self::tokenIsValid(Request::post('token'))) {
+                $vm['errors']['security'] = 'Une erreur d\'authentification est survenue';
+            }
+
             if (!isset($vm['errors'])) {
                 PostManager::update($id, $title, $subtitle, $content);
                 $_SESSION['success'][] = 'L\'article a bien été modifié';
 
                 self::redirect('admin/posts');
+
+                return;
             } else {
                 self::renderTemplate('admin-posts-form.twig', ['vm' => $vm, 'post' => $post]);
 
@@ -82,16 +97,21 @@ class AdminPostController extends Controller
 
     /**
      * @throws ResourceNotFoundException
+     * @throws \Exception
      */
-    public static function createAction(): void
+    public
+    static function createAction(): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $submit = Request::post('submitPost');
+
+        if (isset($submit)) {
             $vm = [];
 
-            if (empty($_POST['title'])) {
+            $title = Request::post('title');
+
+            if (empty($title)) {
                 $vm['errors']['title'] = 'Veuillez renseigner le titre';
             } else {
-                $title = $_POST['title'];
                 $vm['title'] = $title;
 
                 if (strlen($title) < 2 || strlen($title) > 45) {
@@ -99,10 +119,11 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (empty($_POST['subtitle'])) {
+            $subtitle = Request::post('subtitle');
+
+            if (empty($subtitle)) {
                 $vm['errors']['subtitle'] = 'Veuillez renseigner le chapô';
             } else {
-                $subtitle = $_POST['subtitle'];
                 $vm['subtitle'] = $subtitle;
 
                 if (strlen($subtitle) < 2 || strlen($subtitle) > 95) {
@@ -110,10 +131,11 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (empty($_POST['content'])) {
+            $content = Request::post('content');
+
+            if (empty($content)) {
                 $vm['errors']['content'] = 'Veuillez renseigner le contenu de l\'article';
             } else {
-                $content = $_POST['content'];
                 $vm['content'] = $content;
 
                 if (strlen($content) < 15) {
@@ -121,10 +143,11 @@ class AdminPostController extends Controller
                 }
             }
 
-            if (empty($_POST['author'])) {
+            $author = Request::post('author');
+
+            if (empty($author)) {
                 $vm['errors']['author'] = 'Veuillez renseigner votre identifiant';
             } else {
-                $author = $_POST['author'];
                 $vm['author'] = $author;
 
                 if (strlen($author) < 2) {
@@ -132,11 +155,17 @@ class AdminPostController extends Controller
                 }
             }
 
+            if (!self::tokenIsValid(Request::post('token'))) {
+                $vm['errors']['security'] = 'Une erreur d\'authentification est survenue';
+            }
+
             if (!isset($vm['errors'])) {
                 PostManager::create($author, $title, $subtitle, $content);
                 $_SESSION['success'][] = 'L\'article a bien été ajouté';
 
                 self::redirect('admin/posts');
+
+                return;
             } else {
                 self::renderTemplate('admin-posts-form.twig', ['vm' => $vm]);
 
@@ -149,15 +178,23 @@ class AdminPostController extends Controller
 
     /**
      * @throws ResourceNotFoundException
+     * @throws \Exception
      */
-    public static function deleteAction(array $parameters): void
+    public
+    static function deleteAction(
+        array $parameters
+    ): void
     {
-        if (isset($_POST['submit']) && isset($_POST['token']) && isset($_SESSION['token'])) {
+        $submit = Request::post('submit');
+        $token = Request::post('token');
+        $sessionToken = $_SESSION['token'];
+
+        if (isset($submit) && isset($token) && isset($sessionToken)) {
             $id = $parameters['id'];
 
             PostManager::findById($id);
 
-            if (self::tokenIsValid($_POST['token'])) {
+            if (self::tokenIsValid($token)) {
                 PostManager::delete($id);
                 $_SESSION['success'][] = 'L\'article a bien été supprimé';
             } else {
