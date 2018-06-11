@@ -8,6 +8,9 @@
             <div class="alert alert-danger" role="alert">{{ error }}</div>
         {% endfor %}
     {% endif %}
+    {% if vm.errors.security is defined %}
+        <div class="alert alert-danger" role="alert">{{ vm.errors.security }}</div>
+    {% endif %}
     <div class="card my-4 commentForm loginForm">
         <h5 class="card-header">S'inscrire</h5>
         <div class="card-body">

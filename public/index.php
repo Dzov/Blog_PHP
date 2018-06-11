@@ -21,9 +21,3 @@ try {
 } catch (RouteNotFoundException | ResourceNotFoundException $rnfe) {
     header('Location: 404');
 }
-
-
-
-
-
-

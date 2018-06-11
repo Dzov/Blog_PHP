@@ -9,9 +9,7 @@
         {% endfor %}
     {% endif %}
     {% if success is defined %}
-        {% for message in success %}
-            <div class="alert alert-success" role="alert">{{ message }}</div>
-        {% endfor %}
+        <div class="alert alert-success" role="alert">{{ success }}</div>
     {% endif %}
     <div class="card my-4 commentForm loginForm">
         <h5 class="card-header">Connexion</h5>
