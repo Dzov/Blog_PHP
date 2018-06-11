@@ -8,7 +8,7 @@ namespace Blog\Entity;
 class Comment extends Entity
 {
     /**
-     * @var int
+     * @var ?int
      */
     private $author;
 
@@ -43,16 +43,21 @@ class Comment extends Entity
     private $status;
 
     /**
-     * @var string
+     * @var ?string
      */
     private $username;
 
-    public function getAuthor(): int
+    /**
+     * @var ?string
+     */
+    private $anonUsername;
+
+    public function getAuthor(): ?int
     {
         return $this->author;
     }
 
-    public function setAuthor(int $author): void
+    public function setAuthor(int $author = null): void
     {
         $this->author = $author;
     }
@@ -117,14 +122,24 @@ class Comment extends Entity
         $this->status = $status;
     }
 
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
 
-    public function setUsername(string $username): void
+    public function setUsername(string $username = null): void
     {
         $this->username = $username;
+    }
+
+    public function getAnonUsername(): ?string
+    {
+        return $this->anonUsername;
+    }
+
+    public function setAnonUsername(string $anonUsername = null): void
+    {
+        $this->anonUsername = $anonUsername;
     }
 }
 

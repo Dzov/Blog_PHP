@@ -40,9 +40,9 @@ abstract class PostManager extends DatabaseConnection
 
     public static function findCommentsByPost(int $id): ?array
     {
-        $query = 'SELECT c.content, c.posted_at, c.status, u.username
+        $query = 'SELECT c.content, c.posted_at, c.status, c.anon_username, u.username
                     FROM comment c
-                    INNER JOIN user u ON c.author = u.id
+                    LEFT JOIN user u ON c.author = u.id
                     WHERE c.post_id = :id AND c.status = "PUBLISHED"
                     ORDER BY c.posted_at DESC';
 
