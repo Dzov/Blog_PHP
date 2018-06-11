@@ -1,3 +1,16 @@
+-- phpMyAdmin SQL Dump
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Base de données :  `blog_php`
+--
+
+-- --------------------------------------------------------
+
 --
 -- Structure de la table `comment`
 --
