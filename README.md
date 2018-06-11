@@ -19,7 +19,7 @@ Clone the GitHub on your computer.
 ```
 git clone git@github.com:Dzov/Blog_PHP.git
 ```
-Create a new database and import the sql file.
+Create a new database and import the sql file located in the resources folder.
 
 Rename the Parameters.dist file located in the config folder as Parameters.php and change the class name to Parameters. 
 Replace the placeholders with the parameters that match your configuration.   
