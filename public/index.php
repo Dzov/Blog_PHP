@@ -14,22 +14,12 @@ session_start();
 
 try {
     new Kernel();
-} catch (ActionNotFoundException $anfe) {
-    header('Location: 500');
-} catch (ControllerNotFoundException $cnfe) {
+} catch (ActionNotFoundException | ControllerNotFoundException | \Twig_Error_Loader | \Twig_Error_Runtime | \Twig_Error_Syntax $e) {
     header('Location: 500');
 } catch (AccessDeniedException $ade) {
     header('Location: 403');
-} catch (RouteNotFoundException $rnfe) {
+} catch (RouteNotFoundException | ResourceNotFoundException $rnfe) {
     header('Location: 404');
-} catch (ResourceNotFoundException $rnfe) {
-    header('Location: 404');
-} catch (\Twig_Error_Loader $e) {
-    header('Location: 500');
-} catch (\Twig_Error_Runtime $e) {
-    header('Location: 500');
-} catch (\Twig_Error_Syntax $e) {
-    header('Location: 500');
 }
 
 

@@ -26,7 +26,7 @@ class TokenCSRF
      */
     public static function isValid(string $token): bool
     {
-        if (isset($token) && isset($_SESSION['token'])) {
+        if (isset($token) && isset($_SESSION['security']['token'])) {
             $createdAt = $_SESSION['security']['createdAt'];
             $expiresAt = $createdAt->add(new \DateInterval('PT10M'));
 
