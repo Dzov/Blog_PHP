@@ -89,6 +89,8 @@ class AuthController extends Controller
             }
 
             $username = Request::post('username');
+            $email = Request::post('email');
+            $user = UserManager::findByUsernameOrEmail($username, $email);
             if (empty($username)) {
                 $vm['errors']['username'] = 'Veuillez renseigner votre identifiant';
             } else {
@@ -98,15 +100,11 @@ class AuthController extends Controller
                     $vm['errors']['username'] = 'Votre identifiant doit faire entre 2 et 20 caractères';
                 }
 
-                try {
-                    if (UserManager::findByUsername($username)) {
-                        $vm['errors']['username'] = 'Cet identifiant existe déjà';
-                    }
-                } catch (ResourceNotFoundException $rnfe) {
+                if ($user->getUsername() === $username) {
+                    $vm['errors']['username'] = 'Cet identifiant existe déjà';
                 }
             }
 
-            $email = Request::post('email');
             if (empty($email)) {
                 $vm['errors']['email'] = 'Veuillez renseigner votre email';
             } else {
@@ -116,12 +114,10 @@ class AuthController extends Controller
                     $vm['errors']['email'] = 'Votre email doit faire entre 6 et 50 caractères';
                 }
 
-                try {
-                    if (UserManager::findByEmail($email)) {
-                        $vm['errors']['email'] = 'Cet email existe déjà';
-                    }
-                } catch (ResourceNotFoundException $rnfe) {
+                if ($user->getEmail() === $email) {
+                    $vm['errors']['email'] = 'Cet email existe déjà';
                 }
+
             }
 
             $password = sha1(Request::post('password'));
