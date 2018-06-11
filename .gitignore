@@ -3,7 +3,8 @@ config/Parameters.php
 .idea
 composer.phar
 /vendor
-public/css
+public/css/clean-blog.css.map
+public/css/clean-blog.min.css.map
 public/.sass-cache/
 public/clean-blog.css/*
 node_modules/
