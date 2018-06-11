@@ -7,3 +7,5 @@ public/css
 public/.sass-cache/
 public/clean-blog.css/*
 node_modules/
+package.json
+package-lock.json
