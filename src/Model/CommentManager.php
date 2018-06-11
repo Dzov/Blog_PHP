@@ -13,7 +13,7 @@ abstract class CommentManager extends DatabaseConnection
 {
     public static function findAll(): array
     {
-        $query = 'SELECT c.id, c.post_id, c.author, c.content, c.posted_at, c.status, u.id, u.username 
+        $query = 'SELECT c.id, c.post_id, c.author, c.content, c.posted_at, c.status, u.id AS user_id, u.username 
                   FROM comment c INNER JOIN user u ON c.author = u.id ORDER BY status, posted_at DESC';
 
         return array_map(
@@ -29,7 +29,7 @@ abstract class CommentManager extends DatabaseConnection
      */
     public static function findById(int $id): ?Comment
     {
-        $query = 'SELECT c.id, c.post_id, c.author, c.content, c.posted_at, c.status, u.id, u.username 
+        $query = 'SELECT c.id, c.post_id, c.author, c.content, c.posted_at, c.status, u.id AS user_id, u.username 
                   FROM comment c INNER JOIN user u ON c.author = u.id WHERE c.id = :id';
 
         return new Comment(parent::executeQuery($query, ['id' => $id])->fetch());
