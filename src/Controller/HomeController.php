@@ -7,6 +7,9 @@ namespace Blog\Controller;
  */
 class HomeController extends Controller
 {
+    /**
+     * {@inheritdoc}
+     */
     public static function showAction(): void
     {
         self::renderTemplate('home.twig');

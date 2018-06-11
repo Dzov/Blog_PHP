@@ -1,7 +1,7 @@
 <div class="card my-4 commentForm">
     <h5 class="card-header">Laisser un commentaire:</h5>
     <div class="card-body">
-        <form action="{{ asset('comments/' ~ post.postId ~ '/add') }}" method="post">
+        <form action="{{ asset('comments/' ~ post.id ~ '/add') }}" method="post">
             <div class="form-group">
                 <label for="author">Votre identifiant: </label>
                 {% if vm.errors.author is defined %}

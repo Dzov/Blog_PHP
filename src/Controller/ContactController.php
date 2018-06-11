@@ -13,6 +13,9 @@ use Swift_SmtpTransport;
  */
 class ContactController extends Controller
 {
+    /**
+     * {@inheritdoc}
+     */
     public static function sendAction()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -94,6 +97,9 @@ class ContactController extends Controller
         self::renderTemplate('contact.twig');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function validateAction()
     {
         self::renderTemplate('message-sent.twig');

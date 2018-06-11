@@ -4,7 +4,6 @@ namespace Blog\Controller;
 
 use Blog\Exception\ResourceNotFoundException;
 use Blog\Model\UserManager;
-use Exception;
 use Twig_Environment;
 use Twig_Function;
 use Twig_Loader_Filesystem;

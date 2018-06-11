@@ -15,7 +15,7 @@ class AuthManager extends DatabaseConnection
      */
     public static function getUserIdentification(string $username, string $password): ?User
     {
-        $query = 'SELECT u.user_id
+        $query = 'SELECT u.id
                   FROM user u WHERE u.username = :username AND u.password = :password';
 
         return new User(self::executeQuery($query, ['username' => $username, 'password' => $password])->fetch());
