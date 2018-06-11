@@ -1,11 +1,9 @@
 .DS_Store
-config/
+config/Parameters.php
 .idea
 composer.phar
-vendor
+/vendor
 public/css
 public/.sass-cache/
 public/clean-blog.css/*
-public/.htaccess
-public/css
 node_modules/

@@ -34,7 +34,7 @@ class AuthController extends Controller
 
                     $_SESSION['userId'] = $user->getId();
 
-                    self::redirect('index.php');
+                    self::redirect('');
                 } catch (ResourceNotFoundException $rnfe) {
                     $_SESSION['errors'][] = 'Ces identifiants sont erronés';
                 }
@@ -89,6 +89,8 @@ class AuthController extends Controller
             }
 
             $username = Request::post('username');
+            $email = Request::post('email');
+            $user = UserManager::findByUsernameOrEmail($username, $email);
             if (empty($username)) {
                 $vm['errors']['username'] = 'Veuillez renseigner votre identifiant';
             } else {
@@ -97,16 +99,13 @@ class AuthController extends Controller
                 if (strlen($username) < 2 || strlen($username) >= 20) {
                     $vm['errors']['username'] = 'Votre identifiant doit faire entre 2 et 20 caractères';
                 }
-
-                try {
-                    if (UserManager::findByUsername($username)) {
+                if ($user) {
+                    if ($user->getUsername() === $username) {
                         $vm['errors']['username'] = 'Cet identifiant existe déjà';
                     }
-                } catch (ResourceNotFoundException $rnfe) {
                 }
             }
 
-            $email = Request::post('email');
             if (empty($email)) {
                 $vm['errors']['email'] = 'Veuillez renseigner votre email';
             } else {
@@ -116,12 +115,12 @@ class AuthController extends Controller
                     $vm['errors']['email'] = 'Votre email doit faire entre 6 et 50 caractères';
                 }
 
-                try {
-                    if (UserManager::findByEmail($email)) {
+                if ($user) {
+                    if ($user->getEmail() === $email) {
                         $vm['errors']['email'] = 'Cet email existe déjà';
                     }
-                } catch (ResourceNotFoundException $rnfe) {
                 }
+
             }
 
             $password = sha1(Request::post('password'));
@@ -137,7 +136,7 @@ class AuthController extends Controller
 
             if (!isset($vm['errors'])) {
                 UserManager::create($firstName, $lastName, $username, $email, $password);
-                $_SESSION['success'] = "Bienvenue . $username . ! Vous pouvez maintenant vous connecter";
+                $_SESSION['success'] = "Bienvenue $username ! Vous pouvez maintenant vous connecter";
                 self::redirect('login');
 
                 return;
