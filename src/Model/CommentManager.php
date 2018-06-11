@@ -13,8 +13,8 @@ abstract class CommentManager extends DatabaseConnection
 {
     public static function findAll(): array
     {
-        $query = 'SELECT c.id, c.post_id, c.author, c.content, c.posted_at, c.status, u.id AS user_id, u.username 
-                  FROM comment c INNER JOIN user u ON c.author = u.id ORDER BY status, posted_at DESC';
+        $query = 'SELECT c.id, c.post_id, c.author, c.content, c.posted_at, c.status, c.anon_username, u.id AS user_id, u.username
+                  FROM comment c LEFT JOIN user u ON c.author = u.id ORDER BY status, posted_at DESC';
 
         return array_map(
             function ($item) {
@@ -29,42 +29,39 @@ abstract class CommentManager extends DatabaseConnection
      */
     public static function findById(int $id): ?Comment
     {
-        $query = 'SELECT c.id, c.post_id, c.author, c.content, c.posted_at, c.status, u.id AS user_id, u.username 
-                  FROM comment c INNER JOIN user u ON c.author = u.id WHERE c.id = :id';
+        $query = 'SELECT c.id FROM comment c WHERE c.id = :id';
 
         return new Comment(parent::executeQuery($query, ['id' => $id])->fetch());
     }
 
-    /**
-     * @throws ResourceNotFoundException
-     */
     public static function insert(int $post_id, string $author, string $content): \PDOStatement
     {
-        $query = 'INSERT INTO comment(post_id, author, content, posted_at, status) 
-                  VALUES (:post_id, :author, :content, :posted_at, :status)';
+        $query = 'INSERT INTO comment(post_id, author, content, posted_at, status, anon_username) 
+                  VALUES (:post_id, :author, :content, :posted_at, :status, :anon_username)';
 
         return parent::executeQuery(
             $query,
             [
-                ':post_id'   => $post_id,
-                ':author'    => self::getAuthorId($author),
-                ':content'   => $content,
-                ':posted_at' => date('Y-m-d H:i:s'),
-                ':status'    => 'PENDING'
+                ':post_id'       => $post_id,
+                ':author'        => self::getAuthorId($author) ? self::getAuthorId($author) : null,
+                ':content'       => $content,
+                ':posted_at'     => date('Y-m-d H:i:s'),
+                ':status'        => 'PENDING',
+                ':anon_username' => self::getAuthorId($author) ? null : $author
             ]
         );
     }
 
-    /**
-     * @throws ResourceNotFoundException
-     */
-    private static function getAuthorId(string $author): int
+    private static function getAuthorId(string $username): ?int
     {
-        $query = 'SELECT id FROM user u WHERE u.username = :author';
+        try {
+            $query = 'SELECT id FROM user u WHERE u.username = :username';
+            $author = new User(parent::executeQuery($query, ['username' => $username])->fetch());
 
-        $author = new User(parent::executeQuery($query, ['author' => $author])->fetch());
-
-        return $author->getId();
+            return $author->getId();
+        } catch (ResourceNotFoundException $rnfe) {
+            return null;
+        }
     }
 
     public static function publish(int $id): \PDOStatement

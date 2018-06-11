@@ -31,8 +31,12 @@
                                         </h6>
                                     </a>
                                     <p>Posté le
-                                        {{ comment.postedAt | date("d M Y \à h:m") }} par
-                                        {{ comment.username | capitalize }}
+                                        {{ comment.postedAt | date("d m Y \à H:m") }} par
+                                        {% if comment.anonUsername is not null %}
+                                            {{ comment.anonUsername | capitalize }}
+                                        {% else %}
+                                            {{ comment.username | capitalize }}
+                                        {% endif %}
                                     </p>
                                 </div>
                                 <div class="controls">
