@@ -33,7 +33,7 @@
                                     {% endif %}
                                     <p>{{ user.email }}</p>
                                 </div>
-                                <div class="controls d-flex flex-column align-items-center align-items-md-end">
+                                <div class="controls d-flex flex-column align-items-center align-items-md-end align-self-start">
                                     {% if user.role == 'REGISTERED_USER' %}
                                         <form action="{{ asset('admin/users/' ~ user.id ~ '/grant') }}" method="post">
                                             <input type="hidden" name="token" id="token" value="{{ token }}"/>
