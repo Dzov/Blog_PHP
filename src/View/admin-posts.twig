@@ -41,7 +41,7 @@
                                         <a href="{{ asset('user/' ~ post.author) }}">{{ post.username | capitalize }}</a>
                                     </p>
                                 </div>
-                                <div class="controls d-flex flex-column align-items-center align-items-md-end align-self-start">
+                                <div class="controls d-flex flex-column align-items-center align-items-md-end align-self-md-start">
                                     <form action="{{ asset('admin/posts/' ~ post.id ~ '/edit') }}" method="post" class="my-2">
                                         <input type="hidden" name="token" id="token" value="{{ token }}"/>
                                         <button type="submit" name="submit" class="btn btn-primary">Modifier</button>
