@@ -58,7 +58,7 @@ class ContactController extends Controller
                 }
             }
 
-            $message = sha1(Request::post('message'));
+            $message = Request::post('message');
 
             if (empty($message)) {
                 $vm['errors']['message'] = 'Veuillez renseigner le corps du mail';
