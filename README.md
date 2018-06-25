@@ -1,4 +1,4 @@
-# Blog
+# Blog [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4818533c96634bda92311e4548c4db79)](https://www.codacy.com/app/amelie.haladjian/Blog_PHP?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Dzov/Blog_PHP&amp;utm_campaign=Badge_Grade)
 
 An object-oriented Blog using PHP. 
 
