@@ -32,8 +32,10 @@ abstract class PostManager extends DatabaseConnection
      */
     public static function findById(int $id): ?Post
     {
-        $query = 'SELECT * FROM post 
-                    WHERE id = :id';
+        $query = 'SELECT p.id, p.title, p.subtitle, p.updated_at, p.author, p.content, u.username 
+                    FROM post p
+                    INNER JOIN user u ON p.author = u.id 
+                    WHERE p.id = :id';
 
         return new Post(parent::executeQuery($query, [':id' => $id])->fetch());
     }
