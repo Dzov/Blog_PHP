@@ -31,7 +31,7 @@
                                         </h6>
                                     </a>
                                     <p>Posté le
-                                        {{ comment.postedAt | date("d m Y \à H:m") }} par
+                                        {{ comment.postedAt | date("d m Y \à H:i") }} par
                                         {% if comment.anonUsername is not null %}
                                             {{ comment.anonUsername | capitalize }}
                                         {% else %}
