@@ -53,6 +53,11 @@ class ContactController extends Controller
                 $email = str_replace(array("\n", "\r", PHP_EOL), '', $email);
                 $vm['email'] = $email;
 
+                if (false === filter_var($email, FILTER_VALIDATE_EMAIL))
+                {
+                    $vm['errors']['email'] = 'Veuillez renseinger un email valide';
+                }
+
                 if (strlen($email) < 6 || strlen($lastName) >= 50) {
                     $vm['errors']['email'] = 'Votre email doit faire entre 6 et 50 caractères';
                 }
